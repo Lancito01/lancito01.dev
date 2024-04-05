@@ -1,14 +1,24 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Layout from "./Components/layout/Layout";
+import Home from "./Routes/Home";
+import About from "./Routes/About";
+import AndyBot from "./Routes/AndyBot";
+import AndyScript from "./Routes/AndyScript";
 
 function App() {
   return (
-    <>
-      <div className='coming-soon'>
-        <h1>Coming soon!</h1>
-        <p>Stay posted for updates...</p>
-        <p>- andy</p>
-      </div>
-    </>
+    <BrowserRouter>
+      <Routes>
+        <Route element={<Layout />}>
+
+          <Route path="/" element={<Home />}></Route>
+          <Route path="/about" element={<About />}></Route>
+          <Route path="/andybot" element={<AndyBot />}></Route>
+          <Route path="/andyscript" element={<AndyScript />}></Route>
+
+        </Route>
+      </Routes >
+    </BrowserRouter >
   )
 }
 
