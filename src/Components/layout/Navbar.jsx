@@ -4,10 +4,10 @@ import './Navbar.css'
 const Navbar = () => {
   return (
     <nav>
-        <Link to="/">Home</Link>
-        <Link to="/about">About Me</Link>
-        <Link to="/andybot">AndyBot</Link>
-        <Link to="/andyscript">AndyScript</Link>
+        <Link to="/">🏠 Home</Link>
+        <Link to="/about">📃 About Me</Link>
+        <Link to="/andybot">🤖 AndyBot</Link>
+        <Link to="/andyscript">💻 AndyScript</Link>
     </nav>
   )
 }
