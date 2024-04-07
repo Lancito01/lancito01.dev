@@ -46,3 +46,9 @@ nav button {
     border: var(--primary-color) 1px solid;
     cursor: pointer;
 }
+
+@media (max-width:881px) {
+    .nav-links {
+        display: none;
+    }
+}

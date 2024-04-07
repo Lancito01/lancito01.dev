@@ -1,8 +1,8 @@
 :root {
   --background-color: #111111;
-  --primary-color: #1e90ff;
-  --secondary-color: #071f3ac2;
-  --accent-color: cyan;
+  --primary-color: #0db5f8;
+  --secondary-color: #da8910;
+  --accent-color: #88ec1c;
 }
 
 html>* {
@@ -18,7 +18,7 @@ html>* {
 }
 
 .margin-left {
-  margin-left: 20px;
+  margin-left: 30px;
 }
 
 .accent-color {
@@ -28,4 +28,10 @@ html>* {
 a {
   text-decoration: none;
   color: var(--primary-color);
+}
+
+.color-gradient {
+  background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
