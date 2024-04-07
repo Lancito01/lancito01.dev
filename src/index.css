@@ -1,11 +1,31 @@
+:root {
+  --background-color: #111111;
+  --primary-color: #1e90ff;
+  --secondary-color: #071f3ac2;
+  --accent-color: cyan;
+}
+
 html>* {
   /*every first children of the HTML element (body, */
   margin: 0;
 }
 
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
-  color-scheme: light dark;
+  font-family: monospace;
+  font-size: larger;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: var(--background-color);
+}
+
+.margin-left {
+  margin-left: 20px;
+}
+
+.accent-color {
+  color: var(--accent-color);
+}
+
+a {
+  text-decoration: none;
+  color: var(--primary-color);
 }

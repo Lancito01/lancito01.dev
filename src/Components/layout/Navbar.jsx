@@ -4,10 +4,14 @@ import './Navbar.css'
 const Navbar = () => {
   return (
     <nav>
+      <Link to="/"><h2>{"<"}Andy&apos;s Website{" />"}</h2></Link>
+      <ul className='nav-links'>
         <Link to="/">🏠 Home</Link>
         <Link to="/about">📃 About Me</Link>
         <Link to="/andybot">🤖 AndyBot</Link>
         <Link to="/andyscript">💻 AndyScript</Link>
+      </ul>
+      {/* <button>Change Theme</button> */}
     </nav>
   )
 }

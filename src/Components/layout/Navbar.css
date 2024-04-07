@@ -1,23 +1,48 @@
+nav * {
+    margin: 0;
+}
+
+nav>* {
+    margin: 0 20px 0 20px;
+}
+
 nav {
+    display: flex;
+    align-items: center;
     width: 100%;
     top: 0px;
     margin: 0 auto;
-    display: flex;
-    justify-content: space-around;
+    /* justify-content: space-between; */
+    /*! Uncomment this line if there's a "change theme" button in navbar (TBD) */
     height: 60px;
-    background-color: rgb(24, 24, 24);
-    align-items: center;
+    background-color: var(--background-color);
+    border-bottom: var(--primary-color) 1px solid;
 }
 
-a {
-    padding: 7.5px;
+ul.nav-links {
+    padding: 0;
+}
+
+nav a {
     text-decoration: none;
     color: white;
-    font-size: 1.2em;
+}
+
+nav a {
+    padding: 5px 20px;
     border-radius: 5px;
 }
 
-a:hover {
+nav a:hover {
     background-color: rgba(255, 255, 255, 0.1);
     transition: background-color 0.1s;
+}
+
+nav button {
+    padding: 8.5px 10px;
+    background-color: var(--secondary-color);
+    color: white;
+    border-radius: 5px;
+    border: var(--primary-color) 1px solid;
+    cursor: pointer;
 }
