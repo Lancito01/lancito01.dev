@@ -1,8 +1,8 @@
 :root {
   --background-color: #111111;
-  --primary-color: #0db5f8;
+  --primary-color: #00b7ff;
   --secondary-color: #da8910;
-  --accent-color: #88ec1c;
+  --accent-color: #85ee14;
 }
 
 html>* {
@@ -25,6 +25,10 @@ html>* {
   color: var(--accent-color);
 }
 
+.secondary-color {
+  color: var(--secondary-color);
+}
+
 a {
   text-decoration: none;
   color: var(--primary-color);
@@ -32,6 +36,12 @@ a {
 
 .color-gradient {
   background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.color-gradient:hover {
+  background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
   background-clip: text;
   -webkit-text-fill-color: transparent;
 }

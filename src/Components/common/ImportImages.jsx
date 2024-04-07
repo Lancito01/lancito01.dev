@@ -1,13 +1,14 @@
-import twitterLogo from '../../assets/twitter logo.png'
-import discordLogo from '../../assets/discord logo.png'
 import githubLogo from '../../assets/github logo.png'
+import discordLogo from '../../assets/discord logo.png'
+import twitterLogo from '../../assets/twitter logo.png'
+import standLogo from '../../assets/stand logo.gif'
 
-const ImportImages = () => {
-  return {
-    twitterLogo,
-    discordLogo,
-    githubLogo
-  }
+const Images = {
+  githubLogo,
+  discordLogo,
+  twitterLogo,
+  standLogo,
 }
 
-export default ImportImages
+
+export default Images
