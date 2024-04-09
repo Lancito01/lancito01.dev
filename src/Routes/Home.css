@@ -6,20 +6,3 @@
 .sublinks a {
   width: fit-content;
 }
-
-.socials {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-}
-
-.socials a {
-  display: flex;
-  padding: 0 10px;
-  align-items: center;
-}
-
-.socials img {
-  padding-right: 10px;
-  width: 30px;
-}
