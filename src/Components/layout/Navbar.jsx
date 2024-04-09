@@ -4,12 +4,12 @@ import './Navbar.css'
 const Navbar = () => {
   return (
     <nav>
-      <Link to="/"><h2 className='color-gradient'>{"<"}Andy&apos;s Website{" />"}</h2></Link>
+      <Link to="/"><div className='color-gradient'><h2>{"<"}Andy&apos;s Website{" />"}</h2></div></Link>
       <ul className='nav-links'>
-        <Link to="/">🏠 Home</Link>
-        <Link to="/about">📃 About Me</Link>
-        <Link to="/andybot">🤖 AndyBot</Link>
-        <Link to="/andyscript">💻 AndyScript</Link>
+        <Link className='padding-background-effect' to="/">🏠 Home</Link>
+        <Link className='padding-background-effect' to="/about">📃 About Me</Link>
+        <Link className='padding-background-effect' to="/andybot">🤖 AndyBot</Link>
+        <Link className='padding-background-effect' to="/andyscript">💻 AndyScript</Link>
       </ul>
       {/* <button>Change Theme</button> */}
     </nav>

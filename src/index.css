@@ -21,6 +21,14 @@ html>* {
   margin-left: 30px;
 }
 
+.padding-left {
+  padding-left: 40px;
+}
+
+.padding-left-large {
+  padding-left: 80px;
+}
+
 .accent-color {
   color: var(--accent-color);
 }
@@ -44,4 +52,8 @@ a {
   background: linear-gradient(90deg, var(--accent-color), var(--primary-color));
   background-clip: text;
   -webkit-text-fill-color: transparent;
+}
+
+p {
+  margin-right: 30px;
 }

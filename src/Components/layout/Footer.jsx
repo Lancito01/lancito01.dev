@@ -1,8 +1,8 @@
-import Images from '../common/ImportImages'
+import Images from '../common/ImportFooterImages'
 
 const Footer = () => {
   return (
-    <div className='margin-left'>
+    <div className='margin-left' id='socials'>
       <h3><span className='accent-color'>&gt;</span> Socials 📱</h3>
       <ul className='socials'>
         <a href="https://github.com/lancito01"><img src={Images.githubLogo} alt="github logo"></img>Github: lancito01</a>

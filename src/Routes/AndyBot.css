@@ -1,0 +1,17 @@
+.andybot-images {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.showcase-entry img {
+    max-width: 350px;
+    width: 60vw;
+}
+
+.showcase-entry {
+    max-width: 350px;
+    width: 60vw;
+    display: inline-block;
+    text-wrap: wrap;
+    padding: 6px 20px 0 0;
+}

@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom"
-import Images from "../Components/common/ImportImages"
 import './About.css'
+import standLogo from '../assets/stand logo.gif'
 
 const About = () => {
   function getAge() {
@@ -37,7 +37,7 @@ const About = () => {
         <p><span className="secondary-color">&gt;</span> <a href="https://github.com/Lancito01/lancito01.dev">This very website!</a></p>
         <p><span className="secondary-color">&gt;</span> <Link to="/andybot">AndyBot</Link></p>
       </ul>
-      <a href="https://stand.gg"><h3><span className="accent-color">&gt;</span> Stand <img id="stand-logo" src={Images.standLogo}></img></h3></a>
+      <a href="https://stand.gg"><h3><span className="accent-color">&gt;</span> Stand <img id="stand-logo" src={standLogo}></img></h3></a>
       <ul className="stand-desc">
         <p><span className="secondary-color">&gt;</span> Currently staff & Spanish translator at <a href="https://stand.gg">Stand</a>, the Grand Theft Auto V mod menu that enhances your game experience.</p>
       </ul>
