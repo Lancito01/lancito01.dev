@@ -7,7 +7,7 @@ const AndyBot = () => {
       <h1><span className="accent-color">&gt;</span> AndyBot</h1>
       <h3><span className="accent-color">&gt;</span> About AndyBot 🔎</h3>
       <ul>
-        <p>AndyBot is an advances AI-powered Discord bot featuring Google&apos;s Gemini API for dynamic and intelligent responses.</p>
+        <p>AndyBot is an advanced AI-powered Discord bot featuring Google&apos;s Gemini API for dynamic and intelligent responses.</p>
         <p>With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations.</p>
         <p>AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
         <br />
