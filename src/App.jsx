@@ -5,20 +5,25 @@ import About from "./Routes/About";
 import AndyBot from "./Routes/AndyBot";
 import AndyScript from "./Routes/AndyScript";
 
+import { SpeedInsights } from '@vercel/speed-insights/react';
+
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route element={<Layout />}>
+    <div className="app">
+      <BrowserRouter>
+        <Routes>
+          <Route element={<Layout />}>
 
-          <Route path="/" element={<Home />}></Route>
-          <Route path="/about" element={<About />}></Route>
-          <Route path="/andybot" element={<AndyBot />}></Route>
-          <Route path="/andyscript" element={<AndyScript />}></Route>
+            <Route path="/" element={<Home />}></Route>
+            <Route path="/about" element={<About />}></Route>
+            <Route path="/andybot" element={<AndyBot />}></Route>
+            <Route path="/andyscript" element={<AndyScript />}></Route>
 
-        </Route>
-      </Routes >
-    </BrowserRouter >
+          </Route>
+        </Routes >
+      </BrowserRouter >
+      <SpeedInsights /> {/*!from Vercel */}
+    </div>
   )
 }
 
