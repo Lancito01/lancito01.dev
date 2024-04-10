@@ -1,4 +1,4 @@
-import ShowcaseImages from '../Components/common/ImportAndyBotShowcaseImages'
+import Showcase from '../Components/common/ImportAndyBotShowcaseImages'
 import './AndyBot.css'
 
 const AndyBot = () => {
@@ -23,20 +23,20 @@ const AndyBot = () => {
         <p>Here are some examples of what its capable of:</p>
         <div className="andybot-images">
           <div className='showcase-entry'>
-            <img src={ShowcaseImages.showcase1} alt="" />
-            <small>Prompt: {ShowcaseImages.image1prompt}</small>
+            <img src={Showcase.showcase1.image} alt="" />
+            <small>Prompt: {Showcase.showcase1.prompt}</small>
           </div>
           <div className='showcase-entry'>
-            <img src={ShowcaseImages.showcase2} alt="" />
-            <small>Prompt: {ShowcaseImages.image2prompt}</small>
+            <img src={Showcase.showcase2.image} alt="" />
+            <small>Prompt: {Showcase.showcase2.prompt}</small>
           </div>
           <div className='showcase-entry'>
-            <img src={ShowcaseImages.showcase3} alt="" />
-            <small>Prompt: {ShowcaseImages.image3prompt}</small>
+            <img src={Showcase.showcase3.image} alt="" />
+            <small>Prompt: {Showcase.showcase3.prompt}</small>
           </div>
           <div className='showcase-entry'>
-            <img src={ShowcaseImages.showcase4} alt="" />
-            <small>Prompt: {ShowcaseImages.image4prompt}</small>
+            <img src={Showcase.showcase4.image} alt="" />
+            <small>Prompt: {Showcase.showcase4.prompt}</small>
           </div>
         </div>
       </ul>
