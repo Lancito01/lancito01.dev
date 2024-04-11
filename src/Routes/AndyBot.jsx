@@ -4,7 +4,7 @@ import './AndyBot.css'
 const AndyBot = () => {
   return (
     <div className="margin-left andybot-div">
-      <h1><span className="accent-color">&gt;</span> AndyBot</h1>
+      <h1><span className="accent-color">&gt;</span> AndyBot 🤖</h1>
       <h3><span className="accent-color">&gt;</span> About AndyBot 🔎</h3>
       <ul>
         <p>AndyBot is an advanced AI-powered Discord bot featuring Google&apos;s Gemini API for dynamic and intelligent responses.</p>

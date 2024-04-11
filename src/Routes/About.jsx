@@ -14,8 +14,8 @@ const About = () => {
   }
 
   return (
-    <div className="margin-left about-div">
-      <h1>👋 Hi, there! My name&apos;s Andy.</h1>
+    <div className="about-div margin-left">
+      <h1><span className="accent-color">&gt;</span> Hi, there! My name&apos;s Andy. 👋</h1>
       <h2><span className="accent-color">&gt;</span> I am a beginner full-stack programmer, looking to improve.</h2>
       <h3><span className="accent-color">&gt;</span> A little about me</h3>
       <ul>
