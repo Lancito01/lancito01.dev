@@ -1,4 +1,4 @@
-import Showcase from '../Components/common/ImportAndyBotShowcaseImages'
+import Showcases from '../Components/common/ImportAndyBotShowcaseImages'
 import './AndyBot.css'
 
 const AndyBot = () => {
@@ -22,22 +22,14 @@ const AndyBot = () => {
         <p>AndyBot is capable of generating images with the DALL-E API through its bult-in slash command /imagine.</p>
         <p>Here are some examples of what its capable of:</p>
         <div className="andybot-images">
-          <div className='showcase-entry'>
-            <img src={Showcase.showcase1.image} alt="" />
-            <small>Prompt: {Showcase.showcase1.prompt}</small>
-          </div>
-          <div className='showcase-entry'>
-            <img src={Showcase.showcase2.image} alt="" />
-            <small>Prompt: {Showcase.showcase2.prompt}</small>
-          </div>
-          <div className='showcase-entry'>
-            <img src={Showcase.showcase3.image} alt="" />
-            <small>Prompt: {Showcase.showcase3.prompt}</small>
-          </div>
-          <div className='showcase-entry'>
-            <img src={Showcase.showcase4.image} alt="" />
-            <small>Prompt: {Showcase.showcase4.prompt}</small>
-          </div>
+          {Showcases.map((showcase, index) => {
+            return (
+              <div key={index} className='showcase-entry'>
+                <img src={showcase.image} alt="" />
+                <small>Prompt: {showcase.prompt}</small>
+              </div>
+            )
+          })}
         </div>
       </ul>
       <h3><span className="accent-color">&gt;</span> Commands ⌨️</h3>
