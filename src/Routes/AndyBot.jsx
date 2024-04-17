@@ -11,7 +11,7 @@ const AndyBot = () => {
         <p>With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations.</p>
         <p>AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
         <br />
-        <p>For more information, please contant me on any of my <a href="#socials">socials</a> below</p>
+        <p>For more information, please contact me on any of my <a href="#socials">socials</a> below.</p>
       </ul>
       <h3><span className="accent-color">&gt;</span> Usage 📰</h3>
       <ul>
