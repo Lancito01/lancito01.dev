@@ -23,8 +23,8 @@ function App() {
           </Route>
         </Routes >
       </BrowserRouter >
-      <SpeedInsights /> {/*!from Vercel */}
-      <Analytics /> {/*!from Vercel */}
+      <SpeedInsights /> {/*Vercel */}
+      <Analytics /> {/*Vercel */}
     </div>
   )
 }
