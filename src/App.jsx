@@ -20,7 +20,7 @@ function App() {
             <Route path="/about" element={<About />}></Route>
             <Route path="/andybot" element={<AndyBot />}></Route>
             <Route path="/andyscript" element={<AndyScript />}></Route>
-            <Route path="/ball" element={<Ball />}></Route>
+            <Route path="/☠️" element={<Ball />}></Route>
 
           </Route>
         </Routes >
