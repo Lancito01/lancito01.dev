@@ -7,6 +7,7 @@ import AndyScript from "./Routes/AndyScript";
 
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
+import Ball from "./Routes/Ball";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
             <Route path="/about" element={<About />}></Route>
             <Route path="/andybot" element={<AndyBot />}></Route>
             <Route path="/andyscript" element={<AndyScript />}></Route>
+            <Route path="/ball" element={<Ball />}></Route>
 
           </Route>
         </Routes >
