@@ -7,7 +7,7 @@ const AndyBot = () => {
       <h1><span className="accent-color">&gt;</span> AndyBot 🤖</h1>
       <h3><span className="accent-color">&gt;</span> About AndyBot 🔎</h3>
       <ul>
-        <p>AndyBot is an advanced AI-powered Discord bot featuring Google&apos;s Gemini API for dynamic and intelligent responses.</p>
+        <p>AndyBot is an advanced AI-powered Discord bot featuring OpenAI&apos;s GPT and Google&apos;s Gemini APIs for dynamic and intelligent responses.</p>
         <p>With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations.</p>
         <p>AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
         <br />
@@ -33,7 +33,7 @@ const AndyBot = () => {
         </div>
       </ul>
       <h3><span className="accent-color">&gt;</span> Commands ⌨️</h3>
-      <p className='padding-left'>The following is a list of all of AndyBot&apos;s commands. The ones marked with a 🔓 require special permissions to use them and the ones marked with a 🔒 are only available to admins.</p>
+      <p className='padding-left'>The following is a list of some of AndyBot&apos;s commands. The ones marked with a 🔓 require special permissions to use them and the ones marked with a 🔒 are only available to admins.</p>
       <ul className='padding-left-large'>
         <p>/help - Shows this message</p>
         <p>/ping - &quot;Pong!&quot; (shows the bot&apos;s latency)</p>
