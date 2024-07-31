@@ -31,7 +31,7 @@ const About = () => {
         <p><span className="secondary-color">&gt;</span> HTML</p>
         <p><span className="secondary-color">&gt;</span> C++</p>
       </ul>
-      <h3><span className="accent-color">&gt;</span> Proyects</h3>
+      <h3><span className="accent-color">&gt;</span> Projects</h3>
       <ul className="proy-list">
         <p><span className="secondary-color">&gt;</span> <a href="https://github.com/Lancito01/andyscript">AndyScript</a> for <a href="https://stand.gg">Stand</a> mod menu</p>
         <p><span className="secondary-color">&gt;</span> <a href="https://github.com/Lancito01/lancito01.dev">This very website!</a></p>
