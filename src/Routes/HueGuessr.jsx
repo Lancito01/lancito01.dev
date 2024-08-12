@@ -62,8 +62,10 @@ const HueGuessr = () => {
                         {!guessed && (<form onSubmit={handleFormSubmit}>
                             <input onChange={onInputChange} value={hueGuess} maxLength={7} />
                             <button type="submit">Guess</button>
-                        </form>
-                        )}
+                        </form>)}
+                        {guessed && (<p>
+                            Your answer: {hueGuess}
+                        </p>)}
                     </div>
                 </div>
             </div>

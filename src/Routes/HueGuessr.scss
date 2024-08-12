@@ -1,5 +1,4 @@
 .hueguessr-wrapper {
-    .description {}
 
     .game {
         display: flex;
@@ -86,6 +85,10 @@
                             cursor: pointer;
                         }
                     }
+                }
+
+                p {
+                    margin: 0;
                 }
             }
         }
