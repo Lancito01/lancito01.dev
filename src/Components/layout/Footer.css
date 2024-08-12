@@ -1,16 +1,18 @@
-.socials {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-}
+footer {
+    .socials {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: center;
+    }
 
-.socials a {
-    display: flex;
-    padding: 0 15px 10px 0;
-    align-items: center;
-}
+    .socials a {
+        display: flex;
+        padding: 0 15px 10px 0;
+        align-items: center;
+    }
 
-.socials img {
-    padding-right: 10px;
-    width: 30px;
+    .socials img {
+        padding-right: 10px;
+        width: 30px;
+    }
 }

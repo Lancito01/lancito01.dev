@@ -11,6 +11,7 @@ const Home = () => {
         <Link to='/about'><span className="secondary-color">&gt;</span> About me</Link>
         <Link to='/andybot'><span className="secondary-color">&gt;</span> AndyBot</Link>
         <Link to='/andyscript'><span className="secondary-color">&gt;</span> AndyScript</Link>
+        <Link to='/games'><span className="secondary-color">&gt;</span> Games</Link>
       </ul>
     </div>
   )
