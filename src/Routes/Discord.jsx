@@ -1,9 +1,11 @@
-import { Redirect } from 'react-router-dom'
+import { useEffect } from 'react'
 
 const Discord = () => {
-    return (
-        <Redirect to='https://discord.gg/8Z3r3Vj' />
-    )
+    useEffect(() => {
+        window.location.href = 'https://discord.gg/q7Rwp3uY2b';
+    }, []);
+
+    return null;
 }
 
 export default Discord
