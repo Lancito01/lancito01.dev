@@ -10,6 +10,7 @@ import HueGuessr from "./Routes/HueGuessr.jsx";
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import Ball from "./Routes/Ball";
+import Discord from "./Routes/Discord.jsx";
 
 function App() {
   return (
@@ -23,6 +24,7 @@ function App() {
             <Route path="/andybot" element={<AndyBot />} />
             <Route path="/andyscript" element={<AndyScript />} />
             <Route path="/💀" element={<Ball />}></Route>
+            <Route path="/discord" element={<Discord />}></Route>
             <Route path="/games" element={<Games />} />
             <Route path="/games/hueguessr" element={<HueGuessr />} />
 

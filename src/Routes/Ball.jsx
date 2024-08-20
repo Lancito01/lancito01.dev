@@ -1,12 +1,8 @@
-import { useEffect } from 'react'
+import { Redirect } from 'react-router-dom'
 
 const Ball = () => {
-    useEffect(() => {
-        window.location.href = 'https://www.youtube.com/watch?v=v6gKBSuQjpg'
-    })
-
     return (
-        <div>Ball</div>
+        <Redirect to='https://www.youtube.com/watch?v=v6gKBSuQjpg' />
     )
 }
 
