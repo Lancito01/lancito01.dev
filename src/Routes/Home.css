@@ -1,8 +1,0 @@
-.sublinks {
-  display: flex;
-  flex-direction: column;
-}
-
-.sublinks a {
-  width: fit-content;
-}

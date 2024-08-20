@@ -60,36 +60,36 @@ const HueGuessr = () => {
     }
 
     return (
-        <div className="margin-left hueguessr-wrapper">
-            <h1>HueGuessr</h1>
-            <div className="description">
+        <div className="hueguessr-wrapper pt-4">
+            <h1 className='margin-left text-2xl ml-5'>HueGuessr</h1>
+            <div className="description margin-left ml-5">
                 <h4>Objective:</h4>
                 <p>You&apos;ll be shown a color. Your objective is to type in a Hex value and get as close to the target color as possible!</p>
             </div>
-            <div className='game'>
-                <div className='hint'>
+            <div className='game flex flex-col sm:flex-row pt-2'>
+                <div className='hint flex flex-col items-center pb-5 mx-auto'>
                     <h3>Color:</h3>
-                    <div className='color-box' style={{ backgroundColor: color }}></div>
-                    <div className='answer'>
-                        {guessed && (<button className='restart-button' onClick={() => {
+                    <div className='color-box w-full rounded' style={{ backgroundColor: color }}></div>
+                    <div className='answer pt-2 flex flex-col'>
+                        {guessed && (<button className='restart-button rounded h-7' onClick={() => {
                             setGuessed(false)
                             getNewColor()
                             setGuessedColor('#222222')
                             setHueGuess('#222222')
                         }}>Restart</button>)}
-                        {guessed && (<div className='stats'>
+                        {guessed && (<div className='stats flex'>
                             <p>Answer: {color}</p>
-                            <p>Accuracy: {accuracy}%</p>
+                            <p className='text-right'>Accuracy: {accuracy}%</p>
                         </div>)}
                     </div>
                 </div>
-                <div className='input'>
+                <div className='input flex flex-col items-center mx-auto'>
                     <h3>Guess:</h3>
-                    <div className='color-box' style={{ backgroundColor: guessedColor }}></div>
-                    <div className='submit-guess'>
-                        {!guessed && (<form onSubmit={handleFormSubmit}>
-                            <input onChange={onInputChange} value={hueGuess} maxLength={7} />
-                            <button type="submit">Guess</button>
+                    <div className='color-box w-full rounded' style={{ backgroundColor: guessedColor }}></div>
+                    <div className='submit-guess pt-1'>
+                        {!guessed && (<form onSubmit={handleFormSubmit} className='flex h-7 justify-between'>
+                            <input onChange={onInputChange} value={hueGuess} maxLength={7} className='rounded h-full mt-0.5 pl-1 pb-0.5' />
+                            <button type="submit" className='rounded h-full mt-0.5'>Guess</button>
                         </form>)}
                         {guessed && (<p>
                             Your answer: {hueGuess}
