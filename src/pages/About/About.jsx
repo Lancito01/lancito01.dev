@@ -36,6 +36,7 @@ const About = () => {
                 <p><span className="secondary-color">&gt;</span> <a href="https://github.com/Lancito01/andyscript">AndyScript</a> for <a href="https://stand.gg">Stand</a> mod menu</p>
                 <p className="pl-3"><span className="secondary-color">&gt;</span> <a href="https://github.com/Lancito01/lancito01.dev">This very website!</a></p>
                 <p className="pl-3"><span className="secondary-color">&gt;</span> <Link to="/andybot">AndyBot</Link></p>
+                <p className="pl-3"><span className="secondary-color">&gt;</span> <Link to="/games">Games</Link></p>
             </ul>
             <h3 className=" pt-2" style={{ height: "32px" }}><a href="https://stand.gg"><span className="accent-color">&gt;</span> Stand <img id="stand-logo" src={standLogo}></img></a></h3>
             <ul className="stand-desc ml-5 pt-2">
