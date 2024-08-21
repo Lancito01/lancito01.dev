@@ -1,4 +1,4 @@
-import Showcases from '../../components/utils/ImportAndyBotShowcaseImages'
+import Showcases from '../../Components/utils/ImportAndyBotShowcaseImages'
 import './AndyBot.scss'
 
 const AndyBot = () => {
