@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom"
-import standLogo from '../assets/stand logo.gif'
+import standLogo from '../../assets/stand logo.gif'
 import './About.scss'
 
 const About = () => {
