@@ -11,7 +11,7 @@ import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
 import Skull from "./Routes/Skull";
 import Discord from "./Routes/Discord";
-import QR from "./Routes/QR.jsx/index.js";
+import QR from "./Routes/QR";
 
 function App() {
   return (

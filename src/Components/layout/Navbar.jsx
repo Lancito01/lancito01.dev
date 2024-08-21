@@ -10,6 +10,7 @@ const Navbar = () => {
         <Link className='padding-background-effect' to="/about">📃 About Me</Link>
         <Link className='padding-background-effect' to="/andybot">🤖 AndyBot</Link>
         <Link className='padding-background-effect' to="/andyscript">💻 AndyScript</Link>
+        <Link className='padding-background-effect' to="/games">🎮 Games</Link>
       </ul>
       {/* <button>Change Theme</button> */}
     </nav>
