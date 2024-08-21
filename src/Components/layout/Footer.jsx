@@ -1,4 +1,4 @@
-import Images from '../common/ImportFooterImages'
+import Images from '../utils/ImportFooterImages'
 import './Footer.scss'
 
 const Footer = () => {

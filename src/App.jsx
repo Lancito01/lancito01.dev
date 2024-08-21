@@ -1,17 +1,17 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import Layout from "./Components/layout/Layout";
-import Home from "./Routes/Home";
-import About from "./Routes/About";
-import AndyBot from "./Routes/AndyBot";
-import AndyScript from "./Routes/AndyScript";
-import Games from "./Routes/Games.jsx";
-import HueGuessr from "./Routes/HueGuessr.jsx";
+import Layout from "./components/layout/Layout";
+import Home from "./pages/Home/Home.jsx";
+import About from "./pages/About/About.jsx";
+import AndyBot from "./pages/AndyBot/AndyBot.jsx";
+import AndyScript from "./pages/AndyScript/AndyScript.jsx";
+import Games from "./pages/Games/Games.jsx";
+import HueGuessr from "./pages/HueGuessr/HueGuessr.jsx";
 
 import { SpeedInsights } from '@vercel/speed-insights/react';
 import { Analytics } from '@vercel/analytics/react';
-import Skull from "./Routes/Skull";
-import Discord from "./Routes/Discord";
-import QR from "./Routes/QR";
+import Skull from "./pages/Skull/Skull.jsx";
+import Discord from "./pages/Discord/Discord.jsx";
+import QR from "./pages/QR/QR.jsx";
 
 function App() {
   return (
