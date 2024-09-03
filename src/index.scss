@@ -3,7 +3,9 @@
 @tailwind utilities;
 
 :root {
-  --background-color: #111111;
+  --background-color: #1b1b1b;
+  --darker-background-color: #161616;
+  --lighter-background-color: #222;
   --primary-color: #00b7ff;
   --secondary-color: #f17b0b;
   --accent-color: #85ee14;
@@ -16,9 +18,13 @@ html>* {
 
 :root {
   font-family: monospace;
-  font-size: 1rem;
+  font-size: 1.2rem;
   color: rgba(255, 255, 255, 0.87);
   background-color: var(--background-color);
+}
+
+body {
+  height: 100vh;
 }
 
 .accent-color {

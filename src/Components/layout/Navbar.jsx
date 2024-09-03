@@ -1,20 +1,43 @@
-import { Link } from 'react-router-dom'
-import './Navbar.scss'
+import { Link, useLocation } from "react-router-dom";
+import "./Navbar.scss";
 
 const Navbar = () => {
-  return (
-    <nav className='flex items-center w-full m-auto h-14'>
-      <Link to="/" className='text-xl px-3'><div className='color-gradient'><h2>{"<"}Andy&apos;s Website{" />"}</h2></div></Link>
-      <ul className='nav-links p-0'>
-        <Link className='padding-background-effect' to="/">🏠 Home</Link>
-        <Link className='padding-background-effect' to="/about">📃 About Me</Link>
-        <Link className='padding-background-effect' to="/andybot">🤖 AndyBot</Link>
-        <Link className='padding-background-effect' to="/andyscript">💻 AndyScript</Link>
-        <Link className='padding-background-effect' to="/games">🎮 Games</Link>
-      </ul>
-      {/* <button>Change Theme</button> */}
-    </nav>
-  )
-}
+    const location = useLocation();
 
-export default Navbar
+    return (
+        <nav className="flex items-center justify-center w-full m-auto h-20">
+            <div className="padding-background-effect rounded-md md:mx-4">
+                <Link
+                    to="/"
+                    className={`${
+                        location.pathname == "/" ? "selected" : ""
+                    } text-nowrap`}
+                >
+                    <i className="fa-regular fa-address-card" /> About
+                </Link>
+            </div>
+            <div className="padding-background-effect rounded-md md:mx-4">
+                <Link
+                    to="/proyects"
+                    className={`${
+                        location.pathname.includes("proyects") ? "selected" : ""
+                    } text-nowrap`}
+                >
+                    <i className="fa-regular fa-clipboard" /> Proyects
+                </Link>
+            </div>
+            <div className="padding-background-effect rounded-md md:mx-4">
+                <Link
+                    to="/games"
+                    className={`${
+                        location.pathname.includes("games") ? "selected" : ""
+                    } text-nowrap`}
+                >
+                    <i className="fa-solid fa-gamepad" /> Games
+                </Link>
+            </div>
+        </nav>
+    );
+};
+
+export default Navbar;

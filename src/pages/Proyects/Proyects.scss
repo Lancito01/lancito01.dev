@@ -1,0 +1,18 @@
+.proyects-wrapper {
+    .project {
+        background-color: var(--lighter-background-color);
+    }
+
+    .project-title {
+        text-decoration: underline;
+    }
+
+    a {
+        color: white
+    }
+
+    hr {
+        border-top: 1px dotted #444;
+        margin: 1rem 4rem;
+    }
+}

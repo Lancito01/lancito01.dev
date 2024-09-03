@@ -14,8 +14,8 @@ const AndyScript = () => {
             <ul className="ml-10 pt-2 list-disc">
                 <li>Turn off radio automatically</li>
                 <li>Andy&apos;s Shortcuts (create aliases for other commands, i.e. &quot;dv&quot; = &quot;deletevehicle&quot;)</li>
-                <li>Give every weapon after joining a sesion</li>
-                <li>Head ped to max health (only health, no armor)</li>
+                <li>Give every weapon after joining a session</li>
+                <li>Heal ped to max health (only health, no armor)</li>
                 <li>Spawn peds inside player vehicle</li>
                 <li>Chaos mode</li>
                 <li>Andy&apos;s Spooner</li>
