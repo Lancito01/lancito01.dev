@@ -18,7 +18,7 @@ html>* {
 
 :root {
   font-family: monospace;
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   color: rgba(255, 255, 255, 0.87);
   background-color: var(--background-color);
 }
@@ -27,12 +27,20 @@ body {
   height: 100vh;
 }
 
+.primary-color {
+  color: var(--primary-color);
+}
+
 .accent-color {
   color: var(--accent-color);
 }
 
 .secondary-color {
   color: var(--secondary-color);
+}
+
+.light-background {
+  background-color: var(--lighter-background-color);
 }
 
 a {
