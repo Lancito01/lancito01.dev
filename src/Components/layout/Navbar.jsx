@@ -18,12 +18,12 @@ const Navbar = () => {
             </div>
             <div className="padding-background-effect rounded-md md:mx-4">
                 <Link
-                    to="/proyects"
+                    to="/projects"
                     className={`${
-                        location.pathname.includes("proyects") ? "selected" : ""
+                        location.pathname.includes("projects") ? "selected" : ""
                     } text-nowrap`}
                 >
-                    <i className="fa-regular fa-clipboard" /> Proyects
+                    <i className="fa-regular fa-clipboard" /> Projects
                 </Link>
             </div>
             <div className="padding-background-effect rounded-md md:mx-4">

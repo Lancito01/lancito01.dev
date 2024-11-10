@@ -1,7 +1,7 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Layout from "./Components/layout/Layout.jsx";
 import About from "./pages/About/About.jsx";
-import Proyects from "./pages/Proyects/Proyects.jsx";
+import Projects from "./pages/Projects/Projects.jsx";
 import AndyBot from "./pages/AndyBot/AndyBot.jsx";
 import AndyScript from "./pages/AndyScript/AndyScript.jsx";
 import Games from "./pages/Games/Games.jsx";
@@ -20,7 +20,7 @@ function App() {
                 <Routes>
                     <Route element={<Layout />}>
                         <Route path="/" element={<About />} />
-                        <Route path="/proyects" element={<Proyects />} />
+                        <Route path="/projects" element={<Projects />} />
                         <Route path="/andybot" element={<AndyBot />} />
                         <Route path="/andyscript" element={<AndyScript />} />
                         <Route path="/games" element={<Games />} />

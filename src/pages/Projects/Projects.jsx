@@ -1,9 +1,9 @@
-import "./Proyects.scss";
+import "./Projects.scss";
 import Card from "../../Components/Card.jsx";
 
-const Proyects = () => {
+const Projects = () => {
     return (
-        <div className="proyects-wrapper m-auto pt-4">
+        <div className="projects-wrapper m-auto pt-4">
             <h1 className="text-2xl mx-auto w-fit">Coding Projects</h1>
             <div className="flex justify-center flex-wrap">
                 <Card
@@ -33,4 +33,4 @@ const Proyects = () => {
     );
 };
 
-export default Proyects;
+export default Projects;
