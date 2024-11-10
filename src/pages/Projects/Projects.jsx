@@ -7,15 +7,17 @@ const Projects = () => {
             <h1 className="text-2xl mx-auto w-fit">Coding Projects</h1>
             <div className="flex justify-center flex-wrap">
                 <Card
-                    title={"AndyScript"}
-                    description={"AndyScript is my open-source Lua script for Stand, the Grand Theft Auto V mod menu that enhances your game experience."}
-                    github={"https://github.com/lancito01/andyscript"}
-                    download={"https://github.com/Lancito01/AndyScript/archive/refs/heads/main.zip"}
-                />
-                <Card
                     title={"AndyBot"}
                     description={"AndyBot is an advanced AI-powered Discord bot featuring OpenAI's GPT and Google's Gemini APIs for dynamic and intelligent responses."}
+                    link={"andybot"}
                     information={"/andybot"}
+                />
+                <Card
+                    title={"AndyScript"}
+                    description={"AndyScript is my open-source Lua script for Stand, the Grand Theft Auto V mod menu that enhances your game experience."}
+                    link={"andyscript"}
+                    github={"https://github.com/lancito01/andyscript"}
+                    download={"https://github.com/Lancito01/AndyScript/archive/refs/heads/main.zip"}
                 />
             </div>
             <hr />
@@ -25,8 +27,9 @@ const Projects = () => {
             <div className="flex justify-center flex-wrap">
                 <Card
                     title={"HueGuessr"}
+                    link={"games/hueguessr"}
                     description={"HueGuessr is a fun game where you'll be shown a color and its corresponding Hex value, and you're supposed to approximate a Hex value to that color!"}
-                    playLink={"/games/hueguessr"}
+                    playLink={"games/hueguessr"}
                 />
             </div>
         </div>

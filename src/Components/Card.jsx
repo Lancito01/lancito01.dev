@@ -1,9 +1,11 @@
-const Card = ({ title, description, github = "", download = "", information = "", playLink = "" }) => {
+import PropTypes from 'prop-types';
+
+const Card = ({ title, description, link, github = "", download = "", information = "", playLink = "" }) => {
     return (
         <div className="flex flex-col justify-between project w-60 sm:w-96 p-4 m-4 rounded-md">
             <a
                 className="text-xl project-title mx-auto w-fit block"
-                href="/andyscript"
+                href={"/" + link}
             >
                 {title}
             </a>
@@ -32,7 +34,7 @@ const Card = ({ title, description, github = "", download = "", information = ""
                     </a>
                 </div>)}
                 {playLink && (<div className="flex justify-evenly">
-                    <a className="text-sm" href={playLink}>
+                    <a className="text-sm" href={"/" + playLink}>
                         <i className="fa-solid fa-play fa-lg mt-6 mb-2" />{" "}
                         Play
                     </a>
@@ -40,7 +42,17 @@ const Card = ({ title, description, github = "", download = "", information = ""
             </div>
         </div>
     )
-}
+};
+
+Card.propTypes = {
+    title: PropTypes.string.isRequired,
+    description: PropTypes.string.isRequired,
+    link: PropTypes.string.isRequired,
+    github: PropTypes.string,
+    download: PropTypes.string,
+    information: PropTypes.string,
+    playLink: PropTypes.string,
+};
 
 export default Card
 
