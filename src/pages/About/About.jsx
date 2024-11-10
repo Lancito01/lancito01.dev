@@ -21,7 +21,7 @@ const About = () => {
 
     return (
         <div className="about-div m-auto sm:p-2">
-            <div className="about-intro m-auto w-fit">
+            <div className="about-intro m-auto p-3 w-fit">
                 <h1 className="text-2xl">
                     <span className="accent-color">&gt;</span> My name&apos;s
                     Andy. 👋
@@ -55,9 +55,8 @@ const About = () => {
                     }}
                 >
                     <span
-                        className={`primary-color arrow${
-                            isOpen ? " arrow--open" : ""
-                        }`}
+                        className={`primary-color arrow${isOpen ? " arrow--open" : ""
+                            }`}
                     >
                         &gt;
                     </span>{" "}
@@ -65,11 +64,9 @@ const About = () => {
                     <small className="span-small">Click me!</small>
                 </button>
                 <ul
-                    className={`prog-lang ${
-                        isOpen ? "prog--open" : "prog--closed"
-                    } flex flex-wrap py-2 px-8 mt-2 w-fit rounded-xl light-background ${
-                        !hasOpened ? "hidden" : ""
-                    }`}
+                    className={`prog-lang ${isOpen ? "prog--open" : "prog--closed"
+                        } flex flex-wrap py-2 px-8 mt-2 w-fit rounded-xl light-background ${!hasOpened ? "hidden" : ""
+                        }`}
                 >
                     <p>
                         <span className="primary-color">&gt;</span> JavaScript
@@ -94,22 +91,15 @@ const About = () => {
                 <h3 className="text-l pt-2">
                     <span className="accent-color">&gt;</span> Find me here
                 </h3>
-                <ul className="flex justify-center mt-2">
-                    <a
-                        href="https://github.com/lancito01"
-                        className="text-white"
-                    >
-                        <i className="fa-brands fa-github" /> GitHub
+                <ul className="about-links flex justify-evenly mt-2">
+                    <a href="https://github.com/lancito01" className="text-white flex w-fit">
+                        <i className="fa-brands fa-github relative" /> GitHub
                     </a>
-                    <a href="https://x.com/lancito01" className="text-white px-14">
-                        <i className="fa-brands fa-twitter pl-5" /> Twitter
+                    <a href="https://x.com/lancito01" className="text-white flex w-fit">
+                        <i className="fa-brands fa-twitter pl-5 relative" /> Twitter
                     </a>
-                    <a
-                        href="https://discord.gg/q7Rwp3uY2b"
-                        className="text-white"
-                    >
-                        <i className="fa-brands fa-discord pl-5" /> Discord
-                        server
+                    <a href="https://discord.gg/q7Rwp3uY2b" className="text-white flex w-fit">
+                        <i className="fa-brands fa-discord pl-5 relative" /> Discord server
                     </a>
                 </ul>
             </div>
