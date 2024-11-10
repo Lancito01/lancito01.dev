@@ -1,6 +1,9 @@
 .hueguessr-wrapper {
+    .description {
+        max-width: 700px;
+    }
+
     .game {
-        margin: 0 auto;
         max-width: 1000px;
 
         .color-box {
@@ -8,15 +11,9 @@
         }
 
         .hint {
-            width: 50%;
             max-width: 13rem;
 
-            .answer {
-                .restart-button {
-                    color: white;
-                    background-color: #222222;
-                }
-            }
+            .answer {}
         }
 
         .input {
@@ -24,6 +21,11 @@
             max-width: 13rem;
 
             .submit-guess {
+                .restart-button {
+                    color: white;
+                    background-color: #222222;
+                }
+
                 form {
                     input {
                         width: 60%;
