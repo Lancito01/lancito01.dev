@@ -20,7 +20,7 @@ const About = () => {
     const [hasOpened, setHasOpened] = useState(false);
 
     return (
-        <div className="about-div m-auto p-6 sm:p-2">
+        <div className="about-div m-auto sm:p-2">
             <div className="about-intro m-auto w-fit">
                 <h1 className="text-2xl">
                     <span className="accent-color">&gt;</span> My name&apos;s
