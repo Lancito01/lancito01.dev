@@ -92,13 +92,13 @@ const About = () => {
                     <span className="accent-color">&gt;</span> Find me here
                 </h3>
                 <ul className="about-links flex justify-evenly mt-2">
-                    <a href="https://github.com/lancito01" className="text-white flex w-fit">
+                    <a href="https://github.com/lancito01" target="__blank" className="text-white flex w-fit">
                         <i className="fa-brands fa-github relative" /> GitHub
                     </a>
-                    <a href="https://x.com/lancito01" className="text-white flex w-fit">
+                    <a href="https://x.com/lancito01" target="__blank" className="text-white flex w-fit">
                         <i className="fa-brands fa-twitter pl-5 relative" /> Twitter
                     </a>
-                    <a href="https://discord.gg/q7Rwp3uY2b" className="text-white flex w-fit">
+                    <a href="https://discord.gg/q7Rwp3uY2b" target="__blank" className="text-white flex w-fit">
                         <i className="fa-brands fa-discord pl-5 relative" /> Discord server
                     </a>
                 </ul>
