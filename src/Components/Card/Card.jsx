@@ -1,8 +1,9 @@
 import PropTypes from 'prop-types';
+import './Card.scss';
 
 const Card = ({ title, description, link, github = "", download = "", information = "", playLink = "" }) => {
     return (
-        <div className="flex flex-col justify-between project w-60 sm:w-96 p-4 m-4 rounded-md">
+        <div className="card flex flex-col justify-between project w-60 sm:w-96 p-4 m-4 rounded-md">
             <a
                 className="text-xl project-title mx-auto w-fit block"
                 href={"/" + link}
