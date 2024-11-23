@@ -17,7 +17,7 @@ const HueGuessr = () => {
     const [guessed, setGuessed] = useState(false);
     const [accuracy, setAccuracy] = useState(0);
 
-    const getNewColor = () => {
+    const getNewColor = () => { //? gives var "color" a value
         setColor(generateRandomHue())
     }
 
