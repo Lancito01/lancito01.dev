@@ -1,27 +1,41 @@
+import { useRef } from 'react';
 import PropTypes from 'prop-types';
 import './Card.scss';
 
 const Card = ({ title, description, link, github = "", download = "", information = "", playLink = "" }) => {
+    const cardRef = useRef(null);
+    let currTarget;
+
+    const shadowOffset = 8;
+    function handleMouseMove(e) {
+        currTarget = cardRef.current;
+        const boundrect = currTarget.getBoundingClientRect();
+
+        const clientX = e.clientX - boundrect.x;
+        const resultX = (clientX / boundrect.width * 2 - 1);
+
+        const clientY = e.clientY - boundrect.y;
+        const resultY = (clientY / boundrect.height * 2 - 1);
+
+        currTarget.style.transition = "none";
+        currTarget.style.transform = `scale(1.05) rotateX(${-resultY * 0.01}turn) rotateY(${resultX * 0.01}turn)`;
+        currTarget.style.boxShadow = `${-resultX * shadowOffset}px ${-resultY * shadowOffset}px 10px 5px rgba(0, 0, 0, 0.4)`;
+    }
+
+    function handleMouseLeave() {
+        setTimeout(() => {
+            currTarget.style.transition = "all 0.2s";
+            currTarget.style.transform = "rotateX(0deg) rotateY(0deg)";
+            currTarget.style.boxShadow = "0px 0px 10px 5px rgba(0, 0, 0, 0.3)";
+        }, 50)
+    }
+
     return (
-        <div className="card flex flex-col justify-between project w-60 sm:w-96 p-4 m-4 rounded-md" onMouseMove={(e) => {
-            const currTarget = e.currentTarget;
-
-            // const cardXMin = 0;
-            const cardXMax = currTarget.getBoundingClientRect().width;
-            const clientX = e.clientX - currTarget.getBoundingClientRect().x;
-            let result = clientX / cardXMax * 2 - 1;
-            result = result * 45;
-            currTarget.style.transform = `rotateY(${result}deg)`;
-
-            // const cardYMin = 0;
-            //const cardYMax = currTarget.getBoundingClientRect().height;
-            //const clientY = e.clientY - currTarget.getBoundingClientRect().y;
-            //result = clientY / cardYMax * 2 - 1;
-            //result = result * 45;
-            //currTarget.style.transform += ` rotateX(${-result}deg)`;
-        }} onMouseLeave={(e) => {
-            e.currentTarget.style.transform = "rotateX(0deg) rotateY(0deg)";
-        }}>
+        <div className="card flex flex-col justify-between project w-60 sm:w-96 p-4 m-4 rounded-md"
+            onMouseMove={(e) => { requestAnimationFrame(() => handleMouseMove(e)) }}
+            onMouseLeave={(e) => { handleMouseLeave(e) }}
+            ref={cardRef}
+        >
             <a
                 className="text-xl project-title mx-auto w-fit block"
                 href={"/" + link}
@@ -59,7 +73,7 @@ const Card = ({ title, description, link, github = "", download = "", informatio
                     </a>
                 </div>)}
             </div>
-        </div>
+        </div >
     )
 };
 
