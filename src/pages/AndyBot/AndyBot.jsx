@@ -7,7 +7,7 @@ const AndyBot = () => {
             <h1 className='text-2xl w-fit m-auto'><span className="accent-color">&gt;</span> AndyBot 🤖</h1>
             <h3 className='text-l w-fit m-auto'><span className="accent-color">&gt;</span> About AndyBot 🔎</h3>
             <ul className='andybot-desc m-auto'>
-                <p className='text-descs text-justify'>AndyBot is an advanced AI-powered Discord bot featuring OpenAI&apos;s GPT and Google&apos;s Gemini APIs for dynamic and intelligent responses. With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations. AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
+                <p className='text-descs text-justify'>AndyBot is an advanced AI-powered Discord bot featuring OpenAI&apos;s GPT API for dynamic and intelligent responses. With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations. AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
                 <br />
                 <p className='text-center'>For more information, please contact me on any of my <a href="#socials">socials</a> below.</p>
             </ul>
@@ -34,8 +34,6 @@ const AndyBot = () => {
                 <p><span className='font-black'>/imagine [prompt]</span> 🔓 - Generates an image based on the prompt</p>
                 <p><span className='font-black'>/clear-history</span> 🔒 - Clears the history of messages sent to the bot in the current server/DM</p>
                 <p><span className='font-black'>/lock-imagine [value]</span> 🔒 - Unlocks the imagine command so anyone can use it</p>
-                <p><span className='font-black'>/joinvc</span> - Joins the voice channel you&apos;re in</p>
-                <p><span className='font-black'>/leavevc</span> - Leaves the voice channel</p>
             </ul>
         </div>
     )
