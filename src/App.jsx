@@ -10,7 +10,6 @@ import HueGuessr from "./pages/HueGuessr/HueGuessr.jsx";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
 import Skull from "./pages/Skull/Skull.jsx";
-import Discord from "./pages/Discord/Discord.jsx";
 import QR from "./pages/QR/QR.jsx";
 
 function App() {
@@ -25,7 +24,6 @@ function App() {
                         <Route path="/andyscript" element={<AndyScript />} />
                         <Route path="/games" element={<Games />} />
                         <Route path="/💀" element={<Skull />}></Route>
-                        <Route path="/discord" element={<Discord />}></Route>
                         <Route
                             path="/games/hueguessr"
                             element={<HueGuessr />}
