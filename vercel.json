@@ -9,7 +9,7 @@
         {
             "source": "/(.*)",
             "has": [{ "type": "host", "value": "youtube.lancito01.dev" }],
-            "destination": "https://www.youtube.com/@YourChannel",
+            "destination": "https://www.youtube.com/@Lancito01",
             "permanent": true
         },
         {
