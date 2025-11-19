@@ -4,25 +4,5 @@
             "source": "/(.*)",
             "destination": "/index.html"
         }
-    ],
-    "redirects": [
-        {
-            "source": "/(.*)",
-            "has": [{ "type": "host", "value": "youtube.lancito01.dev" }],
-            "destination": "https://www.youtube.com/@YourChannel",
-            "permanent": true
-        },
-        {
-            "source": "/(.*)",
-            "has": [{ "type": "host", "value": "discord.lancito01.dev" }],
-            "destination": "https://discord.gg/q7Rwp3uY2b",
-            "permanent": true
-        },
-        {
-            "source": "/(.*)",
-            "has": [{ "type": "host", "value": "bluesky.lancito01.dev" }],
-            "destination": "https://bsky.app/profile/lancito01.dev",
-            "permanent": true
-        }
     ]
 }
