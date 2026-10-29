@@ -16,6 +16,9 @@ const BoardCard = ({ id, index, rotate, place, boardRef, draggable, z, tidyKey, 
     const x = useMotionValue(0);
     const y = useMotionValue(0);
     const lastDragEnd = useRef(0);
+    // On a window resize, motion's drag keeps each card at the same fraction of the free space
+    // (board width minus card width), so the starting spots are measured the same way or they drift apart
+    const spot = { left: `calc(${place.at} * (100% - var(--width)))`, top: place.top };
 
     useEffect(() => {
         // links and images would otherwise start the browser's own drag-and-drop
@@ -35,13 +38,14 @@ const BoardCard = ({ id, index, rotate, place, boardRef, draggable, z, tidyKey, 
         <motion.div
             ref={ref}
             className={`board-card ${className}`}
-            style={{ ...(draggable && place), x, y, zIndex: z }}
+            style={{ ...(draggable && spot), x, y, zIndex: z }}
             initial={{ opacity: 0, scale: 1.06, rotate: rotate - 4 }}
             whileInView={{ opacity: 1, scale: 1, rotate }}
             viewport={{ once: true, amount: 0.3 }}
             transition={{ ...settle, delay: index * 0.09 }}
             drag={draggable}
-            dragConstraints={boardRef}
+            // without a ref, motion's resize handler leaves the stacked phone layout alone
+            dragConstraints={draggable ? boardRef : false}
             dragElastic={0.1}
             dragTransition={{ power: 0.15, timeConstant: 180, bounceStiffness: 400, bounceDamping: 40 }}
             whileDrag={{ scale: 1.04, rotate: rotate / 3 }}
@@ -66,8 +70,8 @@ BoardCard.propTypes = {
     id: PropTypes.string.isRequired,
     index: PropTypes.number.isRequired,
     rotate: PropTypes.number.isRequired,
-    // where the card sits on the desktop board, as CSS left/top
-    place: PropTypes.shape({ left: PropTypes.string, top: PropTypes.number }).isRequired,
+    // where the card sits on the desktop board: `at` runs 0 (left edge) to 1 (right edge), `top` is in px
+    place: PropTypes.shape({ at: PropTypes.number, top: PropTypes.number }).isRequired,
     boardRef: PropTypes.shape({ current: PropTypes.instanceOf(Element) }).isRequired,
     draggable: PropTypes.bool.isRequired,
     z: PropTypes.number.isRequired,
@@ -98,7 +102,7 @@ const cards = [
         id: "obs-hud",
         className: "board-card--obs",
         rotate: -2,
-        place: { left: "4%", top: 48 },
+        place: { at: 0.06, top: 48 },
         content: (
             <>
                 <div className="board-card__top mono">
@@ -126,7 +130,7 @@ const cards = [
         id: "andyscript",
         className: "board-card--paper board-card--script",
         rotate: 2.5,
-        place: { left: "41%", top: 88 },
+        place: { at: 0.57, top: 88 },
         content: (
             <>
                 <h3>AndyScript</h3>
@@ -144,7 +148,7 @@ const cards = [
         id: "hueguessr",
         className: "board-card--paper board-card--hue",
         rotate: -3.5,
-        place: { left: "73%", top: 54 },
+        place: { at: 0.93, top: 54 },
         content: (
             <>
                 <HueSwatch />
@@ -159,7 +163,7 @@ const cards = [
         id: "andybot",
         className: "board-card--paper board-card--bot",
         rotate: 6,
-        place: { left: "76%", top: 330 },
+        place: { at: 0.88, top: 330 },
         content: (
             <figure>
                 <img src={botImage} alt="A car on a freeway at sunset, drawn by AndyBot" />
@@ -173,7 +177,7 @@ const cards = [
         id: "more",
         className: "board-card--note",
         rotate: -4,
-        place: { left: "47%", top: 352 },
+        place: { at: 0.6, top: 352 },
         content: (
             <>
                 <h3>more on github</h3>
@@ -209,8 +213,9 @@ const ProjectBoard = () => {
             </div>
             <div className="board" ref={boardRef}>
                 {cards.map(({ content, ...card }, index) => (
+                    // fresh cards when switching layouts, or motion carries drag measurements over from the other one
                     <BoardCard
-                        key={card.id}
+                        key={`${card.id}-${draggable}`}
                         {...card}
                         index={index}
                         boardRef={boardRef}
