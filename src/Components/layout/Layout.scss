@@ -2,6 +2,8 @@
     min-height: 100vh;
     display: flex;
     flex-direction: column;
+    // glows like the one behind the activity feed can reach past the page edge
+    overflow-x: clip;
 }
 
 .layout__main {

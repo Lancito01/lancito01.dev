@@ -19,10 +19,24 @@
     --font-sans: "Host Grotesk", system-ui, sans-serif;
     --font-mono: "Recursive", ui-monospace, "Cascadia Mono", monospace;
 
+    // panels that sit up off the page: a faint lit top edge and a soft shadow underneath
+    --raised: inset 0 1px 0 rgba(255, 255, 255, 0.04), 0 22px 44px -24px rgba(0, 0, 0, 0.75);
+
     --page-width: 1240px;
     --gutter: 40px;
 
+    // Follows the colour of whatever's playing on Spotify, see LiveStrip
+    --accent: var(--green);
+    transition: --accent 0.8s ease;
+
     color-scheme: dark;
+}
+
+// Registered so the accent can fade from one colour to the next
+@property --accent {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #85ee14;
 }
 
 *,
@@ -89,7 +103,7 @@ button {
 }
 
 .prompt {
-    color: var(--green);
+    color: var(--accent);
     font-family: var(--font-mono);
 }
 
