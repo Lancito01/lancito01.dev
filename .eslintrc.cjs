@@ -18,7 +18,7 @@ module.exports = {
     ],
   },
   overrides: [
-    // Vercel functions run on Node
-    { files: ['api/**/*.js'], env: { node: true } },
+    // Vercel functions and local scripts run on Node
+    { files: ['api/**/*.js', 'scripts/**/*.js'], env: { node: true } },
   ],
 }

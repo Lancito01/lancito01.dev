@@ -11,8 +11,10 @@ const clockFormat = new Intl.DateTimeFormat("en-GB", {
 
 export const formatLocalTime = (date) => clockFormat.format(date);
 
+export const localHour = (date) => Number(clockFormat.formatToParts(date).find((part) => part.type === "hour").value);
+
 export function awakeGuess(date) {
-    const hour = Number(clockFormat.formatToParts(date).find((part) => part.type === "hour").value);
+    const hour = localHour(date);
     if (hour >= 3 && hour < 8) return "probably asleep";
     if (hour >= 23 || hour < 3) return "probably still awake";
     return "probably awake";
