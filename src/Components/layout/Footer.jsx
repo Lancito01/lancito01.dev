@@ -3,7 +3,7 @@ import "./Footer.scss";
 
 const Footer = () => {
     return (
-        <footer className="wrap footer" id="links">
+        <footer className="wrap footer">
             <span>andy · lancito01</span>
             <ul className="footer__links">
                 {socials.map((social) => (

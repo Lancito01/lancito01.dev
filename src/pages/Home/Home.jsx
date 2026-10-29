@@ -6,7 +6,6 @@ import ProjectBoard from "../../Components/ProjectBoard/ProjectBoard";
 import useActivity from "../../lib/useActivity";
 import useLiveStats from "../../lib/useLiveStats";
 import { awakeGuess, formatLocalTime, localHour, useNow } from "../../lib/time";
-import { socials } from "../../data/links";
 import "./Home.scss";
 
 const rise = {
@@ -82,16 +81,6 @@ const Home = () => {
                             <dd>
                                 <span className="status__clock">{formatLocalTime(now)}</span> in argentina
                                 <span className="status__note mono">utc-3</span>
-                            </dd>
-                        </div>
-                        <div>
-                            <dt className="mono">elsewhere</dt>
-                            <dd className="status__links">
-                                {socials.slice(0, 4).map((social) => (
-                                    <a key={social.name} href={social.url} target="_blank" rel="noreferrer">
-                                        {social.name}
-                                    </a>
-                                ))}
                             </dd>
                         </div>
                     </motion.dl>

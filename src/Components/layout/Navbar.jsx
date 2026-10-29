@@ -13,7 +13,6 @@ const Navbar = () => {
                 </NavLink>
                 <NavLink to="/projects">projects</NavLink>
                 <NavLink to="/games">games</NavLink>
-                <a href="#links">links</a>
             </nav>
         </header>
     );
