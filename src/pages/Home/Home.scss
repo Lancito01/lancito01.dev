@@ -80,10 +80,10 @@
     font-variant-numeric: tabular-nums;
 }
 
-// The feed takes the intro's height and scrolls inside it, instead of making the row taller
+// The feed takes the intro's height and scrolls inside it, instead of making the row taller.
+// No min-height here: any floor taller than the intro makes the panel hang past it.
 .home-hero__feed {
     position: relative;
-    min-height: 360px;
     isolation: isolate;
 
     // A soft light behind the feed, in the accent colour so it follows the music too
@@ -135,8 +135,6 @@
 
     // Stacked, there's no intro beside it to match, so cap it instead
     .home-hero__feed {
-        min-height: 0;
-
         .activity {
             position: static;
             max-height: clamp(320px, 50vw, 480px);
