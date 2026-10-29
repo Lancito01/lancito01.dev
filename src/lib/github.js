@@ -115,7 +115,7 @@ const groupKey = (event) =>
               event.payload?.issue?.number ?? event.payload?.number ?? event.payload?.ref ?? "",
           ].join("|");
 
-export function summarizeEvents(events, limit = 6) {
+export function summarizeEvents(events, limit = 10) {
     const sorted = [...events].sort((a, b) => b.created_at.localeCompare(a.created_at));
     const groups = [];
 
