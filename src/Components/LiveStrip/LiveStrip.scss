@@ -1,0 +1,248 @@
+.live-wrap {
+    overflow: hidden;
+}
+
+.live-wrap__inner {
+    padding-bottom: 88px;
+}
+
+.live__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+
+    h2 {
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+    }
+
+    span {
+        font-size: 13px;
+        color: var(--muted);
+    }
+}
+
+// The 1px gaps show the background through, which draws the dividers however the sections wrap
+.live {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    gap: 1px;
+    background: var(--rule);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+
+    &--music-only {
+        max-width: 520px;
+    }
+}
+
+.live__section {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    min-width: 0;
+    padding: 20px 22px 22px;
+    background: var(--panel);
+}
+
+.live__label {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.live__status {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-size: 18px;
+    font-weight: 600;
+}
+
+.live__dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: var(--green);
+
+    &--away {
+        background: var(--yellow);
+    }
+}
+
+.live__note {
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.live__app {
+    margin-top: auto;
+    font-size: 15px;
+    color: var(--fg-soft);
+
+    b {
+        color: var(--fg);
+        font-weight: 600;
+    }
+
+    span {
+        display: block;
+        font-size: 13px;
+        color: var(--muted);
+    }
+}
+
+.live__meters {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.live__meter {
+    display: grid;
+    grid-template-columns: 40px 1fr;
+    align-items: baseline;
+    gap: 4px 10px;
+
+    .live__bar {
+        grid-column: 1 / -1;
+    }
+}
+
+.live__meter-value {
+    font-size: 15px;
+    font-variant-numeric: tabular-nums;
+}
+
+.live__bar {
+    display: block;
+    height: 4px;
+    border-radius: 2px;
+    background: #262624;
+    overflow: hidden;
+
+    i {
+        display: block;
+        height: 100%;
+        background: var(--fg-soft);
+        transform-origin: left;
+        transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
+    }
+
+    &--music i {
+        background: var(--green);
+        transition-duration: 1s;
+        transition-timing-function: linear;
+    }
+}
+
+.live__counts {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.live__count {
+    display: flex;
+    flex-direction: column;
+
+    b {
+        font-size: 24px;
+        font-weight: 700;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+        font-variant-numeric: tabular-nums;
+    }
+}
+
+.live__track {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    min-width: 0;
+    color: var(--fg);
+
+    &:hover {
+        text-decoration: none;
+
+        b {
+            text-decoration: underline;
+            text-underline-offset: 3px;
+        }
+    }
+
+    img,
+    .live__cover {
+        flex: none;
+        width: 52px;
+        height: 52px;
+        border-radius: 6px;
+    }
+
+    .live__cover {
+        display: grid;
+        place-items: center;
+        background: #262624;
+        color: var(--muted);
+        font-size: 20px;
+    }
+}
+
+.live__track-text {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+
+    b,
+    span {
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    b {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    span {
+        font-size: 14px;
+        color: var(--muted);
+    }
+}
+
+.live__progress {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-top: auto;
+
+    .live__bar {
+        flex: 1;
+    }
+
+    span.mono {
+        font-size: 12px;
+        color: var(--muted);
+        white-space: nowrap;
+    }
+}
+
+@media (max-width: 760px) {
+    .live__head {
+        flex-direction: column;
+        gap: 4px;
+
+        h2 {
+            font-size: 32px;
+        }
+    }
+
+    .live-wrap__inner {
+        padding-bottom: 64px;
+    }
+}

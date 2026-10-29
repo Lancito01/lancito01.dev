@@ -1,9 +1,11 @@
 import { motion } from "motion/react";
 import PropTypes from "prop-types";
 import ActivityFeed from "../../Components/ActivityFeed/ActivityFeed";
+import LiveStrip from "../../Components/LiveStrip/LiveStrip";
 import ProjectBoard from "../../Components/ProjectBoard/ProjectBoard";
 import useActivity, { activityItemShape, activityStatus } from "../../lib/useActivity";
-import { awakeGuess, formatLocalTime, timeAgo, useNow } from "../../lib/time";
+import useLiveStats from "../../lib/useLiveStats";
+import { awakeGuess, formatLocalTime, localHour, timeAgo, useNow } from "../../lib/time";
 import { socials } from "../../data/links";
 import "./Home.scss";
 
@@ -48,9 +50,22 @@ Currently.propTypes = {
     now: PropTypes.instanceOf(Date).isRequired,
 };
 
+// Goes by whether my PC is on when the site knows, and by the clock when it doesn't
+function presence(live, now) {
+    const pc = live?.pc;
+    if (pc?.online) return pc.status === "away" ? "pc's on, but i stepped away" : "at the pc right now";
+    if (live?.music) return "away from the pc, music's on";
+    if (pc) {
+        const hour = localHour(now);
+        return hour >= 23 || hour < 8 ? "pc's off, probably asleep" : "away from the pc";
+    }
+    return awakeGuess(now);
+}
+
 const Home = () => {
     const now = useNow();
     const activity = useActivity();
+    const live = useLiveStats();
 
     return (
         <>
@@ -74,7 +89,7 @@ const Home = () => {
                             <dt className="mono">local time</dt>
                             <dd>
                                 {formatLocalTime(now)} in argentina
-                                <span className="status__note mono">utc-3, {awakeGuess(now)}</span>
+                                <span className="status__note mono">utc-3, {presence(live, now)}</span>
                             </dd>
                         </div>
                         <div>
@@ -98,6 +113,8 @@ const Home = () => {
                     <ActivityFeed status={activity.status} items={activity.items} now={now} />
                 </motion.div>
             </section>
+
+            <LiveStrip data={live} now={now.getTime()} />
 
             <ProjectBoard />
         </>
