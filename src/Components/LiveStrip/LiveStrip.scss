@@ -4,6 +4,7 @@
 
 .live-wrap__inner {
     padding-bottom: 88px;
+    container-type: inline-size;
 }
 
 .live__head {
@@ -26,10 +27,13 @@
     }
 }
 
-// The 1px gaps show the background through, which draws the dividers however the sections wrap
+// The 1px gaps show the background through, which draws the dividers between sections.
+// Sections share one row while each gets at least 230px, otherwise they stack: a 2-wide grid
+// leaves an empty grey cell whenever there's an odd number of them
 .live {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+    grid-auto-flow: column;
+    grid-auto-columns: minmax(0, 1fr);
     gap: 1px;
     background: var(--rule);
     border: 1px solid var(--rule);
@@ -38,6 +42,19 @@
 
     &--music-only {
         max-width: 520px;
+    }
+}
+
+// 3 × 230px + 2px of gaps + 2px of border, and 4 × 230px + 3px + 2px
+@container (max-width: 693px) {
+    .live {
+        grid-auto-flow: row;
+    }
+}
+
+@container (max-width: 924px) {
+    .live:has(> :nth-child(4)) {
+        grid-auto-flow: row;
     }
 }
 
