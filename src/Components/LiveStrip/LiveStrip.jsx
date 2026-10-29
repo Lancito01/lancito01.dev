@@ -124,13 +124,14 @@ PcSections.propTypes = {
     }).isRequired,
 };
 
-// The played part of the song is drawn as y = (1 - e^(-a·x))·sin(4x + n): flat where the song
-// starts and settling into a steady wave, with n sliding from π down to -π so it flows toward the playhead
+// The played part of the song is drawn as y = (1 - e^(-a·x))·sin(4x + n), with x counted back from the
+// playhead: flat where the song is now and growing into a steady wave behind it, with n sliding from
+// -π up to π so the wave flows toward the playhead
 const WAVE = {
-    pxPerUnit: 12, // screen px per unit of x, so one wavelength (2π/4 units) is about 19px
+    pxPerUnit: 20, // screen px per unit of x, so one wavelength (2π/4 units) is about 31px
     a: 1, // how quickly the wave grows out of the flat start
     amplitude: 3, // px
-    cycleMs: 1500, // how long n takes to go from π to -π
+    cycleMs: 1500, // how long n takes to go from -π to π
     height: 10,
 };
 
@@ -149,13 +150,13 @@ const MusicWave = ({ progressMs, durationMs, at }) => {
             // The API answer can be a few seconds old, so move the song along from when it was made
             const elapsed = Math.min(durationMs, progressMs + Math.max(0, Date.now() - at));
             const played = (elapsed / durationMs) * width;
-            const n = still.matches ? 0 : Math.PI - ((time / WAVE.cycleMs) % 1) * 2 * Math.PI;
+            const n = still.matches ? 0 : ((time / WAVE.cycleMs) % 1) * 2 * Math.PI - Math.PI;
             const y = (px) => {
-                const x = px / WAVE.pxPerUnit;
+                const x = (played - px) / WAVE.pxPerUnit;
                 return mid - WAVE.amplitude * (1 - Math.exp(-WAVE.a * x)) * Math.sin(4 * x + n);
             };
 
-            let path = `M0 ${mid}`;
+            let path = `M0 ${y(0).toFixed(2)}`;
             for (let px = 1; px < played; px += 1) path += `L${px} ${y(px).toFixed(2)}`;
             if (played > 0) path += `L${played.toFixed(2)} ${y(played).toFixed(2)}`;
             waveRef.current.setAttribute("d", path);
