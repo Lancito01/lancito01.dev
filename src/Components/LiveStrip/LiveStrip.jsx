@@ -1,5 +1,7 @@
+import { useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
+import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
 const number = new Intl.NumberFormat("en-US");
@@ -49,6 +51,8 @@ Count.propTypes = {
 };
 
 const PcSections = ({ pc }) => {
+    // Picked once per page load, so it doesn't change under you while you read
+    const [phrase] = useState(pickActivePhrase);
     const away = pc.status === "away";
     const hasLoad = pc.cpu !== undefined || pc.gpu !== undefined || pc.ramTotal !== undefined;
     const hasToday = pc.clicks !== undefined || pc.mouse !== undefined;
@@ -59,7 +63,7 @@ const PcSections = ({ pc }) => {
                 <span className="live__label mono">my pc</span>
                 <p className="live__status">
                     <i className={`live__dot${away ? " live__dot--away" : ""}`} />
-                    {away ? "on, but i stepped away" : "at it right now"}
+                    {away ? "idle, on but i stepped away" : phrase}
                 </p>
                 {pc.uptime !== undefined && <p className="live__note mono">on for {formatUptime(pc.uptime)}</p>}
                 {pc.app && (
