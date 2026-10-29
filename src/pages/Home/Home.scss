@@ -64,6 +64,34 @@
     margin-left: 8px;
 }
 
+// Fixed-width digits, so the line doesn't shift as the seconds tick
+.status__clock {
+    font-variant-numeric: tabular-nums;
+}
+
+.presence b {
+    font-weight: 600;
+}
+
+.presence__dot {
+    display: inline-block;
+    vertical-align: 0.08em;
+    width: 8px;
+    height: 8px;
+    margin-right: 10px;
+    border-radius: 50%;
+    background: var(--muted);
+    transition: background-color 0.4s ease;
+
+    &--active {
+        background: var(--green);
+    }
+
+    &--idle {
+        background: var(--yellow);
+    }
+}
+
 .status__links {
     display: flex;
     flex-wrap: wrap;
