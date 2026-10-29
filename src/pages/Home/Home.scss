@@ -84,6 +84,17 @@
 .home-hero__feed {
     position: relative;
     min-height: 360px;
+    isolation: isolate;
+
+    // A soft light behind the feed, in the accent colour so it follows the music too
+    &::before {
+        content: "";
+        position: absolute;
+        inset: -140px -160px;
+        z-index: -1;
+        background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent);
+        pointer-events: none;
+    }
 
     .activity {
         position: absolute;
