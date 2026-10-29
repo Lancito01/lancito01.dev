@@ -192,7 +192,7 @@ const LiveStrip = ({ data, now }) => {
                         <div className="live__head">
                             <h2 id="live-title">right now</h2>
                             <span className="mono">
-                                {pc ? "live from my pc, refreshed every minute" : "playing on spotify"}
+                                {pc ? "live from my pc, updated every few seconds" : "playing on spotify"}
                             </span>
                         </div>
                         <div className={`live${pc ? "" : " live--music-only"}`}>
