@@ -1,3 +1,4 @@
+import { useCallback, useEffect, useRef, useState } from "react";
 import { motion } from "motion/react";
 import PropTypes from "prop-types";
 import { GITHUB_USER } from "../../lib/github";
@@ -56,6 +57,53 @@ ActivityRow.propTypes = {
     index: PropTypes.number.isRequired,
 };
 
+// The list scrolls inside the panel; a fade shows at whichever end has more to see
+const ScrollingList = ({ items, now }) => {
+    const listRef = useRef(null);
+    const [edges, setEdges] = useState({ top: false, bottom: false });
+
+    const updateEdges = useCallback(() => {
+        const list = listRef.current;
+        if (!list) return;
+        const top = list.scrollTop > 2;
+        const bottom = list.scrollTop + list.clientHeight < list.scrollHeight - 2;
+        setEdges((current) => (current.top === top && current.bottom === bottom ? current : { top, bottom }));
+    }, []);
+
+    useEffect(() => {
+        updateEdges();
+        // The panel's height follows the intro beside it, so re-check when it resizes
+        const observer = new ResizeObserver(updateEdges);
+        observer.observe(listRef.current);
+        return () => observer.disconnect();
+    }, [updateEdges, items]);
+
+    return (
+        <div
+            className={`activity__scroll${edges.top ? " activity__scroll--fade-top" : ""}${
+                edges.bottom ? " activity__scroll--fade-bottom" : ""
+            }`}
+        >
+            <ul className="activity__list" ref={listRef} onScroll={updateEdges}>
+                {items.map((item, index) => (
+                    <ActivityRow key={item.id} item={item} now={now} index={index} />
+                ))}
+                <li className="activity__more">
+                    that&apos;s the latest.{" "}
+                    <a href={`https://github.com/${GITHUB_USER}`} target="_blank" rel="noreferrer">
+                        more on my github
+                    </a>
+                </li>
+            </ul>
+        </div>
+    );
+};
+
+ScrollingList.propTypes = {
+    items: PropTypes.arrayOf(activityItemShape).isRequired,
+    now: PropTypes.instanceOf(Date).isRequired,
+};
+
 const ActivityFeed = ({ status, items, now }) => {
     return (
         <aside className="activity" aria-label="Recent GitHub activity">
@@ -91,13 +139,7 @@ const ActivityFeed = ({ status, items, now }) => {
                 <p className="activity__empty">nothing public in the last few weeks.</p>
             )}
 
-            {status === "ready" && items.length > 0 && (
-                <ul className="activity__list">
-                    {items.map((item, index) => (
-                        <ActivityRow key={item.id} item={item} now={now} index={index} />
-                    ))}
-                </ul>
-            )}
+            {status === "ready" && items.length > 0 && <ScrollingList items={items} now={now} />}
         </aside>
     );
 };

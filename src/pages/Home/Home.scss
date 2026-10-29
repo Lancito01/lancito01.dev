@@ -2,9 +2,9 @@
     display: grid;
     grid-template-columns: 1.05fr 0.95fr;
     gap: 72px;
-    align-items: start;
+    align-items: stretch;
     padding-top: 84px;
-    padding-bottom: 96px;
+    padding-bottom: 72px;
 
     h1 {
         font-size: clamp(46px, 6.4vw, 76px);
@@ -69,6 +69,17 @@
     font-variant-numeric: tabular-nums;
 }
 
+// The feed takes the intro's height and scrolls inside it, instead of making the row taller
+.home-hero__feed {
+    position: relative;
+    min-height: 360px;
+
+    .activity {
+        position: absolute;
+        inset: 0;
+    }
+}
+
 .presence b {
     font-weight: 600;
 }
@@ -103,7 +114,17 @@
         grid-template-columns: 1fr;
         gap: 48px;
         padding-top: 48px;
-        padding-bottom: 72px;
+        padding-bottom: 56px;
+    }
+
+    // Stacked, there's no intro beside it to match, so cap it instead
+    .home-hero__feed {
+        min-height: 0;
+
+        .activity {
+            position: static;
+            max-height: 480px;
+        }
     }
 }
 
