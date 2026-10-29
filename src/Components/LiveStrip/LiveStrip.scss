@@ -132,12 +132,20 @@
         transform-origin: left;
         transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
+}
 
-    &--music i {
-        background: var(--green);
-        transition-duration: 1s;
-        transition-timing-function: linear;
-    }
+// Registered so the tint can fade from one song's colour to the next
+@property --tint {
+    syntax: "<color>";
+    inherits: false;
+    initial-value: transparent;
+}
+
+.live__section--music {
+    background:
+        radial-gradient(130% 120% at 0% 0%, color-mix(in srgb, var(--tint) 28%, transparent), transparent 75%),
+        var(--panel);
+    transition: --tint 0.8s ease;
 }
 
 .live__counts {
@@ -221,14 +229,33 @@
     gap: 12px;
     margin-top: auto;
 
-    .live__bar {
-        flex: 1;
-    }
-
     span.mono {
         font-size: 12px;
         color: var(--muted);
         white-space: nowrap;
+    }
+}
+
+.live__wave {
+    flex: 1;
+    min-width: 0;
+    overflow: visible;
+
+    path,
+    line {
+        fill: none;
+        stroke-width: 2;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    path {
+        stroke: var(--green);
+    }
+
+    // see-through, so it shows on whatever the tint is
+    line {
+        stroke: rgba(255, 255, 255, 0.12);
     }
 }
 

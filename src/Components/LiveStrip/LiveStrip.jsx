@@ -1,6 +1,7 @@
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
+import useAverageColor from "../../lib/useAverageColor";
 import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
@@ -123,13 +124,73 @@ PcSections.propTypes = {
     }).isRequired,
 };
 
+// The played part of the song is drawn as y = (1 - e^(-a·x))·sin(4x + n): flat where the song
+// starts and settling into a steady wave, with n sliding from π down to -π so it flows toward the playhead
+const WAVE = {
+    pxPerUnit: 12, // screen px per unit of x, so one wavelength (2π/4 units) is about 19px
+    a: 1, // how quickly the wave grows out of the flat start
+    amplitude: 3, // px
+    cycleMs: 1500, // how long n takes to go from π to -π
+    height: 10,
+};
+
+const MusicWave = ({ progressMs, durationMs, at }) => {
+    const svgRef = useRef(null);
+    const waveRef = useRef(null);
+    const trackRef = useRef(null);
+
+    useEffect(() => {
+        const still = window.matchMedia("(prefers-reduced-motion: reduce)");
+        const mid = WAVE.height / 2;
+        let frame;
+
+        const draw = (time) => {
+            const width = svgRef.current.clientWidth;
+            // The API answer can be a few seconds old, so move the song along from when it was made
+            const elapsed = Math.min(durationMs, progressMs + Math.max(0, Date.now() - at));
+            const played = (elapsed / durationMs) * width;
+            const n = still.matches ? 0 : Math.PI - ((time / WAVE.cycleMs) % 1) * 2 * Math.PI;
+            const y = (px) => {
+                const x = px / WAVE.pxPerUnit;
+                return mid - WAVE.amplitude * (1 - Math.exp(-WAVE.a * x)) * Math.sin(4 * x + n);
+            };
+
+            let path = `M0 ${mid}`;
+            for (let px = 1; px < played; px += 1) path += `L${px} ${y(px).toFixed(2)}`;
+            if (played > 0) path += `L${played.toFixed(2)} ${y(played).toFixed(2)}`;
+            waveRef.current.setAttribute("d", path);
+            trackRef.current.setAttribute("x1", played);
+            trackRef.current.setAttribute("x2", width);
+
+            frame = requestAnimationFrame(draw);
+        };
+
+        frame = requestAnimationFrame(draw);
+        return () => cancelAnimationFrame(frame);
+    }, [progressMs, durationMs, at]);
+
+    return (
+        <svg ref={svgRef} className="live__wave" height={WAVE.height} aria-hidden="true">
+            <line ref={trackRef} y1={WAVE.height / 2} y2={WAVE.height / 2} />
+            <path ref={waveRef} />
+        </svg>
+    );
+};
+
+MusicWave.propTypes = {
+    progressMs: PropTypes.number.isRequired,
+    durationMs: PropTypes.number.isRequired,
+    at: PropTypes.number.isRequired,
+};
+
 const Music = ({ music, at, now }) => {
     // The API answer can be a few seconds old, so move the song along from when it was made
     const progress = Math.min(music.durationMs, music.progressMs + Math.max(0, now - at));
     const Wrapper = music.url ? "a" : "div";
+    const tint = useAverageColor(music.image);
 
     return (
-        <div className="live__section live__section--music">
+        <div className="live__section live__section--music" style={tint ? { "--tint": `rgb(${tint})` } : undefined}>
             <span className="live__label mono">listening to</span>
             <Wrapper
                 className="live__track"
@@ -149,9 +210,7 @@ const Music = ({ music, at, now }) => {
             </Wrapper>
             {music.durationMs > 0 && (
                 <div className="live__progress">
-                    <span className="live__bar live__bar--music">
-                        <i style={{ transform: `scaleX(${progress / music.durationMs})` }} />
-                    </span>
+                    <MusicWave progressMs={music.progressMs} durationMs={music.durationMs} at={at} />
                     <span className="mono">
                         {formatTrackTime(progress)} / {formatTrackTime(music.durationMs)}
                     </span>
