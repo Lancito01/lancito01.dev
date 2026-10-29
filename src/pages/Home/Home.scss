@@ -125,12 +125,6 @@
     }
 }
 
-.status__links {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 4px 16px;
-}
-
 @media (max-width: 960px) {
     .home-hero {
         grid-template-columns: 1fr;
