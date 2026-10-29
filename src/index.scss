@@ -22,7 +22,18 @@
     --page-width: 1240px;
     --gutter: 40px;
 
+    // Follows the colour of whatever's playing on Spotify, see LiveStrip
+    --accent: var(--green);
+    transition: --accent 0.8s ease;
+
     color-scheme: dark;
+}
+
+// Registered so the accent can fade from one colour to the next
+@property --accent {
+    syntax: "<color>";
+    inherits: true;
+    initial-value: #85ee14;
 }
 
 *,
@@ -89,7 +100,7 @@ button {
 }
 
 .prompt {
-    color: var(--green);
+    color: var(--accent);
     font-family: var(--font-mono);
 }
 

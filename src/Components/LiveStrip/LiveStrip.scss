@@ -250,7 +250,11 @@
     }
 
     path {
-        stroke: var(--green);
+        stroke: var(--accent);
+    }
+
+    circle {
+        fill: var(--accent);
     }
 
     // see-through, so it shows on whatever the tint is

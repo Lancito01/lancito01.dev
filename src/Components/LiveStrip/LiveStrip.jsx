@@ -1,7 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
-import useAverageColor from "../../lib/useAverageColor";
+import useAverageColor, { readableAccent } from "../../lib/useAverageColor";
 import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
@@ -139,6 +139,7 @@ const MusicWave = ({ progressMs, durationMs, at }) => {
     const svgRef = useRef(null);
     const waveRef = useRef(null);
     const trackRef = useRef(null);
+    const dotRef = useRef(null);
 
     useEffect(() => {
         const still = window.matchMedia("(prefers-reduced-motion: reduce)");
@@ -162,6 +163,7 @@ const MusicWave = ({ progressMs, durationMs, at }) => {
             waveRef.current.setAttribute("d", path);
             trackRef.current.setAttribute("x1", played);
             trackRef.current.setAttribute("x2", width);
+            dotRef.current.setAttribute("cx", played);
 
             frame = requestAnimationFrame(draw);
         };
@@ -174,6 +176,7 @@ const MusicWave = ({ progressMs, durationMs, at }) => {
         <svg ref={svgRef} className="live__wave" height={WAVE.height} aria-hidden="true">
             <line ref={trackRef} y1={WAVE.height / 2} y2={WAVE.height / 2} />
             <path ref={waveRef} />
+            <circle ref={dotRef} cy={WAVE.height / 2} r="3.5" />
         </svg>
     );
 };
@@ -189,6 +192,15 @@ const Music = ({ music, at, now }) => {
     const progress = Math.min(music.durationMs, music.progressMs + Math.max(0, now - at));
     const Wrapper = music.url ? "a" : "div";
     const tint = useAverageColor(music.image);
+
+    // While something's playing, the page's accent (the ">" in headings and so on) takes the song's colour,
+    // and fades back to green when it stops
+    useEffect(() => {
+        if (!tint) return undefined;
+        const root = document.documentElement;
+        root.style.setProperty("--accent", `rgb(${readableAccent(tint)})`);
+        return () => root.style.removeProperty("--accent");
+    }, [tint]);
 
     return (
         <div className="live__section live__section--music" style={tint ? { "--tint": `rgb(${tint})` } : undefined}>
