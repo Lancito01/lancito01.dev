@@ -1,18 +1,13 @@
-.projects-wrapper {
-    .project {
-        background-color: var(--lighter-background-color);
-    }
+.projects__obs {
+    margin-top: 18px;
+    padding: 18px;
+    border-radius: 10px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
 
-    .project-title {
-        text-decoration: underline;
-    }
-
-    a {
-        color: white
-    }
-
-    hr {
-        border-top: 1px dotted #444;
-        margin: 1rem 4rem;
+    img {
+        margin-top: 16px;
+        width: 100%;
+        height: auto;
     }
 }

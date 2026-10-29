@@ -1,0 +1,130 @@
+.activity {
+    background: var(--panel);
+    border: 1px solid var(--rule);
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.activity__head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    padding: 18px 20px 14px;
+    border-bottom: 1px solid var(--rule);
+
+    h2 {
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    a {
+        font-size: 13px;
+        color: var(--muted);
+    }
+}
+
+.activity__list {
+    list-style: none;
+
+    li + li {
+        border-top: 1px solid var(--rule);
+    }
+}
+
+.activity__row {
+    display: grid;
+    grid-template-columns: 18px 1fr auto;
+    gap: 12px;
+    align-items: start;
+    padding: 13px 20px;
+    color: var(--fg);
+    transition: background 0.15s;
+
+    &:is(a):hover {
+        background: #1f1f1d;
+        text-decoration: none;
+    }
+}
+
+.activity__glyph {
+    font-size: 14px;
+    line-height: 1.6;
+    text-align: center;
+
+    &--comment {
+        color: var(--sky);
+    }
+    &--release {
+        color: var(--orange);
+    }
+    &--pr {
+        color: var(--purple);
+    }
+    &--issue {
+        color: var(--yellow);
+    }
+    &--push {
+        color: var(--green);
+    }
+    &--other {
+        color: var(--muted);
+    }
+}
+
+.activity__text {
+    font-size: 15.5px;
+    line-height: 1.45;
+    min-width: 0;
+
+    small {
+        display: block;
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 13px;
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+}
+
+.activity__time {
+    font-size: 12.5px;
+    color: var(--muted);
+    line-height: 1.9;
+    white-space: nowrap;
+}
+
+.activity__row--skeleton {
+    grid-template-columns: 1fr;
+    gap: 8px;
+
+    span {
+        display: block;
+        height: 12px;
+        border-radius: 3px;
+        background: #232321;
+        animation: activity-loading 1.4s ease-in-out infinite;
+    }
+
+    span:first-child {
+        width: 70%;
+    }
+
+    span:last-child {
+        width: 40%;
+        height: 9px;
+    }
+}
+
+@keyframes activity-loading {
+    50% {
+        opacity: 0.45;
+    }
+}
+
+.activity__empty {
+    padding: 18px 20px;
+    color: var(--muted);
+    font-size: 15px;
+}

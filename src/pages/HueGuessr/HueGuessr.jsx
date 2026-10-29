@@ -1,104 +1,109 @@
-import './HueGuessr.scss'
-import { useState } from 'react'
+import { useState } from "react";
+import { motion } from "motion/react";
+import { accuracy, expandHex, isHexGuess, randomHex } from "../../lib/hue";
+import "../page.scss";
+import "./HueGuessr.scss";
+
+const verdict = (score) => {
+    if (score >= 95) return "basically perfect.";
+    if (score >= 85) return "really close!";
+    if (score >= 70) return "not bad.";
+    return "way off. again?";
+};
 
 const HueGuessr = () => {
-    const generateRandomHue = () => {
-        let result = '#'
-        const characters = '0123456789ABCDEF'
-        for (let i = 0; i < 6; i++) {
-            result += characters.charAt(Math.floor(Math.random() * 16))
-        }
-        return result
-    }
-
-    const [color, setColor] = useState(generateRandomHue());
-    const [guessedColor, setGuessedColor] = useState('#222222');
-    const [hueGuess, setHueGuess] = useState('#222222');
-    const [guessed, setGuessed] = useState(false);
-    const [accuracy, setAccuracy] = useState(0);
-
-    const getNewColor = () => { //? gives var "color" a value
-        setColor(generateRandomHue())
-    }
-
-    const isValidHex = (str) => /[A-F0-9]+$/.test(str);
+    const [target, setTarget] = useState(randomHex);
+    const [input, setInput] = useState("");
+    const [result, setResult] = useState(null);
 
     const onInputChange = (e) => {
-        const value = e.target.value.toUpperCase().slice(1)
-        if (!isValidHex(value) && value != "") return;
-        setHueGuess(`#${value}`)
-    }
+        const value = e.target.value.toUpperCase().replace(/^#/, "");
+        if (/^[0-9A-F]{0,6}$/.test(value)) setInput(value);
+    };
 
     const handleFormSubmit = (e) => {
-        e.preventDefault()
-        setGuessedColor(hueGuess)
-        setGuessed(true)
-        setAccuracy(calculateAccuracy(color, hueGuess))
-    }
+        e.preventDefault();
+        if (!isHexGuess(input)) return;
+        const guess = expandHex(input);
+        setResult({ guess, score: accuracy(target, guess) });
+    };
 
-    const hexToRgb = (hex) => {
-        let fullHex = hex;
-        if (hex.length === 4) { // for shorter hex values e.g. #fff or #000
-            fullHex = hex.split('');
-            fullHex = fullHex[0] + fullHex[1] + fullHex[1] + fullHex[2] + fullHex[2] + fullHex[3] + fullHex[3];
-        }
-        const r = parseInt(fullHex.slice(1, 3), 16);
-        const g = parseInt(fullHex.slice(3, 5), 16);
-        const b = parseInt(fullHex.slice(5, 7), 16);
-        return { r, g, b };
-    }
-
-    const calculateAccuracy = (color, targetColor) => {
-        const colorRgb = hexToRgb(color)
-        const targetColorRgb = hexToRgb(targetColor)
-        const rDiff = Math.abs(colorRgb.r - targetColorRgb.r)
-        const gDiff = Math.abs(colorRgb.g - targetColorRgb.g)
-        const bDiff = Math.abs(colorRgb.b - targetColorRgb.b)
-        const totalDiff = rDiff + gDiff + bDiff
-        const accuracy = 100 - (totalDiff / 765 * 100)
-        return accuracy.toFixed(2)
-    }
+    const restart = () => {
+        setTarget(randomHex());
+        setInput("");
+        setResult(null);
+    };
 
     return (
-        <div className="hueguessr-wrapper pt-4 w-full h-fit m-auto">
-            <h1 className='text-2xl w-fit mx-auto'>HueGuessr</h1>
-            <div className="description mx-auto">
-                <h4 className='w-fit m-auto '>Objective:</h4>
-                <p>You&apos;ll be shown a color. Your objective is to type in a Hex value and get as close to the target color as possible!</p>
-            </div>
-            <div className='game m-auto flex flex-col sm:flex-row pt-2'>
-                <div className='hint w-1/2 flex flex-col items-center pb-5 mx-auto'>
-                    <h3>Color:</h3>
-                    <div className='color-box w-full rounded' style={{ backgroundColor: color }}></div>
-                    <div className='answer pt-2 flex flex-col'>
-                        {guessed && (<div className='stats flex'>
-                            <p>Answer: {color}</p>
-                            <p className='text-right'>Accuracy: {accuracy}%</p>
-                        </div>)}
-                    </div>
-                </div>
-                <div className='input flex flex-col items-center mx-auto'>
-                    <h3>Guess:</h3>
-                    <div className='color-box w-full rounded' style={{ backgroundColor: guessedColor }}></div>
-                    <div className='flex flex-col w-full submit-guess pt-1'>
-                        {guessed && (<button className='restart-button rounded h-7' onClick={() => {
-                            setGuessed(false)
-                            getNewColor()
-                            setGuessedColor('#222222')
-                            setHueGuess('#222222')
-                        }}>Restart</button>)}
-                        {!guessed && (<form onSubmit={handleFormSubmit} className='flex h-7 justify-between'>
-                            <input onChange={onInputChange} value={hueGuess} maxLength={7} className='rounded h-full mt-0.5 pl-1 pb-0.5' />
-                            <button type="submit" className='rounded h-full mt-0.5'>Guess</button>
-                        </form>)}
-                        {guessed && (<p className='text-center'>
-                            Your answer: {hueGuess}
-                        </p>)}
-                    </div>
-                </div>
-            </div>
-        </div>
-    )
-}
+        <div className="wrap page hue-game">
+            <h1 className="page__title">
+                <span className="prompt">&gt;</span>HueGuessr
+            </h1>
+            <p className="page__intro">
+                here&apos;s a colour. type the hex code you think it is and see how close you get.
+            </p>
 
-export default HueGuessr
+            <div className="hue-game__swatches">
+                <figure>
+                    <div className="hue-game__swatch" style={{ backgroundColor: target }} />
+                    <figcaption className="mono">
+                        the colour <b>{result ? target : "#??????"}</b>
+                    </figcaption>
+                </figure>
+                <figure>
+                    <div className="hue-game__swatch hue-game__swatch--guess">
+                        {result && (
+                            <motion.div
+                                key={result.guess}
+                                className="hue-game__fill"
+                                style={{ backgroundColor: result.guess }}
+                                initial={{ clipPath: "inset(0 100% 0 0)" }}
+                                animate={{ clipPath: "inset(0 0% 0 0)" }}
+                                transition={{ duration: 0.6, ease: [0.2, 0.7, 0.2, 1] }}
+                            />
+                        )}
+                    </div>
+                    <figcaption className="mono">
+                        your guess <b>{result ? result.guess : "…"}</b>
+                    </figcaption>
+                </figure>
+            </div>
+
+            {result ? (
+                <motion.div
+                    className="hue-game__result"
+                    initial={{ opacity: 0, y: 8 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ delay: 0.35, duration: 0.3 }}
+                >
+                    <p>
+                        <b>{result.score}%</b> {verdict(result.score)}
+                    </p>
+                    <button type="button" className="hue-game__button" onClick={restart}>
+                        play again
+                    </button>
+                </motion.div>
+            ) : (
+                <form className="hue-game__form" onSubmit={handleFormSubmit}>
+                    <label className="hue-game__input mono">
+                        <span>#</span>
+                        <input
+                            value={input}
+                            onChange={onInputChange}
+                            maxLength={7}
+                            placeholder="3FB6E8"
+                            aria-label="Your hex code guess"
+                            autoComplete="off"
+                            spellCheck={false}
+                        />
+                    </label>
+                    <button type="submit" className="hue-game__button" disabled={!isHexGuess(input)}>
+                        guess
+                    </button>
+                </form>
+            )}
+        </div>
+    );
+};
+
+export default HueGuessr;

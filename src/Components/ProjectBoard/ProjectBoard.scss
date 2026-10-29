@@ -1,0 +1,238 @@
+.board-section__head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    margin-bottom: 18px;
+
+    h2 {
+        font-size: 40px;
+        font-weight: 700;
+        letter-spacing: -0.03em;
+        line-height: 1.1;
+    }
+
+    span {
+        font-size: 13px;
+        color: var(--muted);
+    }
+
+    button {
+        padding: 0;
+        border: 0;
+        background: none;
+        color: var(--muted);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+        cursor: pointer;
+
+        &:hover {
+            color: var(--fg);
+        }
+    }
+}
+
+.board {
+    position: relative;
+    height: 560px;
+    background: var(--board);
+    border: 1px solid var(--rule);
+    border-radius: 14px;
+    overflow: hidden;
+}
+
+.board-card {
+    position: absolute;
+    color: var(--ink);
+    box-shadow:
+        0 1px 0 rgba(0, 0, 0, 0.25),
+        0 14px 28px -10px rgba(0, 0, 0, 0.6);
+    cursor: grab;
+    user-select: none;
+
+    &:active {
+        cursor: grabbing;
+    }
+
+    h3 {
+        font-weight: 800;
+        letter-spacing: -0.02em;
+        line-height: 1.1;
+    }
+
+    p {
+        margin-top: 10px;
+        line-height: 1.45;
+    }
+
+    a {
+        color: var(--ink);
+        text-decoration: underline;
+        text-underline-offset: 3px;
+    }
+}
+
+.board-card__top {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 12px;
+    font-size: 13px;
+}
+
+.board-card__tag {
+    background: var(--ink);
+    color: var(--paper);
+    padding: 2px 8px;
+    white-space: nowrap;
+}
+
+.board-card__links {
+    display: flex;
+    gap: 18px;
+    margin-top: 16px;
+    font-size: 15px;
+    font-weight: 600;
+
+    &--small {
+        font-size: 13px;
+        font-weight: 400;
+    }
+}
+
+.board-card--obs {
+    width: 380px;
+    padding: 26px;
+    background: var(--orange);
+
+    h3 {
+        font-size: 44px;
+        letter-spacing: -0.035em;
+        margin-top: 16px;
+    }
+
+    p {
+        font-size: 16.5px;
+        color: #2a1a08;
+        margin-bottom: 18px;
+    }
+}
+
+.board-card--paper {
+    background: var(--paper);
+}
+
+.board-card--script {
+    width: 320px;
+    padding: 22px 24px;
+
+    h3 {
+        font-size: 24px;
+        padding-bottom: 10px;
+        border-bottom: 2px solid #e6a3a3;
+    }
+
+    p {
+        font-size: 15.5px;
+        color: #33373c;
+    }
+
+    .board-card__links {
+        margin-top: 12px;
+    }
+}
+
+.board-card--hue {
+    width: 250px;
+    padding: 12px 12px 16px;
+
+    h3 {
+        font-size: 21px;
+        margin-top: 12px;
+        padding: 0 2px;
+    }
+
+    p {
+        margin-top: 2px;
+        padding: 0 2px;
+        font-size: 14px;
+        color: var(--ink-soft);
+    }
+}
+
+.board-card__swatch {
+    display: flex;
+    align-items: flex-end;
+    width: 100%;
+    height: 130px;
+    padding: 8px 10px;
+    border: 0;
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.6);
+    cursor: pointer;
+    transition: background-color 0.35s ease;
+}
+
+.board-card--bot {
+    width: 160px;
+    padding: 8px 8px 0;
+
+    img {
+        width: 144px;
+        height: 112px;
+        object-fit: cover;
+        filter: saturate(0.65);
+    }
+
+    figcaption {
+        font-size: 12px;
+        padding: 6px 2px 8px;
+        color: var(--ink-soft);
+
+        a {
+            font-weight: 700;
+            text-decoration: none;
+        }
+    }
+}
+
+.board-card--note {
+    width: 250px;
+    padding: 18px 18px 20px;
+    background: #ffd84d;
+    font-size: 15px;
+
+    h3 {
+        font-size: 17px;
+    }
+
+    p {
+        margin: 4px 0 10px;
+        line-height: 1.4;
+    }
+}
+
+@media (max-width: 760px) {
+    .board-section__head h2 {
+        font-size: 32px;
+    }
+
+    .board {
+        height: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 22px;
+        padding: 32px 16px;
+    }
+
+    .board-card {
+        position: relative;
+        max-width: 100%;
+        cursor: auto;
+    }
+
+    .board-card--obs h3 {
+        font-size: 38px;
+    }
+}

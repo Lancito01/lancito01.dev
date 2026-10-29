@@ -1,42 +1,107 @@
-.hueguessr-wrapper {
-    .description {
-        max-width: 700px;
+.hue-game__swatches {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+    max-width: 560px;
+    margin-top: 40px;
+
+    figcaption {
+        margin-top: 10px;
+        font-size: 13px;
+        color: var(--muted);
+
+        b {
+            color: var(--fg);
+            font-weight: 500;
+            margin-left: 4px;
+        }
+    }
+}
+
+.hue-game__swatch {
+    position: relative;
+    aspect-ratio: 1;
+    border-radius: 10px;
+    overflow: hidden;
+
+    &--guess {
+        background: var(--panel);
+        border: 1px dashed #3a3936;
+    }
+}
+
+.hue-game__fill {
+    position: absolute;
+    inset: 0;
+}
+
+.hue-game__form,
+.hue-game__result {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px;
+    max-width: 560px;
+    margin-top: 28px;
+}
+
+.hue-game__input {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    height: 46px;
+    padding: 0 14px;
+    border: 1px solid var(--rule);
+    border-radius: 8px;
+    background: var(--panel);
+    font-size: 18px;
+
+    &:focus-within {
+        border-color: var(--sky);
     }
 
-    .game {
-        max-width: 1000px;
+    span {
+        color: var(--muted);
+    }
 
-        .color-box {
-            aspect-ratio: 1;
-        }
+    input {
+        flex: 1;
+        min-width: 0;
+        border: 0;
+        outline: 0;
+        background: none;
+        color: var(--fg);
+        font: inherit;
+        letter-spacing: 0.08em;
+    }
+}
 
-        .hint {
-            max-width: 13rem;
-        }
+.hue-game__button {
+    height: 46px;
+    padding: 0 22px;
+    border: 0;
+    border-radius: 8px;
+    background: var(--fg);
+    color: var(--ink);
+    font-weight: 600;
+    cursor: pointer;
+    transition: opacity 0.15s;
 
-        .input {
-            width: 50%;
-            max-width: 13rem;
+    &:disabled {
+        opacity: 0.35;
+        cursor: not-allowed;
+    }
+}
 
-            .submit-guess {
-                .restart-button {
-                    color: white;
-                    background-color: #222222;
-                }
+.hue-game__result p {
+    flex: 1;
+    font-size: 20px;
 
-                form {
-                    input {
-                        width: 60%;
-                        background: #222222;
-                    }
-
-                    button {
-                        width: 37%;
-                        background: #222222;
-                    }
-                }
-            }
-        }
-
+    b {
+        font-size: 32px;
+        letter-spacing: -0.02em;
+        margin-right: 6px;
     }
 }
