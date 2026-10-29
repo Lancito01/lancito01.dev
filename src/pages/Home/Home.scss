@@ -19,6 +19,17 @@
             position: relative;
             top: -0.08em;
         }
+
+        .hero-pikachu {
+            display: inline-block;
+            width: 0.62em;
+            height: 0.62em;
+            margin-left: 0.22em;
+            border: 1px solid var(--green);
+            border-radius: 50%;
+            object-fit: cover;
+            vertical-align: -0.04em;
+        }
     }
 }
 
@@ -123,7 +134,7 @@
 
         .activity {
             position: static;
-            max-height: 480px;
+            max-height: clamp(320px, 50vw, 480px);
         }
     }
 }

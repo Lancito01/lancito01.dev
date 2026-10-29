@@ -2,9 +2,10 @@
 //
 // 1. Create an app at https://developer.spotify.com/dashboard with the redirect URI
 //    http://127.0.0.1:8888/callback (and Web API ticked).
-// 2. node scripts/spotify-auth.js <client id> <client secret> [port]
+// 2. node scripts/spotify-auth.js <client id> <client secret> [port] [--scope=<scopes>]
 //    The port defaults to 8888. If something else uses it, pick another and add the
 //    matching redirect URI (http://127.0.0.1:<port>/callback) to the Spotify app.
+//    --scope swaps the requested permission, for working out login problems.
 // 3. Log in on the page that opens. The token is printed here; put it in SPOTIFY_REFRESH_TOKEN
 //    on Vercel, next to SPOTIFY_CLIENT_ID and SPOTIFY_CLIENT_SECRET.
 //
@@ -14,10 +15,13 @@ import { spawn } from "node:child_process";
 import { randomBytes } from "node:crypto";
 import { createServer } from "node:http";
 
-const [clientId, clientSecret, portArg = "8888"] = process.argv.slice(2);
+const args = process.argv.slice(2);
+const scopeArg = args.find((arg) => arg.startsWith("--scope="));
+const [clientId, clientSecret, portArg = "8888"] = args.filter((arg) => arg !== scopeArg);
+const scope = scopeArg ? scopeArg.slice("--scope=".length) : "user-read-currently-playing";
 const port = Number(portArg);
 if (!clientId || !clientSecret || !Number.isInteger(port) || port < 1 || port > 65535) {
-    console.error("usage: node scripts/spotify-auth.js <client id> <client secret> [port]");
+    console.error("usage: node scripts/spotify-auth.js <client id> <client secret> [port] [--scope=<scopes>]");
     process.exit(1);
 }
 
@@ -27,7 +31,7 @@ const authorizeUrl = `https://accounts.spotify.com/authorize?${new URLSearchPara
     client_id: clientId,
     response_type: "code",
     redirect_uri: redirectUri,
-    scope: "user-read-currently-playing",
+    scope,
     state,
     // Always show the consent screen, so an earlier half-finished login can't get in the way
     show_dialog: "true",

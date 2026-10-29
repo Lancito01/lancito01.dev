@@ -64,6 +64,7 @@ const Home = () => {
                 <motion.div initial="hidden" animate="shown" transition={{ staggerChildren: 0.08 }}>
                     <motion.h1 variants={rise}>
                         <span className="prompt">&gt;</span>hey, i&apos;m andy.
+                        <img className="hero-pikachu" src="/pikachu.gif" alt="Pikachu, my signature" />
                     </motion.h1>
                     <motion.p variants={rise} className="home-hero__lead">
                         full-stack developer from argentina. i build tools, discord bots and small web games, and send
