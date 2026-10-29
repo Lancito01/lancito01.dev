@@ -3,64 +3,55 @@ import PropTypes from "prop-types";
 import ActivityFeed from "../../Components/ActivityFeed/ActivityFeed";
 import LiveStrip from "../../Components/LiveStrip/LiveStrip";
 import ProjectBoard from "../../Components/ProjectBoard/ProjectBoard";
-import useActivity, { activityItemShape, activityStatus } from "../../lib/useActivity";
+import useActivity from "../../lib/useActivity";
 import useLiveStats from "../../lib/useLiveStats";
-import { awakeGuess, formatLocalTime, localHour, timeAgo, useNow } from "../../lib/time";
+import { awakeGuess, formatLocalTime, localHour, useNow } from "../../lib/time";
 import { socials } from "../../data/links";
 import "./Home.scss";
-
-const QUIET_AFTER = 48 * 60 * 60 * 1000;
 
 const rise = {
     hidden: { opacity: 0, y: 14 },
     shown: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1] } },
 };
 
-const Currently = ({ status, current, now }) => {
-    if (status === "loading") return <span className="status__note">checking github…</span>;
-    if (status === "error" || !current) return <span className="status__note">couldn&apos;t reach github right now</span>;
-
-    const ago = `${timeAgo(current.at, now)} ago`;
-    if (now - new Date(current.at) > QUIET_AFTER) {
-        return (
-            <>
-                quiet lately. last seen: {current.past}
-                {current.repo && (
-                    <>
-                        {" "}
-                        in <b>{current.repo}</b>
-                    </>
-                )}
-                <span className="status__note mono">{ago}</span>
-            </>
-        );
+// What I'm up to, going by my PC when the site knows and by the clock when it doesn't.
+// `tone` picks the dot: active (green), idle (yellow) or off (grey).
+function presence(live, now) {
+    const pc = live?.pc;
+    if (pc?.online) {
+        if (pc.status === "away") return { tone: "idle", text: "pc's on, but i stepped away" };
+        return { tone: "active", text: "at the pc right now", app: pc.app };
     }
+    if (live?.music) return { tone: "idle", text: "away from the pc, music's on" };
+    if (pc) {
+        const hour = localHour(now);
+        return { tone: "off", text: hour >= 23 || hour < 8 ? "pc's off, probably asleep" : "away from the pc" };
+    }
+    return { tone: "off", text: awakeGuess(now) };
+}
 
+const Presence = ({ live, now }) => {
+    const { tone, text, app } = presence(live, now);
     return (
-        <>
-            {current.present} {current.repo && <b>{current.repo}</b>}
-            <span className="status__note mono">{ago}</span>
-        </>
+        <span className="presence">
+            <i className={`presence__dot presence__dot--${tone}`} aria-hidden="true" />
+            {text}
+            {app && (
+                <>
+                    , in <b>{app}</b>
+                </>
+            )}
+        </span>
     );
 };
 
-Currently.propTypes = {
-    status: activityStatus.isRequired,
-    current: activityItemShape,
+Presence.propTypes = {
+    live: PropTypes.shape({
+        pc: PropTypes.shape({ online: PropTypes.bool, status: PropTypes.string, app: PropTypes.string }),
+        music: PropTypes.object,
+    }),
     now: PropTypes.instanceOf(Date).isRequired,
 };
-
-// Goes by whether my PC is on when the site knows, and by the clock when it doesn't
-function presence(live, now) {
-    const pc = live?.pc;
-    if (pc?.online) return pc.status === "away" ? "pc's on, but i stepped away" : "at the pc right now";
-    if (live?.music) return "away from the pc, music's on";
-    if (pc) {
-        const hour = localHour(now);
-        return hour >= 23 || hour < 8 ? "pc's off, probably asleep" : "away from the pc";
-    }
-    return awakeGuess(now);
-}
 
 const Home = () => {
     const now = useNow();
@@ -82,14 +73,14 @@ const Home = () => {
                         <div>
                             <dt className="mono">currently</dt>
                             <dd>
-                                <Currently status={activity.status} current={activity.current} now={now} />
+                                <Presence live={live} now={now} />
                             </dd>
                         </div>
                         <div>
                             <dt className="mono">local time</dt>
                             <dd>
-                                {formatLocalTime(now)} in argentina
-                                <span className="status__note mono">utc-3, {presence(live, now)}</span>
+                                <span className="status__clock">{formatLocalTime(now)}</span> in argentina
+                                <span className="status__note mono">utc-3</span>
                             </dd>
                         </div>
                         <div>
