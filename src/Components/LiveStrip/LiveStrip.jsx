@@ -194,7 +194,7 @@ const Music = ({ music, at, now }) => {
     const tint = useAverageColor(music.image);
 
     // While something's playing, the page's accent (the ">" in headings and so on) takes the song's colour,
-    // and fades back to green when it stops
+    // and fades back to the presence colour (green, yellow or grey, see index.scss) when it stops
     useEffect(() => {
         if (!tint) return undefined;
         const root = document.documentElement;

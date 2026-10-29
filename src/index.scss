@@ -25,11 +25,21 @@
     --page-width: 1240px;
     --gutter: 40px;
 
-    // Follows the colour of whatever's playing on Spotify, see LiveStrip
+    // Follows the colour of whatever's playing on Spotify (see LiveStrip), else my presence below
     --accent: var(--green);
     transition: --accent 0.8s ease;
 
     color-scheme: dark;
+}
+
+// With nothing playing, the accent follows whether I'm at the PC (set by the home page),
+// matching the presence dot: green while active, yellow when idle, grey when off
+:root[data-presence="idle"] {
+    --accent: var(--yellow);
+}
+
+:root[data-presence="off"] {
+    --accent: var(--muted);
 }
 
 // Registered so the accent can fade from one colour to the next

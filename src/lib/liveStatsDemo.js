@@ -1,5 +1,5 @@
 // Sample answers for previewing the live strip in `vite dev` with ?demo, ?demo=pc,
-// ?demo=music or ?demo=away. Never bundled into the production build.
+// ?demo=music, ?demo=away or ?demo=off. Never bundled into the production build.
 
 const pc = {
     online: true,
@@ -30,6 +30,7 @@ export default function demo(kind) {
     const at = Date.now();
     if (kind === "pc") return { at, pc, music: null };
     if (kind === "music") return { at, pc: { online: false }, music };
+    if (kind === "off") return { at, pc: { online: false }, music: null };
     if (kind === "away") return { at, pc: { ...pc, status: "away", app: undefined, appInfo: undefined }, music: null };
     return { at, pc, music };
 }
