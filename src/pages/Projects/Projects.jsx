@@ -1,37 +1,98 @@
+import { Link } from "react-router-dom";
+import ObsPill from "../../Components/ObsPill/ObsPill";
+import { andyScriptLinks, obsHudLinks } from "../../data/links";
+import notificationsImage from "../../assets/obs/notifications.webp";
+import "../page.scss";
 import "./Projects.scss";
-import Card from "../../Components/Card/Card.jsx";
 
 const Projects = () => {
     return (
-        <div className="projects-wrapper m-auto pt-4">
-            <h1 className="text-2xl mx-auto w-fit">Coding Projects</h1>
-            <div className="flex justify-center flex-wrap">
-                <Card
-                    title={"AndyBot"}
-                    description={"AndyBot is an advanced AI-powered Discord bot featuring OpenAI's GPT and Google's Gemini APIs for dynamic and intelligent responses."}
-                    link={"andybot"}
-                    information={"/andybot"}
-                />
-                <Card
-                    title={"AndyScript"}
-                    description={"AndyScript is my open-source Lua script for Stand, the Grand Theft Auto V mod menu that enhances your game experience."}
-                    link={"andyscript"}
-                    github={"https://github.com/lancito01/andyscript"}
-                    download={"https://github.com/Lancito01/AndyScript/archive/refs/heads/main.zip"}
-                />
-            </div>
-            <hr />
-            <a className="text-2xl mx-auto w-fit block underline" href="/games">
-                Web Games
-            </a>
-            <div className="flex justify-center flex-wrap">
-                <Card
-                    title={"HueGuessr"}
-                    link={"games/hueguessr"}
-                    description={"HueGuessr is a fun game where you'll be shown a color and its corresponding Hex value, and you're supposed to approximate a Hex value to that color!"}
-                    playLink={"games/hueguessr"}
-                />
-            </div>
+        <div className="wrap page">
+            <h1 className="page__title">
+                <span className="prompt">&gt;</span>projects
+            </h1>
+            <p className="page__intro">
+                the things i&apos;ve built that are worth a look. the rest lives on{" "}
+                <a href="https://github.com/lancito01?tab=repositories" target="_blank" rel="noreferrer">
+                    github
+                </a>
+                .
+            </p>
+
+            <ul className="page__rows">
+                <li className="page__row">
+                    <span className="page__meta mono">c# · windows</span>
+                    <div>
+                        <h2>obs-hud</h2>
+                        <p>
+                            a small always-on-top pill that shows whether obs is recording or buffering, plus a pop-up
+                            and a sound for every event: recording started, clip saved, replay buffer on, lost
+                            connection. it&apos;s click-through, hidden from captures and uses no cpu while idle.
+                        </p>
+                        <div className="projects__obs">
+                            <ObsPill />
+                            <img
+                                src={notificationsImage}
+                                alt="obs-hud notifications: recording started, clip saved, recording paused, recording saved, replay buffer on, lost connection"
+                                width="1094"
+                                height="442"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div className="page__links">
+                            <a href={obsHudLinks.download} target="_blank" rel="noreferrer">
+                                download
+                            </a>
+                            <a href={obsHudLinks.github} target="_blank" rel="noreferrer">
+                                source
+                            </a>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="page__row">
+                    <span className="page__meta mono">lua · gta v</span>
+                    <div>
+                        <h2>AndyScript</h2>
+                        <p>
+                            my open source lua script for stand, the gta v mod menu. shortcuts, chaos mode, a spooner
+                            and more, and it keeps itself up to date.
+                        </p>
+                        <div className="page__links">
+                            <Link to="/andyscript">read more</Link>
+                            <a href={andyScriptLinks.github} target="_blank" rel="noreferrer">
+                                github
+                            </a>
+                            <a href={andyScriptLinks.download}>download</a>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="page__row">
+                    <span className="page__meta mono">browser game</span>
+                    <div>
+                        <h2>HueGuessr</h2>
+                        <p>you get a colour and type the hex code you think it is. sounds easy, it isn&apos;t.</p>
+                        <div className="page__links">
+                            <Link to="/games/hueguessr">play it</Link>
+                        </div>
+                    </div>
+                </li>
+
+                <li className="page__row">
+                    <span className="page__meta mono">discord bot · older</span>
+                    <div>
+                        <h2>AndyBot</h2>
+                        <p>
+                            an ai discord bot that chatted using gpt and gemini and made images with dall·e. i
+                            haven&apos;t worked on it in a while.
+                        </p>
+                        <div className="page__links">
+                            <Link to="/andybot">read more</Link>
+                        </div>
+                    </div>
+                </li>
+            </ul>
         </div>
     );
 };

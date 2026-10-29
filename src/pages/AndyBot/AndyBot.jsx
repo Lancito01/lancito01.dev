@@ -1,42 +1,90 @@
-import Showcases from '../../Components/utils/ImportAndyBotShowcaseImages'
-import './AndyBot.scss'
+import showcase1 from "../../assets/showcase/showcase-1.webp";
+import showcase2 from "../../assets/showcase/showcase-2.webp";
+import showcase3 from "../../assets/showcase/showcase-3.webp";
+import showcase4 from "../../assets/showcase/showcase-4.webp";
+import "../page.scss";
+import "./AndyBot.scss";
+
+const showcases = [
+    { image: showcase1, prompt: "AMG C63 speeding down the freeway at sunset." },
+    {
+        image: showcase2,
+        prompt: "Several hundreds of years into the future, an abandoned city. Buildings decaying and falling. Nature and grass is taking over the abandoned city.",
+    },
+    {
+        image: showcase3,
+        prompt: "Realistic lush forest with beautiful colors and some fauna, god rays leaking through the leaves.",
+    },
+    {
+        image: showcase4,
+        prompt: "A black C63 speeding down a freeway at sunset (almost night time) with few police cars chasing it half a mile back.",
+    },
+];
+
+const commands = [
+    ["/help", null, "shows the list of commands"],
+    ["/ping", null, "\"Pong!\" (shows the bot's latency)"],
+    ["/imagine [prompt]", "perms", "generates an image based on the prompt"],
+    ["/clear-history", "admin", "clears the messages the bot remembers in the current server or DM"],
+    ["/lock-imagine [value]", "admin", "unlocks /imagine so anyone can use it"],
+];
 
 const AndyBot = () => {
     return (
-        <div className="andybot-wrapper w-full flex flex-col px-4">
-            <h1 className='text-2xl w-fit m-auto'><span className="accent-color">&gt;</span> AndyBot 🤖</h1>
-            <h3 className='text-l w-fit m-auto'><span className="accent-color">&gt;</span> About AndyBot 🔎</h3>
-            <ul className='andybot-desc m-auto'>
-                <p className='text-descs text-justify'>AndyBot is an advanced AI-powered Discord bot featuring OpenAI&apos;s GPT API for dynamic and intelligent responses. With its vast knowledge and natural language processing abilities, AndyBot is here to assist you with inquiries, provide information, and engage in conversations. AndyBot can also generate creative content, such as stories and code snippets. Consider AndyBot your digital companion, ready to make your online journey smoother and more enjoyable.</p>
-                <br />
-                <p className='text-center'>For more information, please contact me on any of my <a href="#socials">socials</a> below.</p>
-            </ul>
-            <h3 className='text-l w-fit m-auto'><span className="accent-color">&gt;</span> Usage 📰</h3>
-            <p className='text-descs w-fit m-auto text-justify'>To interact with AndyBot, simply tag it anywhere in your message (or if you&apos;re in DMs, sending a message will suffice) or use any of its built-in slash commands. Feel free to join my Discord server found in my <a href="#socials">socials</a> below to interact with AndyBot!</p>
-            <h3 className='text-l w-fit m-auto'><span className="accent-color">&gt;</span> Images 🖼️</h3>
-            <ul className=''>
-                <p className='w-fit m-auto'>AndyBot is capable of generating images with the DALL-E API through its bult-in slash command /imagine.</p>
-                <p className='w-fit m-auto'>Here are some examples of what its capable of:</p>
-                <div className="flex flex-wrap justify-center w-fit m-auto">
-                    {Showcases.map((showcase, index) => {
-                        return (<div key={index} className='showcase-entry flex flex-col px-2'>
-                            <img src={showcase.image} alt="AndyBot showcase image" />
-                            <small>Prompt: {showcase.prompt}</small>
-                        </div>)
-                    })}
-                </div>
-            </ul>
-            <h3 className='text-l w-fit m-auto'><span className="accent-color">&gt;</span> Commands ⌨️</h3>
-            <p className='text-descs w-fit m-auto text-center'>The following is a list of some of AndyBot&apos;s commands. The ones marked with a 🔓 require special permissions to use them and the ones marked with a 🔒 are only available to admins.</p>
-            <ul className='text-descs w-fit m-auto text-center'>
-                <p><span className='font-black'>/help</span> - Shows this message</p>
-                <p><span className='font-black'>/ping</span> - &quot;Pong!&quot; (shows the bot&apos;s latency)</p>
-                <p><span className='font-black'>/imagine [prompt]</span> 🔓 - Generates an image based on the prompt</p>
-                <p><span className='font-black'>/clear-history</span> 🔒 - Clears the history of messages sent to the bot in the current server/DM</p>
-                <p><span className='font-black'>/lock-imagine [value]</span> 🔒 - Unlocks the imagine command so anyone can use it</p>
-            </ul>
-        </div>
-    )
-}
+        <div className="wrap page">
+            <h1 className="page__title">
+                <span className="prompt">&gt;</span>AndyBot
+            </h1>
+            <p className="page__intro">
+                an ai discord bot that answers questions, chats and writes code using openai&apos;s gpt and google&apos;s
+                gemini, and makes images with dall·e.
+            </p>
+            <p className="page__note">an older project. i haven&apos;t worked on it in a while, but here&apos;s what it does.</p>
 
-export default AndyBot
+            <section className="page__section">
+                <h2>usage</h2>
+                <p>
+                    tag it anywhere in a message (in DMs, just send a message) or use one of its slash commands. it
+                    lives in my{" "}
+                    <a href="https://discord.gg/q7Rwp3uY2b" target="_blank" rel="noreferrer">
+                        discord server
+                    </a>
+                    .
+                </p>
+            </section>
+
+            <section className="page__section">
+                <h2>commands</h2>
+                <p>
+                    <span className="andybot__tag mono">perms</span> needs special permissions,{" "}
+                    <span className="andybot__tag mono">admin</span> is admins only.
+                </p>
+                <dl className="andybot__commands">
+                    {commands.map(([command, access, description]) => (
+                        <div key={command}>
+                            <dt className="mono">
+                                {command} {access && <span className="andybot__tag">{access}</span>}
+                            </dt>
+                            <dd>{description}</dd>
+                        </div>
+                    ))}
+                </dl>
+            </section>
+
+            <section className="page__section">
+                <h2>images</h2>
+                <p>a few things it made with /imagine:</p>
+                <div className="andybot__gallery">
+                    {showcases.map((showcase) => (
+                        <figure key={showcase.prompt}>
+                            <img src={showcase.image} alt={showcase.prompt} loading="lazy" width="768" height="768" />
+                            <figcaption>{showcase.prompt}</figcaption>
+                        </figure>
+                    ))}
+                </div>
+            </section>
+        </div>
+    );
+};
+
+export default AndyBot;

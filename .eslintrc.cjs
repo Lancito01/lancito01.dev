@@ -17,4 +17,8 @@ module.exports = {
       { allowConstantExport: true },
     ],
   },
+  overrides: [
+    // Vercel functions run on Node
+    { files: ['api/**/*.js'], env: { node: true } },
+  ],
 }

@@ -1,4 +1,9 @@
-.outlet-wrapper {
+.layout {
+    min-height: 100vh;
     display: flex;
-    min-height: calc(100vh - 5rem);
+    flex-direction: column;
+}
+
+.layout__main {
+    flex: 1;
 }

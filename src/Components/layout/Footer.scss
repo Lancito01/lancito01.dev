@@ -1,12 +1,28 @@
-footer {
-    .socials a {
-        display: flex;
-        padding: 0 0.5rem;
-        align-items: center;
-    }
+.footer {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 12px 26px;
+    padding-top: 64px;
+    padding-bottom: 44px;
+    color: var(--muted);
+    font-size: 15px;
+}
 
-    .socials img {
-        padding: 0 0.35rem;
-        width: 30px;
+.footer__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px 22px;
+    margin-left: auto;
+    list-style: none;
+
+    a {
+        color: #cfccc5;
+    }
+}
+
+@media (max-width: 640px) {
+    .footer__links {
+        margin-left: 0;
     }
 }

@@ -1,42 +1,21 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import "./Navbar.scss";
 
 const Navbar = () => {
-    const location = useLocation();
-
     return (
-        <nav className="flex items-center justify-center w-full m-auto h-20">
-            <div className="padding-background-effect rounded-md md:mx-4">
-                <Link
-                    to="/"
-                    className={`${
-                        location.pathname == "/" ? "selected" : ""
-                    } text-nowrap`}
-                >
-                    <i className="fa-regular fa-address-card" /> About
-                </Link>
-            </div>
-            <div className="padding-background-effect rounded-md md:mx-4">
-                <Link
-                    to="/projects"
-                    className={`${
-                        location.pathname.includes("projects") ? "selected" : ""
-                    } text-nowrap`}
-                >
-                    <i className="fa-regular fa-clipboard" /> Projects
-                </Link>
-            </div>
-            <div className="padding-background-effect rounded-md md:mx-4">
-                <Link
-                    to="/games"
-                    className={`${
-                        location.pathname.includes("games") ? "selected" : ""
-                    } text-nowrap`}
-                >
-                    <i className="fa-solid fa-gamepad" /> Games
-                </Link>
-            </div>
-        </nav>
+        <header className="wrap navbar">
+            <Link to="/" className="navbar__brand">
+                <span className="prompt">&gt;</span> andy
+            </Link>
+            <nav className="navbar__links" aria-label="Main">
+                <NavLink to="/" end>
+                    home
+                </NavLink>
+                <NavLink to="/projects">projects</NavLink>
+                <NavLink to="/games">games</NavLink>
+                <a href="#links">links</a>
+            </nav>
+        </header>
     );
 };
 

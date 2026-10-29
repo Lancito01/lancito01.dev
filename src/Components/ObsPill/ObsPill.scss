@@ -1,0 +1,34 @@
+.obs-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 16px;
+    padding: 7px 16px 7px 12px;
+    border-radius: 999px;
+    background: #3a3a3d;
+    color: #fff;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+    white-space: nowrap;
+}
+
+.obs-pill__item {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+}
+
+.obs-pill__dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+
+    &--rec {
+        background: #f04b4b;
+    }
+
+    &--replay {
+        background: #29c1a6;
+    }
+}

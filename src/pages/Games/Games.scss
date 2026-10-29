@@ -1,0 +1,20 @@
+.games__thumb {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+    width: 96px;
+    height: 96px;
+
+    i {
+        border-radius: 4px;
+        transition: transform 0.2s ease;
+    }
+
+    &:hover i:nth-child(odd) {
+        transform: rotate(-6deg);
+    }
+
+    &:hover i:nth-child(even) {
+        transform: rotate(6deg);
+    }
+}

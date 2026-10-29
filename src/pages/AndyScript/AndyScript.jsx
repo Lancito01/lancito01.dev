@@ -1,39 +1,59 @@
+import { andyScriptLinks } from "../../data/links";
+import "../page.scss";
+
 const AndyScript = () => {
-    const andyScriptDownloadLink = 'https://github.com/Lancito01/AndyScript/archive/refs/heads/main.zip'
-    const andyScriptGithubLink = 'https://github.com/Lancito01/AndyScript';
-
     return (
-        <div className="andyscript w-full">
-            <h1 className="text-2xl w-fit m-auto"><span className="accent-color">&gt;</span> AndyScript 💻</h1>
-            <h3 className="text-l w-fit m-auto"><span className="accent-color">&gt;</span> What is it? ❓</h3>
-            <ul className="w-fit m-auto">
-                <p className="text-center">AndyScript is my open-source Lua script for <a href="https://stand.gg">Stand</a>, the Grand Theft Auto V mod menu that enhances your game experience.</p>
-                <p className="text-center">For any questions or suggestions, please join my Discord server listed in my <a href="#socials">socials</a> below.</p>
-            </ul>
-            <h3 className="text-l w-fit m-auto"><span className="accent-color">&gt;</span> Features 📃</h3>
-            <ul className="list-disc w-fit m-auto">
-                <li>Turn off radio automatically</li>
-                <li>Andy&apos;s Shortcuts (create aliases for other commands, i.e. &quot;dv&quot; = &quot;deletevehicle&quot;)</li>
-                <li>Give every weapon after joining a session</li>
-                <li>Heal ped to max health (only health, no armor)</li>
-                <li>Spawn peds inside player vehicle</li>
-                <li>Chaos mode</li>
-                <li>Andy&apos;s Spooner</li>
-                <li>... and more!</li>
-            </ul>
-            <h3 className="text-l w-fit m-auto"><span className="accent-color">&gt;</span> How can I try it? 💡</h3>
-            <ul className="w-fit m-auto text-center">
-                <p>It&apos;s easy! You can <a href={andyScriptDownloadLink}>download</a> the latest version of AndyScript from my <a href={andyScriptGithubLink}>GitHub repo</a>.</p>
-                <p>From there, just drag it into Stand&apos;s Lua Scripts folder and you&apos;re good to go!</p>
-                <p>AndyScript will automatically update, so there&apos;s no need to re-download it. </p>
-            </ul>
-            <h3 className="text-l w-fit m-auto"><span className="accent-color">&gt;</span> How can I contribute? 🤝</h3>
-            <ul className="text-descs w-fit m-auto text-center">
-                <p>Firstly, joining my Discord server is greatly appreciated. There, you can suggest new features or report bugs, which is of great help to me! </p>
-                <p>Money-wise, donations are always welcome, but not necessary! For more information about this, message me privately on any of my <a href="#socials">socials</a> below.</p>
-            </ul>
-        </div>
-    )
-}
+        <div className="wrap page">
+            <h1 className="page__title">
+                <span className="prompt">&gt;</span>AndyScript
+            </h1>
+            <p className="page__intro">
+                my open source lua script for{" "}
+                <a href="https://stand.gg" target="_blank" rel="noreferrer">
+                    stand
+                </a>
+                , the grand theft auto v mod menu.
+            </p>
 
-export default AndyScript
+            <section className="page__section">
+                <h2>features</h2>
+                <ul>
+                    <li>turns the radio off automatically</li>
+                    <li>andy&apos;s shortcuts: aliases for other commands, e.g. &quot;dv&quot; for &quot;deletevehicle&quot;</li>
+                    <li>gives you every weapon after joining a session</li>
+                    <li>heals your ped to max health (health only, no armour)</li>
+                    <li>spawns peds inside a player&apos;s vehicle</li>
+                    <li>chaos mode</li>
+                    <li>andy&apos;s spooner</li>
+                    <li>and more</li>
+                </ul>
+            </section>
+
+            <section className="page__section">
+                <h2>how to try it</h2>
+                <p>
+                    <a href={andyScriptLinks.download}>download the latest version</a> from the{" "}
+                    <a href={andyScriptLinks.github} target="_blank" rel="noreferrer">
+                        github repo
+                    </a>
+                    , then drag it into stand&apos;s lua scripts folder and you&apos;re good to go.
+                </p>
+                <p>it updates itself, so there&apos;s no need to download it again.</p>
+            </section>
+
+            <section className="page__section">
+                <h2>how to help</h2>
+                <p>
+                    join my{" "}
+                    <a href="https://discord.gg/q7Rwp3uY2b" target="_blank" rel="noreferrer">
+                        discord server
+                    </a>{" "}
+                    to suggest features or report bugs, that helps a lot. donations are welcome but never needed,
+                    message me on any of the links below if you want to.
+                </p>
+            </section>
+        </div>
+    );
+};
+
+export default AndyScript;
