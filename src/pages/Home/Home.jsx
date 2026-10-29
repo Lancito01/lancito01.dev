@@ -1,3 +1,4 @@
+import { useEffect } from "react";
 import { motion } from "motion/react";
 import PropTypes from "prop-types";
 import ActivityFeed from "../../Components/ActivityFeed/ActivityFeed";
@@ -56,6 +57,16 @@ const Home = () => {
     const now = useNow();
     const activity = useActivity();
     const live = useLiveStats();
+
+    // With no song playing, the page's accent takes the presence dot's colour (see index.scss).
+    // Only once the PC has actually reported, so a guess from the clock never greys it out.
+    const tone = live?.pc ? presence(live, now).tone : null;
+    useEffect(() => {
+        if (!tone) return undefined;
+        const root = document.documentElement;
+        root.dataset.presence = tone;
+        return () => delete root.dataset.presence;
+    }, [tone]);
 
     return (
         <>
