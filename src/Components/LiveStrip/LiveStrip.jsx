@@ -6,6 +6,7 @@ import useCountUp from "../../lib/useCountUp";
 import { LIVE_POLL_MS } from "../../lib/useLiveStats";
 import useTypewriter from "../../lib/useTypewriter";
 import Marquee from "../Marquee/Marquee";
+import RollingText from "../RollingText/RollingText";
 import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
@@ -62,7 +63,9 @@ const Count = ({ label, value, format, glide }) => {
     const shown = useCountUp(value, 1.2, glide);
     return (
         <div className="live__count">
-            <b>{format(shown)}</b>
+            <b>
+                <RollingText text={format(shown)} />
+            </b>
             <span className="live__label mono">{label}</span>
         </div>
     );
@@ -77,7 +80,11 @@ Count.propTypes = {
 
 const Uptime = ({ seconds, glide }) => {
     const shown = useCountUp(seconds, 1.2, glide);
-    return <p className="live__note mono">on for {formatUptime(Math.round(shown))}</p>;
+    return (
+        <p className="live__note mono">
+            on for <RollingText text={formatUptime(Math.round(shown))} />
+        </p>
+    );
 };
 
 Uptime.propTypes = {
@@ -316,7 +323,7 @@ const LiveStrip = ({ data, now }) => {
                         <div className="live__head">
                             <h2 id="live-title">right now</h2>
                             <span className="mono">
-                                {pc ? "live from my pc, updated every few seconds" : "playing on spotify"}
+                                {pc ? "live from my pc" : "playing on spotify"}
                             </span>
                         </div>
                         <motion.div

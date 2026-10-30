@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { useOutletContext } from "react-router-dom";
-import { AnimatePresence, motion, useReducedMotion } from "motion/react";
+import { motion, useReducedMotion } from "motion/react";
 import PropTypes from "prop-types";
 import ActivityFeed from "../../Components/ActivityFeed/ActivityFeed";
 import LiveStrip from "../../Components/LiveStrip/LiveStrip";
 import ProjectBoard from "../../Components/ProjectBoard/ProjectBoard";
+import RollingText from "../../Components/RollingText/RollingText";
 import useActivity from "../../lib/useActivity";
 import { presenceTone } from "../../lib/useSiteAccent";
 import { awakeGuess, formatLocalTime, localHour, useNow } from "../../lib/time";
@@ -31,38 +32,6 @@ const useTyped = (text) => {
     }, [shown, text.length]);
 
     return { typed: text.slice(0, shown), rest: text.slice(shown), done: shown >= text.length };
-};
-
-// Each digit fades up into the next one as it changes
-const RollingClock = ({ time }) => (
-    <span className="status__clock">
-        {[...time].map((char, i) =>
-            /\d/.test(char) ? (
-                <span key={i} className="roll">
-                    <AnimatePresence mode="popLayout" initial={false}>
-                        <motion.span
-                            key={char}
-                            initial={{ y: "30%", opacity: 0 }}
-                            animate={{ y: 0, opacity: 1 }}
-                            exit={{ y: "-30%", opacity: 0 }}
-                            transition={{
-                                y: { duration: 0.35, ease: "easeOut" },
-                                opacity: { duration: 0.35, ease: "easeIn" },
-                            }}
-                        >
-                            {char}
-                        </motion.span>
-                    </AnimatePresence>
-                </span>
-            ) : (
-                <span key={i}>{char}</span>
-            ),
-        )}
-    </span>
-);
-
-RollingClock.propTypes = {
-    time: PropTypes.string.isRequired,
 };
 
 // What I'm up to, going by my PC when the site knows and by the clock when it doesn't.
@@ -136,7 +105,7 @@ const Home = () => {
                         <div>
                             <dt className="mono">local time</dt>
                             <dd>
-                                <RollingClock time={formatLocalTime(now)} /> in argentina
+                                <RollingText text={formatLocalTime(now)} /> in argentina
                                 <span className="status__note mono">utc-3</span>
                             </dd>
                         </div>
