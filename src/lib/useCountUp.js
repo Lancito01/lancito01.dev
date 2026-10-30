@@ -4,7 +4,8 @@ import { animate, useReducedMotion } from "motion/react";
 // A number that counts up from 0 to `target` when it first shows, and moves to each new
 // target after that instead of jumping. Given `glide` (seconds), later changes move at a
 // steady pace over that long, so a reading that lands every 10 seconds ticks along the whole
-// time like it's live, rather than snapping over and then sitting still.
+// time like it's live, rather than snapping over and then sitting still. A `glide` of 0
+// skips the move and jumps straight to `target`.
 const useCountUp = (target, duration = 0.9, glide = undefined) => {
     const still = useReducedMotion();
     const [value, setValue] = useState(still ? target : 0);
@@ -12,7 +13,8 @@ const useCountUp = (target, duration = 0.9, glide = undefined) => {
     const counted = useRef(false); // the first count-up has finished
 
     useEffect(() => {
-        if (still) {
+        if (still || glide === 0) {
+            counted.current = true;
             current.current = target;
             setValue(target);
             return undefined;

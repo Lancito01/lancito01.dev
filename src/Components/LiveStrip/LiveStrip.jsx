@@ -7,7 +7,7 @@ import { LIVE_POLL_MS } from "../../lib/useLiveStats";
 import useTypewriter from "../../lib/useTypewriter";
 import Marquee from "../Marquee/Marquee";
 import RollingText from "../RollingText/RollingText";
-import { pickActivePhrase } from "./statusPhrases";
+import { pickActivePhrase, pickIdlePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
 const number = new Intl.NumberFormat("en-US");
@@ -64,7 +64,7 @@ const Count = ({ label, value, format, glide }) => {
     return (
         <div className="live__count">
             <b>
-                <RollingText text={format(shown)} />
+                <RollingText text={format(shown)} still={glide === 0} />
             </b>
             <span className="live__label mono">{label}</span>
         </div>
@@ -82,7 +82,7 @@ const Uptime = ({ seconds, glide }) => {
     const shown = useCountUp(seconds, 1.2, glide);
     return (
         <p className="live__note mono">
-            on for <RollingText text={formatUptime(Math.round(shown))} />
+            on for <RollingText text={formatUptime(Math.round(shown))} still={glide === 0} />
         </p>
     );
 };
@@ -92,15 +92,17 @@ Uptime.propTypes = {
     glide: PropTypes.number,
 };
 
-const PcSections = ({ pc }) => {
-    // Types itself out, then every 10 seconds deletes itself and types a different one
-    const phrase = useTypewriter(pickActivePhrase);
+const PcSections = ({ pc, resumed }) => {
     const away = pc.status === "away";
+    // Types itself out, then every 10 seconds deletes itself and types a different one. The dot
+    // follows the status right away, but the line only switches lists at its next swap.
+    const phrase = useTypewriter(away ? pickIdlePhrase : pickActivePhrase);
     const hasLoad = pc.cpu !== undefined || pc.gpu !== undefined || pc.ramTotal !== undefined;
     const hasToday = pc.clicks !== undefined || pc.mouse !== undefined;
     // Each reading glides to the next over the time until that one shows up here: the app's own
-    // interval, or how often this page checks if that's longer
-    const glide = Math.max(pc.interval ?? 0, LIVE_POLL_MS / 1000);
+    // interval, or how often this page checks if that's longer. Right after coming back to the tab
+    // they jump instead, since nobody was watching them change.
+    const glide = resumed ? 0 : Math.max(pc.interval ?? 0, LIVE_POLL_MS / 1000);
 
     return (
         <>
@@ -108,19 +110,15 @@ const PcSections = ({ pc }) => {
                 <span className="live__label mono">my pc</span>
                 <p className="live__status">
                     <i className={`live__dot${away ? " live__dot--away" : ""}`} />
-                    {away ? (
-                        "idle, on but i stepped away"
-                    ) : (
-                        <span>
-                            {phrase.text}
-                            {/* keyed by the phrase so the blink-out starts over each time */}
-                            <span
-                                key={phrase.key}
-                                className={`live__caret${phrase.typing ? "" : " live__caret--done"}`}
-                                aria-hidden="true"
-                            />
-                        </span>
-                    )}
+                    <span>
+                        {phrase.text}
+                        {/* keyed by the phrase so the blink-out starts over each time */}
+                        <span
+                            key={phrase.key}
+                            className={`live__caret${phrase.typing ? "" : " live__caret--done"}`}
+                            aria-hidden="true"
+                        />
+                    </span>
                 </p>
                 {pc.uptime !== undefined && <Uptime seconds={pc.uptime} glide={glide} />}
                 {pc.app && (
@@ -181,6 +179,7 @@ PcSections.propTypes = {
         app: PropTypes.string,
         appInfo: PropTypes.string,
     }).isRequired,
+    resumed: PropTypes.bool,
 };
 
 // The played part of the song is drawn as y = (1 - e^(-a·x))·sin(4x + n), with x counted back from the
@@ -332,7 +331,7 @@ const LiveStrip = ({ data, now }) => {
                             animate="shown"
                             transition={{ delayChildren: 0.15, staggerChildren: 0.08 }}
                         >
-                            {pc && <PcSections pc={pc} />}
+                            {pc && <PcSections pc={pc} resumed={Boolean(data.resumed)} />}
                             {music && <Music music={music} at={data.at} now={now} />}
                         </motion.div>
                     </div>
@@ -345,6 +344,7 @@ const LiveStrip = ({ data, now }) => {
 LiveStrip.propTypes = {
     data: PropTypes.shape({
         at: PropTypes.number,
+        resumed: PropTypes.bool,
         pc: PropTypes.shape({ online: PropTypes.bool }),
         music: PropTypes.object,
     }),

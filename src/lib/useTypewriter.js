@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useReducedMotion } from "motion/react";
 
 // A different one from `pick` than the last, so the text always visibly changes
@@ -12,13 +12,20 @@ const pickOther = (pick, current) => {
 
 // Types out a phrase from `pick` in about `duration` ms, holds it for `hold` ms, deletes it
 // (twice as fast) and types a new one, forever. `typing` is true while letters are coming or going.
+// Swapping in a different `pick` doesn't cut the current phrase short: it's used from the next swap on.
 const useTypewriter = (pick, { duration = 500, hold = 10_000 } = {}) => {
     const still = useReducedMotion();
     const [target, setTarget] = useState(pick);
     const [shown, setShown] = useState(still ? target.length : 0);
     const [deleting, setDeleting] = useState(false);
+    const latestPick = useRef(pick);
 
     useEffect(() => {
+        latestPick.current = pick;
+    }, [pick]);
+
+    useEffect(() => {
+        const pick = latestPick.current;
         const perLetter = duration / target.length;
         let timer;
         if (deleting) {
@@ -34,13 +41,13 @@ const useTypewriter = (pick, { duration = 500, hold = 10_000 } = {}) => {
             timer = setTimeout(() => {
                 if (!still) return setDeleting(true);
                 // no typing for reduced motion: just swap the words
-                const next = pickOther(pick, target);
+                const next = pickOther(latestPick.current, target);
                 setTarget(next);
                 setShown(next.length);
             }, hold);
         }
         return () => clearTimeout(timer);
-    }, [pick, duration, hold, still, target, shown, deleting]);
+    }, [duration, hold, still, target, shown, deleting]);
 
     return { text: target.slice(0, shown), typing: deleting || shown < target.length, key: target };
 };
