@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import useAverageColor from "../../lib/useAverageColor";
 import useCountUp from "../../lib/useCountUp";
 import useTypewriter from "../../lib/useTypewriter";
+import Marquee from "../Marquee/Marquee";
 import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
@@ -255,8 +256,8 @@ const Music = ({ music, at, now }) => {
                     </span>
                 )}
                 <span className="live__track-text">
-                    <b>{music.title}</b>
-                    <span>{music.artist}</span>
+                    <Marquee as="b">{music.title}</Marquee>
+                    <Marquee>{music.artist}</Marquee>
                 </span>
             </Wrapper>
             {music.durationMs > 0 && (
