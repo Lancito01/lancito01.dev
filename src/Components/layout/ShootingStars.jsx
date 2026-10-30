@@ -26,9 +26,9 @@ const ShootingStars = () => {
                         x: random(10, 90),
                         y: random(0, 45),
                         angle: Math.random() < 0.5 ? tilt : 180 - tilt,
-                        distance: random(280, 520),
-                        length: random(90, 170),
-                        duration: random(0.9, 1.5),
+                        distance: random(450, 750),
+                        length: random(180, 300),
+                        duration: random(1.6, 2.4),
                     },
                 ]);
             }
@@ -54,7 +54,11 @@ const ShootingStars = () => {
                             "--length": `${star.length}px`,
                             "--duration": `${star.duration}s`,
                         }}
-                        onAnimationEnd={() => setStars((current) => current.filter((s) => s.id !== star.id))}
+                        // once the last of its animations is done, not the first
+                        onAnimationEnd={(event) =>
+                            event.animationName === "shooting-star-fade" &&
+                            setStars((current) => current.filter((s) => s.id !== star.id))
+                        }
                     />
                 </span>
             ))}
