@@ -182,14 +182,14 @@ PcSections.propTypes = {
     resumed: PropTypes.bool,
 };
 
-// The played part of the song is drawn as y = (1 - e^(-a·x))·sin(4x + n), with x counted back from the
+// The played part of the song is drawn as y = (1 - e^(a·x))·sin(4x + n) with a < 0, x counted back from the
 // playhead: flat where the song is now and growing into a steady wave behind it, with n sliding from
 // π down to -π so the wave flows back from the playhead into the played part
 const WAVE = {
     pxPerUnit: 20, // screen px per unit of x, so one wavelength (2π/4 units) is about 31px
-    a: 1, // how quickly the wave grows out of the flat start
-    amplitude: 3, // px
-    cycleMs: 1500, // how long n takes to go from π to -π
+    a: -0.25, // how quickly the wave grows out of the flat start (further below 0 is quicker)
+    amplitude: 4, // px
+    cycleMs: 1000, // how long n takes to go from π to -π
     height: 10,
 };
 
@@ -212,7 +212,7 @@ const MusicWave = ({ progressMs, durationMs, at }) => {
             const n = still.matches ? 0 : Math.PI - ((time / WAVE.cycleMs) % 1) * 2 * Math.PI;
             const y = (px) => {
                 const x = (played - px) / WAVE.pxPerUnit;
-                return mid - WAVE.amplitude * (1 - Math.exp(-WAVE.a * x)) * Math.sin(4 * x + n);
+                return mid - WAVE.amplitude * (1 - Math.exp(WAVE.a * x)) * Math.sin(4 * x + n);
             };
 
             let path = `M0 ${y(0).toFixed(2)}`;
