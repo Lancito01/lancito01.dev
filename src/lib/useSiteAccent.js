@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import useAverageColor, { readableAccent } from "./useAverageColor";
+import useCoverColor, { readableAccent } from "./useCoverColor";
 
 // Whether I'm at the PC, as the presence dot shows it: active (green), idle (yellow) or off (grey)
 export function presenceTone(live) {
@@ -12,7 +12,7 @@ export function presenceTone(live) {
 // colour with `override`; otherwise it takes the colour of what's playing on Spotify, and with
 // nothing playing, the presence colour (see index.scss).
 const useSiteAccent = (live, override) => {
-    const tint = useAverageColor(live?.music?.image);
+    const tint = useCoverColor(live?.music?.image);
     const song = live?.music && tint ? `rgb(${readableAccent(tint)})` : null;
     const accent = override ?? song;
 

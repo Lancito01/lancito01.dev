@@ -1,7 +1,7 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
-import useAverageColor from "../../lib/useAverageColor";
+import useCoverColor from "../../lib/useCoverColor";
 import useCountUp from "../../lib/useCountUp";
 import { LIVE_POLL_MS } from "../../lib/useLiveStats";
 import useTypewriter from "../../lib/useTypewriter";
@@ -250,7 +250,7 @@ const Music = ({ music, at, now }) => {
     const progress = Math.min(music.durationMs, music.progressMs + Math.max(0, now - at));
     const Wrapper = music.url ? "a" : "div";
     // The page's accent follows the song too, see useSiteAccent
-    const tint = useAverageColor(music.image);
+    const tint = useCoverColor(music.image);
 
     return (
         <motion.div
