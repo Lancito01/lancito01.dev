@@ -3,6 +3,7 @@ import { useLocation, useOutlet } from "react-router-dom";
 import { AnimatePresence, motion } from "motion/react";
 import Navbar from "./Navbar";
 import Footer from "./Footer";
+import ShootingStars from "./ShootingStars";
 import useLiveStats from "../../lib/useLiveStats";
 import useSiteAccent from "../../lib/useSiteAccent";
 
@@ -19,6 +20,7 @@ const Layout = () => {
 
     return (
         <div className="layout">
+            <ShootingStars />
             <Navbar />
             <AnimatePresence mode="wait" initial={false} onExitComplete={() => window.scrollTo(0, 0)}>
                 <motion.main

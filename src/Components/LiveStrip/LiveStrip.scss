@@ -208,7 +208,9 @@
     &:hover {
         text-decoration: none;
 
-        b {
+        // the inner span too: underlines don't reach into a sliding title's inline-block
+        b,
+        b > span {
             text-decoration: underline;
             text-underline-offset: 3px;
         }
@@ -236,19 +238,13 @@
     flex-direction: column;
     min-width: 0;
 
-    b,
-    span {
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    b {
+    // both lines are Marquees, which slide when they don't fit
+    > b {
         font-size: 16px;
         font-weight: 600;
     }
 
-    span {
+    > span {
         font-size: 14px;
         color: var(--muted);
     }

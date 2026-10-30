@@ -1,0 +1,28 @@
+.marquee {
+    display: block;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+// Inline until it has to move, so the ellipsis still works when it doesn't
+.marquee--scrolling {
+    text-overflow: clip;
+
+    .marquee__text {
+        display: inline-block;
+        animation: marquee var(--marquee-duration) ease-in-out infinite alternate;
+    }
+}
+
+// Rests at the start, slides to the end, rests, then (alternate) slides back
+@keyframes marquee {
+    0%,
+    20% {
+        transform: translateX(0);
+    }
+    80%,
+    100% {
+        transform: translateX(calc(-1 * var(--marquee-shift)));
+    }
+}

@@ -1,0 +1,55 @@
+// Behind everything, so panels with a background hide the star as it passes under them
+.shooting-stars {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+// Points the way the star flies; the star itself only ever moves along its own x
+.shooting-stars__path {
+    position: absolute;
+    width: 0;
+    height: 0;
+    transform-origin: 0 0;
+}
+
+// A bright head with its tail, tinted with the accent, fading out behind it
+.shooting-stars__star {
+    position: absolute;
+    top: -1px;
+    right: 0;
+    width: var(--length);
+    height: 2px;
+    border-radius: 999px;
+    background: linear-gradient(
+        to right,
+        transparent,
+        color-mix(in srgb, var(--accent) 45%, transparent) 60%,
+        rgba(255, 255, 255, 0.95)
+    );
+    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 60%, transparent));
+    opacity: 0;
+    // grows its tail out from the head
+    transform-origin: right center;
+    animation: shooting-star var(--duration) cubic-bezier(0.3, 0.1, 0.5, 1) forwards;
+}
+
+@keyframes shooting-star {
+    0% {
+        opacity: 0;
+        transform: translateX(0) scaleX(0.3);
+    }
+    15% {
+        opacity: 1;
+    }
+    70% {
+        opacity: 1;
+        transform: translateX(calc(var(--distance) * 0.75)) scaleX(1);
+    }
+    100% {
+        opacity: 0;
+        transform: translateX(var(--distance)) scaleX(0.6);
+    }
+}
