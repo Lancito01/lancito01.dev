@@ -1,4 +1,4 @@
-// What the "my pc" section says while I'm active. One is picked at random on each page load.
+// What the "my pc" section says while I'm active. A random one types out, and swaps for another every 10 seconds.
 export const activePhrases = [
     "online",
     "at it",

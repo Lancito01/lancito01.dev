@@ -20,15 +20,23 @@
             top: -0.08em;
         }
 
-        .hero-pikachu {
+        // Solid while the greeting types, then blinks a few times and goes away.
+        // The negative margin keeps it from taking any space, so the line doesn't shift.
+        .typed-caret {
             display: inline-block;
-            width: 0.62em;
-            height: 0.62em;
-            margin-left: 0.22em;
-            border: 1px solid var(--accent);
-            border-radius: 50%;
-            object-fit: cover;
-            vertical-align: -0.04em;
+            width: 0.07em;
+            height: 0.82em;
+            margin-right: -0.07em;
+            vertical-align: -0.06em;
+            background: var(--accent);
+
+            &--done {
+                animation: caret-blink 0.9s step-end 3 forwards;
+            }
+        }
+
+        .typed-rest {
+            visibility: hidden;
         }
     }
 }
@@ -78,6 +86,17 @@
 // Fixed-width digits, so the line doesn't shift as the seconds tick
 .status__clock {
     font-variant-numeric: tabular-nums;
+
+    // clip-path (not overflow) hides the rolling digits, so the clock keeps the text's baseline
+    .roll {
+        display: inline-block;
+        position: relative;
+        clip-path: inset(0 -0.1em);
+
+        > span {
+            display: inline-block;
+        }
+    }
 }
 
 // The feed takes the intro's height and scrolls inside it, instead of making the row taller.
@@ -90,9 +109,9 @@
     &::before {
         content: "";
         position: absolute;
-        inset: -140px -160px;
+        inset: -240px -260px;
         z-index: -1;
-        background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 13%, transparent), transparent);
+        background: radial-gradient(closest-side, color-mix(in srgb, var(--accent) 19%, transparent), transparent);
         pointer-events: none;
     }
 

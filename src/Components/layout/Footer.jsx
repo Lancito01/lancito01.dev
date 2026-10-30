@@ -4,7 +4,11 @@ import "./Footer.scss";
 const Footer = () => {
     return (
         <footer className="wrap footer">
-            <span>andy · lancito01</span>
+            {/* signed off at the bottom of every page */}
+            <span className="footer__sign">
+                <img src="/pikachu.gif" alt="Pikachu, my signature" width="30" height="30" />
+                andy · lancito01
+            </span>
             <ul className="footer__links">
                 {socials.map((social) => (
                     <li key={social.name}>

@@ -1,4 +1,5 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
 import { motion } from "motion/react";
 import { accuracy, expandHex, isHexGuess, randomHex } from "../../lib/hue";
 import "../page.scss";
@@ -15,6 +16,13 @@ const HueGuessr = () => {
     const [target, setTarget] = useState(randomHex);
     const [input, setInput] = useState("");
     const [result, setResult] = useState(null);
+
+    // The page's accent is the colour to guess, in place of the song or presence colour
+    const { setAccentOverride } = useOutletContext();
+    useEffect(() => {
+        setAccentOverride(target);
+        return () => setAccentOverride(null);
+    }, [target, setAccentOverride]);
 
     const onInputChange = (e) => {
         const value = e.target.value.toUpperCase().replace(/^#/, "");

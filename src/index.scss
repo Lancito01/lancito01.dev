@@ -117,6 +117,17 @@ button {
     font-family: var(--font-mono);
 }
 
+// For the typing carets: a few blinks, then gone
+@keyframes caret-blink {
+    0% {
+        opacity: 1;
+    }
+    50%,
+    100% {
+        opacity: 0;
+    }
+}
+
 .wrap {
     width: 100%;
     max-width: var(--page-width);

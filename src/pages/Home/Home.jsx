@@ -1,11 +1,12 @@
-import { useEffect } from "react";
-import { motion } from "motion/react";
+import { useEffect, useState } from "react";
+import { useOutletContext } from "react-router-dom";
+import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import PropTypes from "prop-types";
 import ActivityFeed from "../../Components/ActivityFeed/ActivityFeed";
 import LiveStrip from "../../Components/LiveStrip/LiveStrip";
 import ProjectBoard from "../../Components/ProjectBoard/ProjectBoard";
 import useActivity from "../../lib/useActivity";
-import useLiveStats from "../../lib/useLiveStats";
+import { presenceTone } from "../../lib/useSiteAccent";
 import { awakeGuess, formatLocalTime, localHour, useNow } from "../../lib/time";
 import "./Home.scss";
 
@@ -14,20 +15,71 @@ const rise = {
     shown: { opacity: 1, y: 0, transition: { duration: 0.5, ease: [0.2, 0.7, 0.2, 1] } },
 };
 
+const GREETING = "hey, i'm andy.";
+const TYPE_DELAY_MS = 180; // before the first letter
+const TYPE_MS = 40; // per letter
+
+// The greeting types itself out once, letter by letter, behind a caret. Returns how far it's got.
+const useTyped = (text) => {
+    const still = useReducedMotion();
+    const [shown, setShown] = useState(still ? text.length : 0);
+
+    useEffect(() => {
+        if (shown >= text.length) return undefined;
+        const timer = setTimeout(() => setShown((n) => n + 1), shown === 0 ? TYPE_DELAY_MS : TYPE_MS);
+        return () => clearTimeout(timer);
+    }, [shown, text.length]);
+
+    return { typed: text.slice(0, shown), rest: text.slice(shown), done: shown >= text.length };
+};
+
+// Each digit fades up into the next one as it changes
+const RollingClock = ({ time }) => (
+    <span className="status__clock">
+        {[...time].map((char, i) =>
+            /\d/.test(char) ? (
+                <span key={i} className="roll">
+                    <AnimatePresence mode="popLayout" initial={false}>
+                        <motion.span
+                            key={char}
+                            initial={{ y: "30%", opacity: 0 }}
+                            animate={{ y: 0, opacity: 1 }}
+                            exit={{ y: "-30%", opacity: 0 }}
+                            transition={{
+                                y: { duration: 0.35, ease: "easeOut" },
+                                opacity: { duration: 0.35, ease: "easeIn" },
+                            }}
+                        >
+                            {char}
+                        </motion.span>
+                    </AnimatePresence>
+                </span>
+            ) : (
+                <span key={i}>{char}</span>
+            ),
+        )}
+    </span>
+);
+
+RollingClock.propTypes = {
+    time: PropTypes.string.isRequired,
+};
+
 // What I'm up to, going by my PC when the site knows and by the clock when it doesn't.
 // `tone` picks the dot: active (green), idle (yellow) or off (grey).
 function presence(live, now) {
     const pc = live?.pc;
+    const tone = presenceTone(live);
     if (pc?.online) {
-        if (pc.status === "away") return { tone: "idle", text: "pc's on, but i stepped away" };
-        return { tone: "active", text: "at the pc right now", app: pc.app };
+        if (pc.status === "away") return { tone, text: "pc's on, but i stepped away" };
+        return { tone, text: "at the pc right now", app: pc.app };
     }
-    if (live?.music) return { tone: "idle", text: "away from the pc, music's on" };
+    if (live?.music) return { tone, text: "away from the pc, music's on" };
     if (pc) {
         const hour = localHour(now);
-        return { tone: "off", text: hour >= 23 || hour < 8 ? "pc's off, probably asleep" : "away from the pc" };
+        return { tone, text: hour >= 23 || hour < 8 ? "pc's off, probably asleep" : "away from the pc" };
     }
-    return { tone: "off", text: awakeGuess(now) };
+    return { tone, text: awakeGuess(now) };
 }
 
 const Presence = ({ live, now }) => {
@@ -56,25 +108,19 @@ Presence.propTypes = {
 const Home = () => {
     const now = useNow();
     const activity = useActivity();
-    const live = useLiveStats();
-
-    // With no song playing, the page's accent takes the presence dot's colour (see index.scss).
-    // Only once the PC has actually reported, so a guess from the clock never greys it out.
-    const tone = live?.pc ? presence(live, now).tone : null;
-    useEffect(() => {
-        if (!tone) return undefined;
-        const root = document.documentElement;
-        root.dataset.presence = tone;
-        return () => delete root.dataset.presence;
-    }, [tone]);
+    const { live } = useOutletContext();
+    const greeting = useTyped(GREETING);
 
     return (
         <>
             <section className="wrap home-hero">
                 <motion.div initial="hidden" animate="shown" transition={{ staggerChildren: 0.08 }}>
-                    <motion.h1 variants={rise}>
-                        <span className="prompt">&gt;</span>hey, i&apos;m andy.
-                        <img className="hero-pikachu" src="/pikachu.gif" alt="Pikachu, my signature" />
+                    <motion.h1 variants={rise} aria-label={GREETING}>
+                        <span className="prompt">&gt;</span>
+                        {greeting.typed}
+                        <span className={`typed-caret${greeting.done ? " typed-caret--done" : ""}`} />
+                        {/* the untyped rest still takes its space, so nothing shifts as the letters appear */}
+                        <span className="typed-rest">{greeting.rest}</span>
                     </motion.h1>
                     <motion.p variants={rise} className="home-hero__lead">
                         full-stack developer from argentina. i build tools, discord bots and small web games, and send
@@ -90,7 +136,7 @@ const Home = () => {
                         <div>
                             <dt className="mono">local time</dt>
                             <dd>
-                                <span className="status__clock">{formatLocalTime(now)}</span> in argentina
+                                <RollingClock time={formatLocalTime(now)} /> in argentina
                                 <span className="status__note mono">utc-3</span>
                             </dd>
                         </div>

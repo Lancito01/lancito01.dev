@@ -19,10 +19,10 @@ async function fetchLiveStats() {
 }
 
 // What my PC and Spotify are up to, re-checked while the tab is visible: every 10 seconds
-// while something's live, every minute otherwise. null until the first answer, or when the
-// API isn't there.
+// while something's live, every minute otherwise. undefined until the first answer, null when
+// the API isn't there.
 const useLiveStats = () => {
-    const [data, setData] = useState(null);
+    const [data, setData] = useState(undefined);
 
     useEffect(() => {
         let cancelled = false;
@@ -36,6 +36,7 @@ const useLiveStats = () => {
                 if (!cancelled) setData(latest);
             } catch {
                 // keep showing the last answer; the next poll may work
+                if (!cancelled) setData((current) => current ?? null);
             }
             if (!cancelled && document.visibilityState === "visible") {
                 timer = setTimeout(poll, isLive(latest) ? LIVE_POLL_MS : IDLE_POLL_MS);

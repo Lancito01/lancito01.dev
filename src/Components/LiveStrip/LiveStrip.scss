@@ -92,6 +92,20 @@
     }
 }
 
+// Same caret as the home greeting: solid while typing or deleting, then blinks out
+.live__caret {
+    display: inline-block;
+    width: 2px;
+    height: 0.95em;
+    margin-left: 2px;
+    vertical-align: -0.12em;
+    background: var(--accent);
+
+    &--done {
+        animation: caret-blink 0.9s step-end 3 forwards;
+    }
+}
+
 .live__note {
     font-size: 13px;
     color: var(--muted);
@@ -148,7 +162,6 @@
         height: 100%;
         background: var(--fg-soft);
         transform-origin: left;
-        transition: transform 0.8s cubic-bezier(0.2, 0.7, 0.2, 1);
     }
 }
 
