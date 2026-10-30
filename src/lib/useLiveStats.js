@@ -20,7 +20,8 @@ async function fetchLiveStats() {
 
 // What my PC and Spotify are up to, re-checked while the tab is visible: every 10 seconds
 // while something's live, every minute otherwise. undefined until the first answer, null when
-// the API isn't there.
+// the API isn't there. From coming back to the tab until the next regular check, the answer
+// has `resumed: true`: whatever changed meanwhile did so unseen, so it should just show up.
 const useLiveStats = () => {
     const [data, setData] = useState(undefined);
 
@@ -29,11 +30,11 @@ const useLiveStats = () => {
         let timer;
 
         let latest = null;
-        const poll = async () => {
+        const poll = async (resumed = false) => {
             clearTimeout(timer);
             try {
                 latest = await fetchLiveStats();
-                if (!cancelled) setData(latest);
+                if (!cancelled) setData(latest && { ...latest, resumed });
             } catch {
                 // keep showing the last answer; the next poll may work
                 if (!cancelled) setData((current) => current ?? null);
@@ -43,8 +44,12 @@ const useLiveStats = () => {
             }
         };
         const onVisibilityChange = () => {
-            if (document.visibilityState === "visible") poll();
-            else clearTimeout(timer);
+            if (document.visibilityState === "visible") {
+                // Anything left mid-move from before jumps to its end on the first frame back,
+                // so the last answer counts as resumed too until the fresh one lands
+                setData((current) => current && { ...current, resumed: true });
+                poll(true);
+            } else clearTimeout(timer);
         };
 
         poll();

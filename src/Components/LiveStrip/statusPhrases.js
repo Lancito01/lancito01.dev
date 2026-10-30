@@ -1,4 +1,5 @@
-// What the "my pc" section says while I'm active. A random one types out, and swaps for another every 10 seconds.
+// What the "my pc" section says. A random one types out, and swaps for another every 10 seconds,
+// picked from whichever list fits how I am at the time of the swap.
 export const activePhrases = [
     "online",
     "at it",
@@ -62,4 +63,46 @@ export const activePhrases = [
     "booted and ready",
 ];
 
-export const pickActivePhrase = () => activePhrases[Math.floor(Math.random() * activePhrases.length)];
+// While the PC's on but I haven't touched it in a while
+export const idlePhrases = [
+    "idle, on but i stepped away",
+    "idle",
+    "away from keyboard",
+    "afk",
+    "stepped away",
+    "be right back",
+    "brb",
+    "out for a bit",
+    "not at my desk",
+    "somewhere else",
+    "away for now",
+    "probably eating",
+    "getting a snack",
+    "grabbing a coffee",
+    "touching grass",
+    "taking a break",
+    "on a break",
+    "resting my eyes",
+    "stretching my legs",
+    "doing something offscreen",
+    "left the pc running",
+    "the pc's on, i'm not",
+    "screen's on, nobody's home",
+    "gone for a minute",
+    "back soon",
+    "back in a bit, probably",
+    "lost track of time",
+    "distracted",
+    "pondering",
+    "staring at a wall",
+    "napping, maybe",
+    "waiting on something",
+    "letting it render",
+    "letting the fans spin",
+    "quiet for now",
+];
+
+const pickFrom = (phrases) => () => phrases[Math.floor(Math.random() * phrases.length)];
+
+export const pickActivePhrase = pickFrom(activePhrases);
+export const pickIdlePhrase = pickFrom(idlePhrases);
