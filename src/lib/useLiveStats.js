@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 
 // Every request counts against Vercel's free monthly allowance (and going over pauses the API
 // for 30 days), so check often only while there's something live to show
-const LIVE_POLL_MS = 10_000;
+export const LIVE_POLL_MS = 10_000;
 const IDLE_POLL_MS = 60_000;
 
 const isLive = (data) => Boolean(data?.pc?.online || data?.music);

@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
 import useAverageColor from "../../lib/useAverageColor";
 import useCountUp from "../../lib/useCountUp";
+import { LIVE_POLL_MS } from "../../lib/useLiveStats";
 import useTypewriter from "../../lib/useTypewriter";
 import Marquee from "../Marquee/Marquee";
 import { pickActivePhrase } from "./statusPhrases";
@@ -36,8 +37,8 @@ const rise = {
 };
 
 // The number counts up and the bar fills from empty when it first shows, then glides between readings
-const Meter = ({ label, value, max, format }) => {
-    const shown = useCountUp(value);
+const Meter = ({ label, value, max, format, glide }) => {
+    const shown = useCountUp(value, 0.9, glide);
     return (
         <div className="live__meter">
             <span className="live__label mono">{label}</span>
@@ -54,10 +55,11 @@ Meter.propTypes = {
     value: PropTypes.number.isRequired,
     max: PropTypes.number.isRequired,
     format: PropTypes.func.isRequired,
+    glide: PropTypes.number,
 };
 
-const Count = ({ label, value, format }) => {
-    const shown = useCountUp(value, 1.2);
+const Count = ({ label, value, format, glide }) => {
+    const shown = useCountUp(value, 1.2, glide);
     return (
         <div className="live__count">
             <b>{format(shown)}</b>
@@ -70,15 +72,17 @@ Count.propTypes = {
     label: PropTypes.string.isRequired,
     value: PropTypes.number.isRequired,
     format: PropTypes.func.isRequired,
+    glide: PropTypes.number,
 };
 
-const Uptime = ({ seconds }) => {
-    const shown = useCountUp(seconds, 1.2);
+const Uptime = ({ seconds, glide }) => {
+    const shown = useCountUp(seconds, 1.2, glide);
     return <p className="live__note mono">on for {formatUptime(Math.round(shown))}</p>;
 };
 
 Uptime.propTypes = {
     seconds: PropTypes.number.isRequired,
+    glide: PropTypes.number,
 };
 
 const PcSections = ({ pc }) => {
@@ -87,6 +91,9 @@ const PcSections = ({ pc }) => {
     const away = pc.status === "away";
     const hasLoad = pc.cpu !== undefined || pc.gpu !== undefined || pc.ramTotal !== undefined;
     const hasToday = pc.clicks !== undefined || pc.mouse !== undefined;
+    // Each reading glides to the next over the time until that one shows up here: the app's own
+    // interval, or how often this page checks if that's longer
+    const glide = Math.max(pc.interval ?? 0, LIVE_POLL_MS / 1000);
 
     return (
         <>
@@ -108,7 +115,7 @@ const PcSections = ({ pc }) => {
                         </span>
                     )}
                 </p>
-                {pc.uptime !== undefined && <Uptime seconds={pc.uptime} />}
+                {pc.uptime !== undefined && <Uptime seconds={pc.uptime} glide={glide} />}
                 {pc.app && (
                     <p className="live__app">
                         in <b>{pc.app}</b>
@@ -121,13 +128,14 @@ const PcSections = ({ pc }) => {
                 <motion.div className="live__section" variants={rise}>
                     <span className="live__label mono">load</span>
                     <div className="live__meters">
-                        {pc.cpu !== undefined && <Meter label="cpu" value={pc.cpu} max={100} format={percent} />}
-                        {pc.gpu !== undefined && <Meter label="gpu" value={pc.gpu} max={100} format={percent} />}
+                        {pc.cpu !== undefined && <Meter label="cpu" value={pc.cpu} max={100} format={percent} glide={glide} />}
+                        {pc.gpu !== undefined && <Meter label="gpu" value={pc.gpu} max={100} format={percent} glide={glide} />}
                         {pc.ramTotal !== undefined && (
                             <Meter
                                 label="ram"
                                 value={pc.ramUsed}
                                 max={pc.ramTotal}
+                                glide={glide}
                                 format={(used) => `${used.toFixed(1)} / ${Math.round(pc.ramTotal)} gb`}
                             />
                         )}
@@ -139,10 +147,10 @@ const PcSections = ({ pc }) => {
                 <motion.div className="live__section" variants={rise}>
                     <span className="live__label mono">today</span>
                     <div className="live__counts">
-                        {pc.clicks !== undefined && <Count label="clicks" value={pc.clicks} format={wholeNumber} />}
-                        {pc.keys !== undefined && <Count label="keys" value={pc.keys} format={wholeNumber} />}
-                        {pc.scrolls !== undefined && <Count label="scrolls" value={pc.scrolls} format={wholeNumber} />}
-                        {pc.mouse !== undefined && <Count label="of mouse" value={pc.mouse} format={formatDistance} />}
+                        {pc.clicks !== undefined && <Count label="clicks" value={pc.clicks} format={wholeNumber} glide={glide} />}
+                        {pc.keys !== undefined && <Count label="keys" value={pc.keys} format={wholeNumber} glide={glide} />}
+                        {pc.scrolls !== undefined && <Count label="scrolls" value={pc.scrolls} format={wholeNumber} glide={glide} />}
+                        {pc.mouse !== undefined && <Count label="of mouse" value={pc.mouse} format={formatDistance} glide={glide} />}
                     </div>
                 </motion.div>
             )}
@@ -153,6 +161,7 @@ const PcSections = ({ pc }) => {
 PcSections.propTypes = {
     pc: PropTypes.shape({
         status: PropTypes.oneOf(["active", "away"]),
+        interval: PropTypes.number,
         uptime: PropTypes.number,
         cpu: PropTypes.number,
         gpu: PropTypes.number,
