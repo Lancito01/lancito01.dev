@@ -26,30 +26,63 @@
     background: linear-gradient(
         to right,
         transparent,
-        color-mix(in srgb, var(--accent) 45%, transparent) 60%,
+        color-mix(in srgb, var(--accent) 40%, transparent) 55%,
         rgba(255, 255, 255, 0.95)
     );
-    filter: drop-shadow(0 0 4px color-mix(in srgb, var(--accent) 60%, transparent));
     opacity: 0;
     // grows its tail out from the head
     transform-origin: right center;
-    animation: shooting-star var(--duration) cubic-bezier(0.3, 0.1, 0.5, 1) forwards;
+    will-change: translate, scale, opacity;
+    // Three animations rather than one, so each gets a single smooth curve: an easing applies to
+    // every gap between keyframes, so mixing them in one would make the star stop and start
+    animation:
+        shooting-star-fly var(--duration) cubic-bezier(0.25, 0.2, 0.45, 1) forwards,
+        shooting-star-tail var(--duration) ease-out forwards,
+        shooting-star-fade var(--duration) linear forwards;
+
+    // the glow around the head
+    &::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: 0;
+        width: 3px;
+        height: 3px;
+        margin-top: -1.5px;
+        border-radius: 50%;
+        background: #fff;
+        box-shadow: 0 0 6px 2px color-mix(in srgb, var(--accent) 55%, transparent);
+    }
 }
 
-@keyframes shooting-star {
+@keyframes shooting-star-fly {
+    from {
+        translate: 0;
+    }
+    to {
+        translate: var(--distance);
+    }
+}
+
+@keyframes shooting-star-tail {
+    from {
+        scale: 0.15 1;
+    }
+    to {
+        scale: 1 1;
+    }
+}
+
+// in slowly, then a long burn out
+@keyframes shooting-star-fade {
     0% {
         opacity: 0;
-        transform: translateX(0) scaleX(0.3);
     }
-    15% {
+    25%,
+    50% {
         opacity: 1;
-    }
-    70% {
-        opacity: 1;
-        transform: translateX(calc(var(--distance) * 0.75)) scaleX(1);
     }
     100% {
         opacity: 0;
-        transform: translateX(var(--distance)) scaleX(0.6);
     }
 }
