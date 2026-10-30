@@ -83,22 +83,6 @@
     margin-left: 8px;
 }
 
-// Fixed-width digits, so the line doesn't shift as the seconds tick
-.status__clock {
-    font-variant-numeric: tabular-nums;
-
-    // clip-path (not overflow) hides the rolling digits, so the clock keeps the text's baseline
-    .roll {
-        display: inline-block;
-        position: relative;
-        clip-path: inset(0 -0.1em);
-
-        > span {
-            display: inline-block;
-        }
-    }
-}
-
 // The feed takes the intro's height and scrolls inside it, instead of making the row taller.
 // No min-height here: any floor taller than the intro makes the panel hang past it.
 .home-hero__feed {

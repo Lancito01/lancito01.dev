@@ -1,0 +1,64 @@
+// Fixed-width digits, so the line doesn't shift as they change
+.rolling {
+    font-variant-numeric: tabular-nums;
+}
+
+// clip-path (not overflow) hides the rolling digits, so the text keeps its baseline
+.rolling__digit {
+    display: inline-block;
+    position: relative;
+    clip-path: inset(0 -0.1em);
+
+    > span {
+        display: inline-block;
+    }
+}
+
+.rolling__in {
+    animation:
+        rolling-up-in 0.35s ease-out,
+        rolling-fade-in 0.35s ease-in;
+}
+
+.rolling__out {
+    position: absolute;
+    left: 0;
+    top: 0;
+    animation:
+        rolling-up-out 0.35s ease-out forwards,
+        rolling-fade-out 0.35s ease-in forwards;
+}
+
+@keyframes rolling-up-in {
+    from {
+        transform: translateY(30%);
+    }
+}
+
+@keyframes rolling-fade-in {
+    from {
+        opacity: 0;
+    }
+}
+
+@keyframes rolling-up-out {
+    to {
+        transform: translateY(-30%);
+    }
+}
+
+@keyframes rolling-fade-out {
+    to {
+        opacity: 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .rolling__in {
+        animation: none;
+    }
+
+    .rolling__out {
+        display: none !important;
+    }
+}
