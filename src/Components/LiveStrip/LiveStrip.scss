@@ -165,7 +165,7 @@
     }
 }
 
-// Registered so the tint can fade from one song's colour to the next
+// Registered so the tint can smooth between the steps of the song's moving colour
 @property --tint {
     syntax: "<color>";
     inherits: false;
@@ -176,7 +176,7 @@
     background:
         radial-gradient(130% 120% at 0% 0%, color-mix(in srgb, var(--tint) 28%, transparent), transparent 75%),
         var(--panel);
-    transition: --tint 0.8s ease;
+    transition: --tint 0.3s linear;
 }
 
 .live__counts {

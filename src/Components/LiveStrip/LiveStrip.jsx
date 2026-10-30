@@ -250,14 +250,14 @@ const Music = ({ music, at, now }) => {
     const progress = Math.min(music.durationMs, music.progressMs + Math.max(0, now - at));
     const Wrapper = music.url ? "a" : "div";
     // The page's accent follows the song too, see useSiteAccent
-    const tint = useCoverColor(music.image);
+    const section = useRef(null);
+    useCoverColor(music.image, (colour) => {
+        if (colour) section.current?.style.setProperty("--tint", `rgb(${colour})`);
+        else section.current?.style.removeProperty("--tint");
+    });
 
     return (
-        <motion.div
-            className="live__section live__section--music"
-            variants={rise}
-            style={tint ? { "--tint": `rgb(${tint})` } : undefined}
-        >
+        <motion.div ref={section} className="live__section live__section--music" variants={rise}>
             <span className="live__label mono">listening to</span>
             <Wrapper
                 className="live__track"
