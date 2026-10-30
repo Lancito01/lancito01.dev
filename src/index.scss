@@ -25,11 +25,17 @@
     --page-width: 1240px;
     --gutter: 40px;
 
-    // Follows the colour of whatever's playing on Spotify (see LiveStrip), else my presence below
+    // Flows through the colours of whatever's playing on Spotify (see useSiteAccent), else my
+    // presence below
     --accent: var(--green);
     transition: --accent 0.8s ease;
 
     color-scheme: dark;
+}
+
+// The song's colours move on their own a few steps a second, so only smooth between the steps
+:root[data-cover] {
+    transition: --accent 0.3s linear;
 }
 
 // With nothing playing, the accent follows whether I'm at the PC (set by the home page),
