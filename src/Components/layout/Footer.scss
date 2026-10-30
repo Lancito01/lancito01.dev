@@ -9,6 +9,20 @@
     font-size: 15px;
 }
 
+.footer__sign {
+    display: inline-flex;
+    align-items: center;
+    gap: 12px;
+
+    img {
+        width: 30px;
+        height: 30px;
+        border: 1px solid var(--accent);
+        border-radius: 50%;
+        object-fit: cover;
+    }
+}
+
 .footer__links {
     display: flex;
     flex-wrap: wrap;

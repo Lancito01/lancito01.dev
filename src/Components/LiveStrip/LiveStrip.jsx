@@ -1,7 +1,9 @@
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import { AnimatePresence, motion } from "motion/react";
 import PropTypes from "prop-types";
-import useAverageColor, { readableAccent } from "../../lib/useAverageColor";
+import useAverageColor from "../../lib/useAverageColor";
+import useCountUp from "../../lib/useCountUp";
+import useTypewriter from "../../lib/useTypewriter";
 import { pickActivePhrase } from "./statusPhrases";
 import "./LiveStrip.scss";
 
@@ -23,85 +25,125 @@ function formatTrackTime(ms) {
     return `${Math.floor(seconds / 60)}:${String(seconds % 60).padStart(2, "0")}`;
 }
 
-const Meter = ({ label, text, fraction }) => (
-    <div className="live__meter">
-        <span className="live__label mono">{label}</span>
-        <span className="live__meter-value">{text}</span>
-        <span className="live__bar">
-            <i style={{ transform: `scaleX(${Math.min(1, Math.max(0, fraction))})` }} />
-        </span>
-    </div>
-);
+const percent = (value) => `${Math.round(value)}%`;
+const wholeNumber = (value) => number.format(Math.round(value));
+
+// The panels rise in one after another when the strip shows up
+const rise = {
+    hidden: { opacity: 0, y: 12 },
+    shown: { opacity: 1, y: 0, transition: { duration: 0.45, ease: [0.2, 0.7, 0.2, 1] } },
+};
+
+// The number counts up and the bar fills from empty when it first shows, then glides between readings
+const Meter = ({ label, value, max, format }) => {
+    const shown = useCountUp(value);
+    return (
+        <div className="live__meter">
+            <span className="live__label mono">{label}</span>
+            <span className="live__meter-value">{format(shown)}</span>
+            <span className="live__bar">
+                <i style={{ transform: `scaleX(${Math.min(1, Math.max(0, shown / max))})` }} />
+            </span>
+        </div>
+    );
+};
 
 Meter.propTypes = {
     label: PropTypes.string.isRequired,
-    text: PropTypes.string.isRequired,
-    fraction: PropTypes.number.isRequired,
+    value: PropTypes.number.isRequired,
+    max: PropTypes.number.isRequired,
+    format: PropTypes.func.isRequired,
 };
 
-const Count = ({ label, value }) => (
-    <div className="live__count">
-        <b>{value}</b>
-        <span className="live__label mono">{label}</span>
-    </div>
-);
+const Count = ({ label, value, format }) => {
+    const shown = useCountUp(value, 1.2);
+    return (
+        <div className="live__count">
+            <b>{format(shown)}</b>
+            <span className="live__label mono">{label}</span>
+        </div>
+    );
+};
 
 Count.propTypes = {
     label: PropTypes.string.isRequired,
-    value: PropTypes.string.isRequired,
+    value: PropTypes.number.isRequired,
+    format: PropTypes.func.isRequired,
+};
+
+const Uptime = ({ seconds }) => {
+    const shown = useCountUp(seconds, 1.2);
+    return <p className="live__note mono">on for {formatUptime(Math.round(shown))}</p>;
+};
+
+Uptime.propTypes = {
+    seconds: PropTypes.number.isRequired,
 };
 
 const PcSections = ({ pc }) => {
-    // Picked once per page load, so it doesn't change under you while you read
-    const [phrase] = useState(pickActivePhrase);
+    // Types itself out, then every 10 seconds deletes itself and types a different one
+    const phrase = useTypewriter(pickActivePhrase);
     const away = pc.status === "away";
     const hasLoad = pc.cpu !== undefined || pc.gpu !== undefined || pc.ramTotal !== undefined;
     const hasToday = pc.clicks !== undefined || pc.mouse !== undefined;
 
     return (
         <>
-            <div className="live__section">
+            <motion.div className="live__section" variants={rise}>
                 <span className="live__label mono">my pc</span>
                 <p className="live__status">
                     <i className={`live__dot${away ? " live__dot--away" : ""}`} />
-                    {away ? "idle, on but i stepped away" : phrase}
+                    {away ? (
+                        "idle, on but i stepped away"
+                    ) : (
+                        <span>
+                            {phrase.text}
+                            {/* keyed by the phrase so the blink-out starts over each time */}
+                            <span
+                                key={phrase.key}
+                                className={`live__caret${phrase.typing ? "" : " live__caret--done"}`}
+                                aria-hidden="true"
+                            />
+                        </span>
+                    )}
                 </p>
-                {pc.uptime !== undefined && <p className="live__note mono">on for {formatUptime(pc.uptime)}</p>}
+                {pc.uptime !== undefined && <Uptime seconds={pc.uptime} />}
                 {pc.app && (
                     <p className="live__app">
                         in <b>{pc.app}</b>
                         {pc.appInfo && <span>{pc.appInfo}</span>}
                     </p>
                 )}
-            </div>
+            </motion.div>
 
             {hasLoad && (
-                <div className="live__section">
+                <motion.div className="live__section" variants={rise}>
                     <span className="live__label mono">load</span>
                     <div className="live__meters">
-                        {pc.cpu !== undefined && <Meter label="cpu" text={`${pc.cpu}%`} fraction={pc.cpu / 100} />}
-                        {pc.gpu !== undefined && <Meter label="gpu" text={`${pc.gpu}%`} fraction={pc.gpu / 100} />}
+                        {pc.cpu !== undefined && <Meter label="cpu" value={pc.cpu} max={100} format={percent} />}
+                        {pc.gpu !== undefined && <Meter label="gpu" value={pc.gpu} max={100} format={percent} />}
                         {pc.ramTotal !== undefined && (
                             <Meter
                                 label="ram"
-                                text={`${pc.ramUsed.toFixed(1)} / ${Math.round(pc.ramTotal)} gb`}
-                                fraction={pc.ramUsed / pc.ramTotal}
+                                value={pc.ramUsed}
+                                max={pc.ramTotal}
+                                format={(used) => `${used.toFixed(1)} / ${Math.round(pc.ramTotal)} gb`}
                             />
                         )}
                     </div>
-                </div>
+                </motion.div>
             )}
 
             {hasToday && (
-                <div className="live__section">
+                <motion.div className="live__section" variants={rise}>
                     <span className="live__label mono">today</span>
                     <div className="live__counts">
-                        {pc.clicks !== undefined && <Count label="clicks" value={number.format(pc.clicks)} />}
-                        {pc.keys !== undefined && <Count label="keys" value={number.format(pc.keys)} />}
-                        {pc.scrolls !== undefined && <Count label="scrolls" value={number.format(pc.scrolls)} />}
-                        {pc.mouse !== undefined && <Count label="of mouse" value={formatDistance(pc.mouse)} />}
+                        {pc.clicks !== undefined && <Count label="clicks" value={pc.clicks} format={wholeNumber} />}
+                        {pc.keys !== undefined && <Count label="keys" value={pc.keys} format={wholeNumber} />}
+                        {pc.scrolls !== undefined && <Count label="scrolls" value={pc.scrolls} format={wholeNumber} />}
+                        {pc.mouse !== undefined && <Count label="of mouse" value={pc.mouse} format={formatDistance} />}
                     </div>
-                </div>
+                </motion.div>
             )}
         </>
     );
@@ -191,19 +233,15 @@ const Music = ({ music, at, now }) => {
     // The API answer can be a few seconds old, so move the song along from when it was made
     const progress = Math.min(music.durationMs, music.progressMs + Math.max(0, now - at));
     const Wrapper = music.url ? "a" : "div";
+    // The page's accent follows the song too, see useSiteAccent
     const tint = useAverageColor(music.image);
 
-    // While something's playing, the page's accent (the ">" in headings and so on) takes the song's colour,
-    // and fades back to the presence colour (green, yellow or grey, see index.scss) when it stops
-    useEffect(() => {
-        if (!tint) return undefined;
-        const root = document.documentElement;
-        root.style.setProperty("--accent", `rgb(${readableAccent(tint)})`);
-        return () => root.style.removeProperty("--accent");
-    }, [tint]);
-
     return (
-        <div className="live__section live__section--music" style={tint ? { "--tint": `rgb(${tint})` } : undefined}>
+        <motion.div
+            className="live__section live__section--music"
+            variants={rise}
+            style={tint ? { "--tint": `rgb(${tint})` } : undefined}
+        >
             <span className="live__label mono">listening to</span>
             <Wrapper
                 className="live__track"
@@ -229,7 +267,7 @@ const Music = ({ music, at, now }) => {
                     </span>
                 </div>
             )}
-        </div>
+        </motion.div>
     );
 };
 
@@ -271,10 +309,15 @@ const LiveStrip = ({ data, now }) => {
                                 {pc ? "live from my pc, updated every few seconds" : "playing on spotify"}
                             </span>
                         </div>
-                        <div className={`live${pc ? "" : " live--music-only"}`}>
+                        <motion.div
+                            className={`live${pc ? "" : " live--music-only"}`}
+                            initial="hidden"
+                            animate="shown"
+                            transition={{ delayChildren: 0.15, staggerChildren: 0.08 }}
+                        >
                             {pc && <PcSections pc={pc} />}
                             {music && <Music music={music} at={data.at} now={now} />}
-                        </div>
+                        </motion.div>
                     </div>
                 </motion.section>
             )}
