@@ -34,7 +34,7 @@
 
 .board {
     position: relative;
-    height: 560px;
+    height: 780px;
     background: var(--board);
     border: 1px solid var(--rule);
     border-radius: 14px;
@@ -120,6 +120,39 @@
         font-size: 16.5px;
         color: #2a1a08;
         margin-bottom: 18px;
+    }
+}
+
+// dark like Thump's own window, with its pink-to-orange title
+.board-card--thump {
+    --width: 390px;
+    width: var(--width);
+    padding: 26px;
+    background: #15151b;
+    color: #f1f1f4;
+
+    .board-card__tag {
+        background: #f1f1f4;
+        color: #15151b;
+    }
+
+    h3 {
+        font-size: 44px;
+        letter-spacing: -0.035em;
+        margin-top: 16px;
+        background: linear-gradient(90deg, #ff2e78, #ffa726);
+        background-clip: text;
+        color: transparent;
+    }
+
+    p {
+        font-size: 16.5px;
+        color: #b9b9c4;
+        margin-bottom: 18px;
+    }
+
+    a {
+        color: #f1f1f4;
     }
 }
 
@@ -241,7 +274,8 @@
         cursor: auto;
     }
 
-    .board-card--obs h3 {
+    .board-card--obs h3,
+    .board-card--thump h3 {
         font-size: 38px;
     }
 }

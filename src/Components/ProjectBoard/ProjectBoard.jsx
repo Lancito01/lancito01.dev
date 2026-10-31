@@ -1,10 +1,11 @@
 import { useEffect, useRef, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import { animate, motion, useMotionValue } from "motion/react";
 import PropTypes from "prop-types";
 import ObsPill from "../ObsPill/ObsPill";
+import ThumpLights from "../ThumpLights/ThumpLights";
 import useMediaQuery from "../../lib/useMediaQuery";
-import { andyScriptLinks, obsHudLinks } from "../../data/links";
+import { andyScriptLinks, obsHudLinks, thumpLinks } from "../../data/links";
 import { randomHex } from "../../lib/hue";
 import botImage from "../../assets/showcase/showcase-1.webp";
 import "./ProjectBoard.scss";
@@ -97,7 +98,41 @@ const HueSwatch = () => {
     );
 };
 
+const ThumpCard = () => {
+    const { live } = useOutletContext();
+    return (
+        <>
+            <div className="board-card__top mono">
+                <span>Lancito01/thump</span>
+                <span className="board-card__tag">windows · c# · hue</span>
+            </div>
+            <h3>Thump</h3>
+            <p>
+                music sync for philips hue that follows the kick and the sub. it learns each track&apos;s kick as it
+                plays and colours every light from the album art.
+            </p>
+            <ThumpLights live={live} />
+            <div className="board-card__links">
+                <Link to="/thump">read more</Link>
+                <a href={thumpLinks.download} target="_blank" rel="noreferrer">
+                    download
+                </a>
+                <a href={thumpLinks.github} target="_blank" rel="noreferrer">
+                    source
+                </a>
+            </div>
+        </>
+    );
+};
+
 const cards = [
+    {
+        id: "thump",
+        className: "board-card--thump",
+        rotate: 1.5,
+        place: { at: 0.04, top: 410 },
+        content: <ThumpCard />,
+    },
     {
         id: "obs-hud",
         className: "board-card--obs",
@@ -116,6 +151,7 @@ const cards = [
                 </p>
                 <ObsPill />
                 <div className="board-card__links">
+                    <Link to="/obs-hud">read more</Link>
                     <a href={obsHudLinks.download} target="_blank" rel="noreferrer">
                         download
                     </a>

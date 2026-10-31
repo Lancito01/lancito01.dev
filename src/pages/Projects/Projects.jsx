@@ -1,7 +1,6 @@
 import { Link, useOutletContext } from "react-router-dom";
 import ObsPill from "../../Components/ObsPill/ObsPill";
 import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
-import { presenceTone } from "../../lib/useSiteAccent";
 import { andyScriptLinks, obsHudLinks, thumpLinks } from "../../data/links";
 import notificationsImage from "../../assets/obs/notifications.webp";
 import "../page.scss";
@@ -35,9 +34,10 @@ const Projects = () => {
                             listening to right now.
                         </p>
                         <div className="projects__thump">
-                            <ThumpDemo music={live?.music ?? null} presence={presenceTone(live)} />
+                            <ThumpDemo live={live} />
                         </div>
                         <div className="page__links">
+                            <Link to="/thump">read more</Link>
                             <a href={thumpLinks.download} target="_blank" rel="noreferrer">
                                 download
                             </a>
@@ -67,6 +67,7 @@ const Projects = () => {
                             />
                         </div>
                         <div className="page__links">
+                            <Link to="/obs-hud">read more</Link>
                             <a href={obsHudLinks.download} target="_blank" rel="noreferrer">
                                 download
                             </a>
