@@ -6,9 +6,8 @@
     --thump-pink: #ff2e78;
     --thump-orange: #ffa726;
 
-    display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    // sized by the space it's given rather than the window, since it sits in narrow columns too
+    container-type: inline-size;
     padding: 14px;
     border-radius: 10px;
     background: var(--thump-bg);
@@ -24,8 +23,14 @@
         letter-spacing: 0.06em;
         text-transform: uppercase;
     }
+}
 
-    @media (max-width: 720px) {
+.thump-demo__grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+
+    @container (max-width: 640px) {
         grid-template-columns: 1fr;
     }
 }
@@ -79,19 +84,21 @@
 
 .thump-demo__lights {
     display: flex;
-    justify-content: space-between;
-    gap: 8px;
+    align-items: center;
+    gap: 12px;
+    // room for the glow, so it stays inside the card
+    padding: 4px 6px;
 }
 
 .thump-demo__light {
     --level: 0.6;
     display: block;
-    flex: none;
-    width: 34px;
-    height: 34px;
+    flex: 0 1 34px;
+    min-width: 0;
+    aspect-ratio: 1;
     border-radius: 50%;
     background: rgb(var(--colour) / calc(0.25 + var(--level) * 0.75));
-    box-shadow: 0 0 calc(4px + var(--level) * 18px) rgb(var(--colour) / calc(var(--level) * 0.8));
+    box-shadow: 0 0 calc(2px + var(--level) * 10px) rgb(var(--colour) / calc(var(--level) * 0.75));
     transition: background-color 0.12s;
 }
 

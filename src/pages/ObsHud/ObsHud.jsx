@@ -1,11 +1,9 @@
-import { useState } from "react";
-import ObsPill from "../../Components/ObsPill/ObsPill";
+import { useEffect, useRef, useState } from "react";
 import ObsToast from "../../Components/ObsToast/ObsToast";
-import ObsOverlay from "./ObsOverlay";
+import ObsOverlay, { Pill } from "./ObsOverlay";
 import { playChime } from "../../lib/obsSounds";
 import { obsHudLinks } from "../../data/links";
 import heroImage from "../../assets/obs/hero.webp";
-import pillsImage from "../../assets/obs/pills.webp";
 import "../page.scss";
 import "./ObsHud.scss";
 
@@ -38,8 +36,47 @@ const readSounds = () => {
     }
 };
 
+// The pill in each of its states, the recording one ticking
+const PillStates = () => {
+    const [now, setNow] = useState(Date.now);
+    const [since] = useState(() => Date.now() - 754_000);
+
+    useEffect(() => {
+        const id = setInterval(() => setNow(Date.now()), 1000);
+        return () => clearInterval(id);
+    }, []);
+
+    return (
+        <div className="obs-page__pills">
+            <figure>
+                <Pill rec={{ since, pausedAt: null }} replay now={now} />
+                <figcaption>recording, with the replay buffer on</figcaption>
+            </figure>
+            <figure>
+                <Pill rec={{ since: 0, pausedAt: 187_000 }} now={now} />
+                <figcaption>recording paused</figcaption>
+            </figure>
+            <figure>
+                <Pill replay now={now} />
+                <figcaption>just the replay buffer</figcaption>
+            </figure>
+        </div>
+    );
+};
+
 const ObsHud = () => {
     const [soundsOn, setSoundsOn] = useState(readSounds);
+    const [playing, setPlaying] = useState(null);
+    const playingTimer = useRef();
+
+    useEffect(() => () => clearTimeout(playingTimer.current), []);
+
+    const play = (name) => {
+        playChime(name);
+        setPlaying(name);
+        clearTimeout(playingTimer.current);
+        playingTimer.current = setTimeout(() => setPlaying(null), 500);
+    };
 
     const toggleSounds = () => {
         const on = !soundsOn;
@@ -97,22 +134,17 @@ const ObsHud = () => {
             <section className="page__section">
                 <h2>what you&apos;ll see</h2>
                 <p>a small pill while something is running, with the recording time ticking:</p>
-                <div className="obs-page__pills">
-                    <ObsPill />
-                    <img
-                        src={pillsImage}
-                        alt="status pills: recording with replay buffer, paused, and replay buffer only"
-                        width="754"
-                        height="52"
-                        loading="lazy"
-                    />
-                </div>
+                <PillStates />
                 <p>and a pop-up for each event, each with its own sound. click one to hear it:</p>
                 <ul className="obs-page__sounds">
                     {sounds.map(({ name, label, glyph, accent }) => (
                         <li key={name}>
-                            <button type="button" onClick={() => playChime(name)}>
-                                <ObsToast glyph={glyph} accent={accent} title={label} />
+                            <button
+                                type="button"
+                                className={playing === name ? "is-playing" : undefined}
+                                onClick={() => play(name)}
+                            >
+                                <ObsToast glyph={glyph} accent={accent} title={label} detail={`${name}.wav`} />
                             </button>
                         </li>
                     ))}

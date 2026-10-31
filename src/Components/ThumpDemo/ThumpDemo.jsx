@@ -56,44 +56,50 @@ const ThumpDemo = ({ live }) => {
 
     return (
         <div className="thump-demo" ref={root} aria-hidden="true">
-            <div className="thump-demo__card thump-demo__playing">
-                {music?.image ? <img src={music.image} alt="" width="44" height="44" /> : <span className="thump-demo__art" />}
-                <div>
-                    <small>now playing</small>
-                    <b>{music ? music.title : "nothing right now"}</b>
-                    <span>{music ? music.artist : STATUS[presenceTone(live)]}</span>
+            <div className="thump-demo__grid">
+                <div className="thump-demo__card thump-demo__playing">
+                    {music?.image ? (
+                        <img src={music.image} alt="" width="44" height="44" />
+                    ) : (
+                        <span className="thump-demo__art" />
+                    )}
+                    <div>
+                        <small>now playing</small>
+                        <b>{music ? music.title : "nothing right now"}</b>
+                        <span>{music ? music.artist : STATUS[presenceTone(live)]}</span>
+                    </div>
                 </div>
-            </div>
 
-            <div className="thump-demo__card">
-                <small>lights</small>
-                <div className="thump-demo__lights">
-                    {colours.map((_, i) => (
-                        <i
-                            key={i}
-                            className="thump-demo__light"
-                            style={{ "--colour": colours[(i + (still ? 0 : step)) % LIGHTS] }}
-                        />
-                    ))}
+                <div className="thump-demo__card">
+                    <small>lights</small>
+                    <div className="thump-demo__lights">
+                        {colours.map((_, i) => (
+                            <i
+                                key={i}
+                                className="thump-demo__light"
+                                style={{ "--colour": colours[(i + (still ? 0 : step)) % LIGHTS] }}
+                            />
+                        ))}
+                    </div>
                 </div>
-            </div>
 
-            <div className="thump-demo__card">
-                <div className="thump-demo__head">
-                    <small>spectrum</small>
-                    <span className="thump-demo__kick">kick</span>
+                <div className="thump-demo__card">
+                    <div className="thump-demo__head">
+                        <small>spectrum</small>
+                        <span className="thump-demo__kick">kick</span>
+                    </div>
+                    <div className="thump-demo__bars">
+                        {BANDS.map((band) => (
+                            <div key={band} className="thump-demo__bar">
+                                <span>
+                                    <i />
+                                </span>
+                                <small>{band}</small>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="thump-demo__tempo">{BPM} BPM · locked to the beat</div>
                 </div>
-                <div className="thump-demo__bars">
-                    {BANDS.map((band) => (
-                        <div key={band} className="thump-demo__bar">
-                            <span>
-                                <i />
-                            </span>
-                            <small>{band}</small>
-                        </div>
-                    ))}
-                </div>
-                <div className="thump-demo__tempo">{BPM} BPM · locked to the beat</div>
             </div>
         </div>
     );

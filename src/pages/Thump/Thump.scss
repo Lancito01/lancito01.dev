@@ -1,3 +1,10 @@
+// Thump's own pink-to-orange, like its window title
+.thump__name {
+    background: linear-gradient(90deg, #ff2e78, #ffa726);
+    background-clip: text;
+    color: transparent;
+}
+
 .thump__demo {
     margin-top: 32px;
 }

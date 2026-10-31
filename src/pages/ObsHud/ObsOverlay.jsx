@@ -61,7 +61,7 @@ const steps = [
     }),
 ];
 
-const Pill = ({ rec, replay, now }) => {
+export const Pill = ({ rec, replay, now }) => {
     if (!rec && !replay) return null;
     const paused = rec?.pausedAt != null;
     return (

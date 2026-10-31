@@ -13,7 +13,7 @@
         height: 26px;
         border-radius: 50%;
         background: rgb(var(--colour) / calc(0.25 + var(--level) * 0.75));
-        box-shadow: 0 0 calc(3px + var(--level) * 14px) rgb(var(--colour) / calc(var(--level) * 0.8));
+        box-shadow: 0 0 calc(2px + var(--level) * 9px) rgb(var(--colour) / calc(var(--level) * 0.75));
         transition: background-color 0.12s;
     }
 }

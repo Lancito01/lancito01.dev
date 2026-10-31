@@ -29,7 +29,8 @@ const Thump = () => {
             <BeatGlows colours={colours} />
 
             <h1 className="page__title">
-                <span className="prompt">&gt;</span>Thump
+                <span className="prompt">&gt;</span>
+                <span className="thump__name">Thump</span>
             </h1>
             <p className="page__intro">
                 bass-first music and screen sync for philips hue, for windows 10 and 11. it follows the kick and the
