@@ -1,0 +1,124 @@
+.obs-page__toggle {
+    padding: 0;
+    border: 0;
+    background: none;
+    color: var(--muted);
+    font-size: 13px;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+    cursor: pointer;
+
+    &:hover {
+        color: var(--fg);
+    }
+}
+
+.obs-page__hero {
+    margin-top: 32px;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid var(--rule);
+    }
+}
+
+.obs-page__pills {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 16px;
+    margin: 14px 0 22px;
+    padding: 18px;
+    border-radius: 10px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+
+    img {
+        max-width: 100%;
+        height: auto;
+        width: 377px;
+    }
+}
+
+.page__section .obs-page__sounds {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+    gap: 10px;
+    margin-top: 14px;
+    padding: 0;
+    list-style: none;
+
+    li + li {
+        margin-top: 0;
+    }
+
+    button {
+        display: block;
+        width: 100%;
+        padding: 0;
+        border: 0;
+        background: none;
+        border-radius: 12px;
+        cursor: pointer;
+        transition: transform 0.12s ease;
+
+        &:hover {
+            transform: translateY(-2px);
+        }
+
+        &:active {
+            transform: translateY(0);
+        }
+    }
+
+    .obs-toast {
+        width: 100%;
+    }
+}
+
+.obs-page ol {
+    padding-left: 1.3em;
+
+    li + li {
+        margin-top: 4px;
+    }
+}
+
+.obs-page code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    padding: 1px 5px;
+    border-radius: 4px;
+    background: var(--panel);
+    border: 1px solid var(--rule);
+}
+
+.obs-page__settings {
+    margin: 14px 0;
+
+    div {
+        display: grid;
+        grid-template-columns: 130px 1fr;
+        gap: 16px;
+        padding: 10px 0;
+        border-top: 1px solid var(--rule);
+    }
+
+    dt {
+        font-size: 14px;
+        color: var(--fg);
+    }
+
+    dd {
+        color: var(--fg-soft);
+    }
+
+    @media (max-width: 640px) {
+        div {
+            grid-template-columns: 1fr;
+            gap: 2px;
+        }
+    }
+}

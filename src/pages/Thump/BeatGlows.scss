@@ -1,0 +1,45 @@
+// Behind everything, like the shooting stars
+.beat-glows {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+    pointer-events: none;
+}
+
+.beat-glows__glow {
+    position: absolute;
+    border-radius: 50%;
+    background: radial-gradient(closest-side, rgb(var(--colour)), rgb(var(--colour) / 0.35) 45%, transparent);
+    opacity: 0;
+    will-change: opacity;
+    transition: background 1.2s ease;
+
+    &--kick {
+        left: -18vmax;
+        bottom: -22vmax;
+        width: 60vmax;
+        height: 60vmax;
+    }
+
+    &--clap {
+        right: -16vmax;
+        top: -10vmax;
+        width: 46vmax;
+        height: 46vmax;
+    }
+
+    &--hat {
+        right: -10vmax;
+        top: 48%;
+        width: 26vmax;
+        height: 26vmax;
+    }
+
+    &--pad {
+        left: 22%;
+        top: -26vmax;
+        width: 70vmax;
+        height: 44vmax;
+    }
+}
