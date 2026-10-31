@@ -15,3 +15,8 @@ export const obsHudLinks = {
     github: "https://github.com/Lancito01/obs-hud",
     download: "https://github.com/Lancito01/obs-hud/releases/latest",
 };
+
+export const thumpLinks = {
+    github: "https://github.com/Lancito01/thump",
+    download: "https://github.com/Lancito01/thump/releases/latest",
+};

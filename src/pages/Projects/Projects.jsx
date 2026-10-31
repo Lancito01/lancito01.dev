@@ -1,11 +1,15 @@
-import { Link } from "react-router-dom";
+import { Link, useOutletContext } from "react-router-dom";
 import ObsPill from "../../Components/ObsPill/ObsPill";
-import { andyScriptLinks, obsHudLinks } from "../../data/links";
+import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
+import { presenceTone } from "../../lib/useSiteAccent";
+import { andyScriptLinks, obsHudLinks, thumpLinks } from "../../data/links";
 import notificationsImage from "../../assets/obs/notifications.webp";
 import "../page.scss";
 import "./Projects.scss";
 
 const Projects = () => {
+    const { live } = useOutletContext();
+
     return (
         <div className="wrap page">
             <h1 className="page__title">
@@ -20,6 +24,29 @@ const Projects = () => {
             </p>
 
             <ul className="page__rows">
+                <li className="page__row">
+                    <span className="page__meta mono">c# · windows · hue</span>
+                    <div>
+                        <h2>Thump</h2>
+                        <p>
+                            music sync for philips hue that cares about the kick and the sub instead of the hats. it
+                            learns each track&apos;s kick as it plays, follows tempo changes, and colours every light from
+                            the album art of whatever&apos;s playing. below is a copy of its panel, using what i&apos;m
+                            listening to right now.
+                        </p>
+                        <div className="projects__thump">
+                            <ThumpDemo music={live?.music ?? null} presence={presenceTone(live)} />
+                        </div>
+                        <div className="page__links">
+                            <a href={thumpLinks.download} target="_blank" rel="noreferrer">
+                                download
+                            </a>
+                            <a href={thumpLinks.github} target="_blank" rel="noreferrer">
+                                source
+                            </a>
+                        </div>
+                    </div>
+                </li>
                 <li className="page__row">
                     <span className="page__meta mono">c# · windows</span>
                     <div>

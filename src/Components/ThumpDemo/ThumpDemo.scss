@@ -1,0 +1,161 @@
+// Thump's own colours, so the copy looks like the app rather than the site
+.thump-demo {
+    --thump-bg: #15151b;
+    --thump-card: #1d1d25;
+    --thump-line: #2b2b35;
+    --thump-pink: #ff2e78;
+    --thump-orange: #ffa726;
+
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--thump-bg);
+    color: #f1f1f4;
+    font-family: "Segoe UI", system-ui, sans-serif;
+    font-size: 14px;
+
+    small {
+        display: block;
+        color: #9a9aa6;
+        font-size: 11px;
+        font-weight: 600;
+        letter-spacing: 0.06em;
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+        grid-template-columns: 1fr;
+    }
+}
+
+.thump-demo__card {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    padding: 14px;
+    border-radius: 10px;
+    background: var(--thump-card);
+    border: 1px solid var(--thump-line);
+    min-width: 0;
+}
+
+.thump-demo__playing {
+    flex-direction: row;
+    align-items: center;
+
+    img,
+    .thump-demo__art {
+        flex: none;
+        width: 44px;
+        height: 44px;
+        border-radius: 6px;
+        object-fit: cover;
+    }
+
+    .thump-demo__art {
+        background: linear-gradient(135deg, var(--thump-pink), var(--thump-orange));
+    }
+
+    div {
+        display: flex;
+        flex-direction: column;
+        gap: 2px;
+        min-width: 0;
+    }
+
+    b,
+    span {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+    }
+
+    span {
+        color: #9a9aa6;
+    }
+}
+
+.thump-demo__lights {
+    display: flex;
+    justify-content: space-between;
+    gap: 8px;
+}
+
+.thump-demo__light {
+    --level: 0.6;
+    display: block;
+    flex: none;
+    width: 34px;
+    height: 34px;
+    border-radius: 50%;
+    background: rgb(var(--colour) / calc(0.25 + var(--level) * 0.75));
+    box-shadow: 0 0 calc(4px + var(--level) * 18px) rgb(var(--colour) / calc(var(--level) * 0.8));
+    transition: background-color 0.12s;
+}
+
+.thump-demo__head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.thump-demo__kick {
+    padding: 2px 9px;
+    border-radius: 999px;
+    background: var(--thump-line);
+    color: #9a9aa6;
+    font-size: 11px;
+    font-weight: 700;
+    text-transform: uppercase;
+    transition: background-color 0.06s, color 0.06s;
+
+    &.is-on {
+        background: var(--thump-pink);
+        color: #fff;
+    }
+}
+
+.thump-demo__bars {
+    display: grid;
+    grid-template-columns: repeat(6, 1fr);
+    gap: 5px;
+}
+
+.thump-demo__bar {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 5px;
+
+    span {
+        position: relative;
+        width: 100%;
+        height: 56px;
+        border-radius: 3px;
+        background: var(--thump-line);
+        overflow: hidden;
+    }
+
+    i {
+        --level: 0;
+        position: absolute;
+        inset: 0;
+        background: linear-gradient(to top, var(--thump-pink), var(--thump-orange));
+        transform: scaleY(var(--level));
+        transform-origin: bottom;
+    }
+
+    small {
+        font-size: 9px;
+        letter-spacing: 0;
+        text-transform: none;
+        font-weight: 400;
+    }
+}
+
+.thump-demo__tempo {
+    color: #9a9aa6;
+    font-size: 12px;
+}
