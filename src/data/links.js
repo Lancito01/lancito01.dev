@@ -20,3 +20,8 @@ export const thumpLinks = {
     github: "https://github.com/Lancito01/thump",
     download: "https://github.com/Lancito01/thump/releases/latest",
 };
+
+export const kickstepLinks = {
+    github: "https://github.com/Lancito01/kickstep",
+    weights: "https://github.com/Lancito01/kickstep/raw/main/kickstep.thdm",
+};

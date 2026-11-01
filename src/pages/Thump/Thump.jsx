@@ -2,23 +2,26 @@ import { useOutletContext } from "react-router-dom";
 import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
 import BeatGlows from "./BeatGlows";
 import { useThumpColours } from "../../lib/thumpLoop";
-import { thumpLinks } from "../../data/links";
+import { kickstepLinks, thumpLinks } from "../../data/links";
 import panelImage from "../../assets/thump/panel.webp";
 import "../page.scss";
 import "./Thump.scss";
 
 const tuning = [
     ["lights locked to the kick, dark in between", "put the main lights on kick, raise contrast, lower release"],
+    ["a light on the backbeat", "clap role (claps, snares, rims), raise clap sensitivity if some are missed"],
+    ["a light that shimmers with the hats", "hats role"],
     ["a rumbling sub that breathes", "bass role, sub weight up, release around 300 ms"],
     ["kicks being missed", "raise kick sensitivity a little"],
     ["the bassline setting off kicks", "lower kick sensitivity"],
     ["less flicker on busy tracks", "raise attack to 30–50 ms"],
 ];
 
-const pipeline = `wasapi loopback --> fft --> 6 auto-levelled bands --+
-                     '-> kick detector (per song) --+
-album art --> palette ------------------------------+--> sync engine (50 hz) --> dtls --> hue bridge
-screen (64x36) --> colour per light ----------------+`;
+const pipeline = `wasapi loopback --> fft --+--> 6 auto-levelled bands -----------+
+                          +--> kickstep: kick, clap/snare, hats --+
+                          '--> beat tracker (all onsets) ---------+
+album art --> palette --------------------------------------------+--> sync engine (50 hz) --> dtls --> hue bridge
+screen (64x36) --> colour per light ------------------------------+`;
 
 const Thump = () => {
     const { live } = useOutletContext();
@@ -33,8 +36,9 @@ const Thump = () => {
                 <span className="thump__name">Thump</span>
             </h1>
             <p className="page__intro">
-                bass-first music and screen sync for philips hue, for windows 10 and 11. it follows the kick and the
-                sub, the bits you actually feel, instead of the hats and synths.
+                drums-first music and screen sync for philips hue, for windows 10 and 11. its own little neural
+                network picks out every kick, clap and hi-hat as they play, and each light follows the drum you give
+                it.
             </p>
             <div className="page__links">
                 <a href={thumpLinks.download} target="_blank" rel="noreferrer">
@@ -48,40 +52,53 @@ const Thump = () => {
             <div className="thump__demo">
                 <ThumpDemo live={live} />
                 <p className="thump__caption mono">
-                    a copy of thump&apos;s panel, coloured by what i&apos;m playing right now. the glows behind the page
-                    are on the same beat: kick bottom left, clap top right, hats on the right and a pad up top.
+                    a copy of thump&apos;s panel, coloured by what i&apos;m playing right now, with a light each on the
+                    kick, clap, hats and bass. the glows behind the page are on the same beat: kick bottom left, clap
+                    top right, hats on the right and a pad up top.
                 </p>
             </div>
 
             <section className="page__section">
                 <h2>why i made it</h2>
                 <p>
-                    hue sync&apos;s music mode is tuned for &quot;average&quot; music: it blends the whole spectrum
-                    into one loudness value. that&apos;s fine for pop, but on techno and house the lights end up
-                    chasing the hats and synths instead of the kick. thump is built the other way round.
+                    hue sync&apos;s music mode blends the whole spectrum into one loudness value. that&apos;s fine
+                    for pop, but on electronic music the lights end up chasing the synths, the vocals and whatever is
+                    loudest instead of the thing you actually move to: the drums. thump listens for the drums.
                 </p>
                 <p>
-                    the sound is split into six bands (sub, bass, low-mid, mid, high and air). each band levels itself
-                    out automatically, and you pick how much each one drives the lights. the defaults lean hard on the
-                    low end.
+                    it hears whatever your pc plays, not the player, so spotify, youtube or a dj set in rekordbox all
+                    work the same. crossfades, live blends, hard cuts and pitch-riding are fine too.
                 </p>
             </section>
 
             <section className="page__section">
-                <h2>a kick detector that learns each track</h2>
-                <p>a small model starts over on every song and learns, while it plays:</p>
+                <h2>kickstep, a drum detector that hears the groove</h2>
+                <p>
+                    the drums come from{" "}
+                    <a href={kickstepLinks.github} target="_blank" rel="noreferrer">
+                        kickstep
+                    </a>
+                    , a small neural network i trained for thump and released on its own. about 50 ms after a hit it
+                    says whether it was a kick, a clap or snare (rims too) or a hi-hat:
+                </p>
                 <ul>
-                    <li>how hard this track&apos;s kick hits, so quiet and loud kicks both work</li>
                     <li>
-                        what it sounds like, compared against hits that turned out not to be kicks, like rolling
-                        basslines and claps
+                        it hears the last ~4 seconds, so it judges every hit by where it sits in the groove as well as
+                        by its sound. a quiet clap on the 2 and 4 still flashes.
                     </li>
-                    <li>the tempo, followed all the time, so dj pitch-riding, tempo ramps and hard cuts keep up</li>
-                    <li>which 16th notes carry kicks, so four-on-the-floor and broken beats both work</li>
+                    <li>
+                        the surer it is, the brighter the flash. below a minimum the light stays dark, so there are no
+                        constant dim flickers, and the sensitivity sliders move how sure it has to be.
+                    </li>
+                    <li>
+                        it never ties a pattern to a song, so it lets go of the old groove within a couple of bars
+                        after a blend or a cut.
+                    </li>
+                    <li>its kicks also drive a tempo tracker that follows ramps and pitch-riding from 100 to 180 bpm</li>
                 </ul>
                 <p>
-                    it survives breakdowns, and there&apos;s no training data or model file: it&apos;s a few hundred
-                    lines of c#.
+                    on top of the drums, the sound is split into six bands (sub, bass, low-mid, mid, high and air)
+                    that level themselves out, so lights can still breathe with the sub or the whole mix.
                 </p>
             </section>
 
@@ -90,7 +107,7 @@ const Thump = () => {
                 <figure className="thump__shot">
                     <img
                         src={panelImage}
-                        alt="Thump's colours tab: album-art colours spread across four lights, with the live spectrum and kick indicator"
+                        alt="Thump's colours tab: album-art colours spread across four lights, with the live spectrum and the kick, clap and hats indicators"
                         width="1104"
                         height="761"
                         loading="lazy"
@@ -116,14 +133,15 @@ const Thump = () => {
             <section className="page__section">
                 <h2>every light gets a role</h2>
                 <p>
-                    put a light on <b>kick</b> for a hard pulse and others on <b>bass</b>, <b>mix</b>,{" "}
-                    <b>mids</b>, <b>highs</b> or <b>ambient</b>. it streams over the hue entertainment api (dtls, about
-                    50 updates a second), the same low-latency path hue sync uses.
+                    <b>kick</b> and <b>clap</b> flash on their drum and stay dark in between, <b>hats</b> shimmers,{" "}
+                    <b>bass</b> and <b>mix</b> follow the low end or the whole track, <b>mids</b> and <b>highs</b> the
+                    synths and cymbals, and <b>ambient</b> ignores the music. it streams over the hue entertainment api
+                    (dtls, about 50 updates a second), the same low-latency path hue sync uses.
                 </p>
             </section>
 
             <section className="page__section">
-                <h2>tuning for techno and house</h2>
+                <h2>tuning</h2>
                 <div className="thump__table">
                     <table>
                         <thead>
@@ -174,7 +192,10 @@ const Thump = () => {
             <section className="page__section">
                 <h2>known limits</h2>
                 <ul>
-                    <li>a bassline that&apos;s louder than the kick in the 40–130 hz range can still hide it</li>
+                    <li>
+                        kickstep still misses some claps and snares, mostly unusual or heavily processed ones and muted
+                        pre-drop snares. it would rather miss a clap than fake one.
+                    </li>
                     <li>screen mode can show black for exclusive-fullscreen games and drm video</li>
                     <li>only the main monitor is sampled</li>
                 </ul>

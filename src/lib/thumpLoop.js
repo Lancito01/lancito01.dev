@@ -98,3 +98,9 @@ export function loopLevels(ms) {
         ],
     };
 }
+
+// How bright each of the four lights is, on Thump's light roles: kick and clap flash on their drum
+// and stay dark in between, hats shimmer over a base level and bass breathes with the low end
+export function lightLevels({ kick, clap, hat, bands }) {
+    return [0.08 + kick * 0.92, 0.08 + clap * 0.92, 0.35 + hat * 0.5, 0.45 + bands[1] * 0.55];
+}

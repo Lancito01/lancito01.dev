@@ -90,11 +90,26 @@
     padding: 4px 6px;
 }
 
+.thump-demo__role {
+    display: flex;
+    flex: 0 1 34px;
+    flex-direction: column;
+    align-items: center;
+    gap: 6px;
+    min-width: 0;
+
+    small {
+        font-size: 10px;
+        font-weight: 400;
+        letter-spacing: 0;
+        text-transform: none;
+    }
+}
+
 .thump-demo__light {
     --level: 0.6;
     display: block;
-    flex: 0 1 34px;
-    min-width: 0;
+    width: 100%;
     aspect-ratio: 1;
     border-radius: 50%;
     background: rgb(var(--colour) / calc(0.25 + var(--level) * 0.75));
@@ -108,20 +123,21 @@
     justify-content: space-between;
 }
 
-.thump-demo__kick {
-    padding: 2px 9px;
+.thump-demo__leds {
+    display: flex;
+    gap: 5px;
+}
+
+// like Thump's LEDs, as bright as Kickstep is sure
+.thump-demo__led {
+    --level: 0;
+    padding: 2px 8px;
     border-radius: 999px;
-    background: var(--thump-line);
-    color: #9a9aa6;
+    background: color-mix(in srgb, var(--thump-pink) calc(var(--level) * 100%), var(--thump-line));
+    color: color-mix(in srgb, #fff calc(var(--level) * 100%), #9a9aa6);
     font-size: 11px;
     font-weight: 700;
     text-transform: uppercase;
-    transition: background-color 0.06s, color 0.06s;
-
-    &.is-on {
-        background: var(--thump-pink);
-        color: #fff;
-    }
 }
 
 .thump-demo__bars {
@@ -165,4 +181,5 @@
 .thump-demo__tempo {
     color: #9a9aa6;
     font-size: 12px;
+    line-height: 1.5;
 }

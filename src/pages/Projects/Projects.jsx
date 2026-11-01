@@ -1,7 +1,8 @@
 import { Link, useOutletContext } from "react-router-dom";
 import ObsPill from "../../Components/ObsPill/ObsPill";
+import KickstepDemo from "../../Components/KickstepDemo/KickstepDemo";
 import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
-import { andyScriptLinks, obsHudLinks, thumpLinks } from "../../data/links";
+import { andyScriptLinks, kickstepLinks, obsHudLinks, thumpLinks } from "../../data/links";
 import notificationsImage from "../../assets/obs/notifications.webp";
 import "../page.scss";
 import "./Projects.scss";
@@ -28,8 +29,9 @@ const Projects = () => {
                     <div>
                         <h2>Thump</h2>
                         <p>
-                            music sync for philips hue that cares about the kick and the sub instead of the hats. it
-                            learns each track&apos;s kick as it plays, follows tempo changes, and colours every light from
+                            drums-first music sync for philips hue. kickstep, its own little neural network, picks out
+                            every kick, clap and hi-hat as they play, and each light follows the drum you give it: a hard
+                            flash on the kick, another on the backbeat, a shimmer with the hats. the colours come from
                             the album art of whatever&apos;s playing. below is a copy of its panel, using what i&apos;m
                             listening to right now.
                         </p>
@@ -43,6 +45,34 @@ const Projects = () => {
                             </a>
                             <a href={thumpLinks.github} target="_blank" rel="noreferrer">
                                 source
+                            </a>
+                        </div>
+                    </div>
+                </li>
+                <li className="page__row">
+                    <span className="page__meta mono">neural net · python · c#</span>
+                    <div>
+                        <h2>Kickstep</h2>
+                        <p>
+                            the drum detector behind thump, released on its own. every 10.7 ms it says whether a kick, a
+                            clap or snare or a hi-hat just started, about 50 ms after the hit and with no lookahead, on
+                            well under 1% of a cpu core. it hears the last ~4 seconds, so it judges each hit by where it
+                            sits in the groove as well as by its sound. it&apos;s tuned for electronic music, and free to
+                            use (mit) in visualisers, lighting, games or anything else.
+                        </p>
+                        <div className="projects__kickstep">
+                            <KickstepDemo />
+                            <p className="mono">
+                                what it hears in the same loop as thump&apos;s panel. each hit is as tall as kickstep is
+                                sure; under the dashed line it stays grey, like a light that stays dark.
+                            </p>
+                        </div>
+                        <div className="page__links">
+                            <a href={kickstepLinks.github} target="_blank" rel="noreferrer">
+                                source
+                            </a>
+                            <a href={kickstepLinks.weights} target="_blank" rel="noreferrer">
+                                weights
                             </a>
                         </div>
                     </div>
