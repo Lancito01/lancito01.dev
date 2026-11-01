@@ -108,8 +108,8 @@ const ThumpCard = () => {
             </div>
             <h3>Thump</h3>
             <p>
-                music sync for philips hue that follows the kick and the sub. it learns each track&apos;s kick as it
-                plays and colours every light from the album art.
+                drums-first music sync for philips hue. its own neural net hears every kick, clap and hat, and the
+                colours come from the album art.
             </p>
             <ThumpLights live={live} />
             <div className="board-card__links">
