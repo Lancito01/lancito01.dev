@@ -3,11 +3,13 @@ import { Link, useOutletContext } from "react-router-dom";
 import { animate, motion, useMotionValue } from "motion/react";
 import PropTypes from "prop-types";
 import ObsPill from "../ObsPill/ObsPill";
+import { TauLogo } from "../TauDemo/TauIcons";
 import ThumpLights from "../ThumpLights/ThumpLights";
 import useMediaQuery from "../../lib/useMediaQuery";
-import { andyScriptLinks, obsHudLinks, thumpLinks } from "../../data/links";
+import { andyScriptLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
 import { randomHex } from "../../lib/hue";
 import botImage from "../../assets/showcase/showcase-1.webp";
+import tauWheel from "../../assets/tau/convert-wheel.webp";
 import "./ProjectBoard.scss";
 
 const settle = { type: "spring", stiffness: 300, damping: 32 };
@@ -130,7 +132,7 @@ const cards = [
         id: "thump",
         className: "board-card--thump",
         rotate: 1.5,
-        place: { at: 0.04, top: 410 },
+        place: { at: 0.04, top: 470 },
         content: <ThumpCard />,
     },
     {
@@ -156,6 +158,35 @@ const cards = [
                         download
                     </a>
                     <a href={obsHudLinks.github} target="_blank" rel="noreferrer">
+                        source
+                    </a>
+                </div>
+            </>
+        ),
+    },
+    {
+        id: "tau",
+        className: "board-card--tau",
+        rotate: -1.5,
+        place: { at: 0.76, top: 540 },
+        content: (
+            <>
+                <div className="board-card__top mono">
+                    <span>Lancito01/tau</span>
+                    <span className="board-card__tag">windows · rust</span>
+                </div>
+                <h3>
+                    <TauLogo size={30} />
+                    Tau
+                </h3>
+                <p>drag a file, tap a key, drop it on the wheel. converts and edits files right where they are.</p>
+                <img src={tauWheel} alt="Tau's Convert wheel, with image formats around a dial" width="451" height="451" loading="lazy" />
+                <div className="board-card__links">
+                    <Link to="/tau">read more</Link>
+                    <a href={tauLinks.download} target="_blank" rel="noreferrer">
+                        download
+                    </a>
+                    <a href={tauLinks.github} target="_blank" rel="noreferrer">
                         source
                     </a>
                 </div>

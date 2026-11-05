@@ -1,0 +1,74 @@
+// Tau's lime, from its logo and the wheel's selection
+$tau-lime: #c8f135;
+
+.tau__name {
+    color: $tau-lime;
+}
+
+.tau__demo {
+    position: relative;
+    // room for the note above the demo
+    margin-top: 74px;
+}
+
+// A note scribbled on the page, its arrow reaching down into the file tray
+.tau__try {
+    position: absolute;
+    left: 130px;
+    top: -42px;
+    z-index: 1;
+    display: flex;
+    align-items: flex-start;
+    gap: 2px;
+    color: $tau-lime;
+    pointer-events: none;
+    transform: rotate(-4deg);
+    transform-origin: left bottom;
+
+    span {
+        margin-top: -6px;
+        font-family: var(--font-hand);
+        font-size: 36px;
+        font-weight: 700;
+        line-height: 1;
+        white-space: nowrap;
+        transform: rotate(-3deg);
+    }
+
+    svg {
+        flex: none;
+        overflow: visible;
+    }
+
+    path {
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+}
+
+.tau__caption {
+    margin-top: 10px;
+    font-size: 13px;
+    color: var(--muted);
+}
+
+.tau__wheels {
+    margin-top: 18px;
+}
+
+.tau ol {
+    padding-left: 1.3em;
+
+    li + li {
+        margin-top: 4px;
+    }
+}
+
+.tau code {
+    font-family: var(--font-mono);
+    font-size: 0.88em;
+    color: var(--fg);
+}
