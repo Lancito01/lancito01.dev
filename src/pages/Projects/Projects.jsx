@@ -1,8 +1,9 @@
 import { Link, useOutletContext } from "react-router-dom";
 import ObsPill from "../../Components/ObsPill/ObsPill";
 import KickstepDemo from "../../Components/KickstepDemo/KickstepDemo";
+import TauWheels from "../../Components/TauDemo/TauWheels";
 import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
-import { andyScriptLinks, kickstepLinks, obsHudLinks, thumpLinks } from "../../data/links";
+import { andyScriptLinks, kickstepLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
 import notificationsImage from "../../assets/obs/notifications.webp";
 import "../page.scss";
 import "./Projects.scss";
@@ -24,6 +25,29 @@ const Projects = () => {
             </p>
 
             <ul className="page__rows">
+                <li className="page__row">
+                    <span className="page__meta mono">rust · windows</span>
+                    <div>
+                        <h2>Tau</h2>
+                        <p>
+                            convert and work with files without opening anything. drag a file, tap the win key, and drop
+                            it on the wheel that appears. everything runs on your pc, and the result lands next to the
+                            original.
+                        </p>
+                        <div className="projects__tau">
+                            <TauWheels />
+                        </div>
+                        <div className="page__links">
+                            <Link to="/tau">read more</Link>
+                            <a href={tauLinks.download} target="_blank" rel="noreferrer">
+                                download
+                            </a>
+                            <a href={tauLinks.github} target="_blank" rel="noreferrer">
+                                source
+                            </a>
+                        </div>
+                    </div>
+                </li>
                 <li className="page__row">
                     <span className="page__meta mono">c# · windows · hue</span>
                     <div>

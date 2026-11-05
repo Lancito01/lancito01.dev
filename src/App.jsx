@@ -9,6 +9,7 @@ import Games from "./pages/Games/Games.jsx";
 import HueGuessr from "./pages/HueGuessr/HueGuessr.jsx";
 import Thump from "./pages/Thump/Thump.jsx";
 import ObsHud from "./pages/ObsHud/ObsHud.jsx";
+import Tau from "./pages/Tau/Tau.jsx";
 
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import { Analytics } from "@vercel/analytics/react";
@@ -29,6 +30,7 @@ function App() {
                             <Route path="/andyscript" element={<AndyScript />} />
                             <Route path="/thump" element={<Thump />} />
                             <Route path="/obs-hud" element={<ObsHud />} />
+                            <Route path="/tau" element={<Tau />} />
                             <Route path="/games" element={<Games />} />
                             <Route path="/💀" element={<Skull />}></Route>
                             <Route

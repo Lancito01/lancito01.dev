@@ -21,6 +21,11 @@ export const thumpLinks = {
     download: "https://github.com/Lancito01/thump/releases/latest",
 };
 
+export const tauLinks = {
+    github: "https://github.com/Lancito01/tau",
+    download: "https://github.com/Lancito01/tau/releases/latest",
+};
+
 export const kickstepLinks = {
     github: "https://github.com/Lancito01/kickstep",
     weights: "https://github.com/Lancito01/kickstep/raw/main/kickstep.thdm",
