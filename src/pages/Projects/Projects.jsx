@@ -3,8 +3,9 @@ import ObsPill from "../../Components/ObsPill/ObsPill";
 import KickstepDemo from "../../Components/KickstepDemo/KickstepDemo";
 import TauWheels from "../../Components/TauDemo/TauWheels";
 import ThumpDemo from "../../Components/ThumpDemo/ThumpDemo";
-import { andyScriptLinks, kickstepLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
+import { andyScriptLinks, deltaLinks, kickstepLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
 import notificationsImage from "../../assets/obs/notifications.webp";
+import deltaThemes from "../../assets/delta/themes.webp";
 import "../page.scss";
 import "./Projects.scss";
 
@@ -25,6 +26,35 @@ const Projects = () => {
             </p>
 
             <ul className="page__rows">
+                <li className="page__row">
+                    <span className="page__meta mono">rust · windows · games</span>
+                    <div>
+                        <h2>Delta</h2>
+                        <p>
+                            a light, good-looking performance overlay for windows games: fps, frame times, gpu, cpu,
+                            ram, disk and network, the way you want them. six themes you can copy and make your own,
+                            numbers that don&apos;t jiggle as digits change, and one ~1 mb exe at about 0.1% cpu. it
+                            never loads anything into your games, so anti-cheat leaves it alone.
+                        </p>
+                        <div className="projects__delta">
+                            <img
+                                src={deltaThemes}
+                                alt="Delta's six built-in themes: minimal, futuristic, neon, terminal, hud and a one-line strip"
+                                width="1600"
+                                height="1086"
+                                loading="lazy"
+                            />
+                        </div>
+                        <div className="page__links">
+                            <a href={deltaLinks.download} target="_blank" rel="noreferrer">
+                                download
+                            </a>
+                            <a href={deltaLinks.github} target="_blank" rel="noreferrer">
+                                source
+                            </a>
+                        </div>
+                    </div>
+                </li>
                 <li className="page__row">
                     <span className="page__meta mono">rust · windows</span>
                     <div>

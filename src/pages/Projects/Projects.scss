@@ -29,3 +29,14 @@
         font-size: 13px;
     }
 }
+
+.projects__delta {
+    margin-top: 18px;
+
+    img {
+        width: 100%;
+        height: auto;
+        border-radius: 10px;
+        border: 1px solid var(--rule);
+    }
+}

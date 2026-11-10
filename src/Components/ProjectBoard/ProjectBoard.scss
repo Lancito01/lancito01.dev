@@ -34,7 +34,7 @@
 
 .board {
     position: relative;
-    height: 950px;
+    height: 1060px;
     background: var(--board);
     border: 1px solid var(--rule);
     border-radius: 14px;
@@ -327,5 +327,45 @@
     .board-card--thump h3,
     .board-card--tau h3 {
         font-size: 38px;
+    }
+}
+
+// Delta's deep navy, like the backdrop of its theme gallery, with its accent teal
+.board-card--delta {
+    --width: 360px;
+    width: var(--width);
+    padding: 22px 22px 20px;
+    background: linear-gradient(160deg, #1c2340, #121628);
+    color: #eef0f4;
+
+    .board-card__tag {
+        background: #4fe3c1;
+        color: #10142a;
+    }
+
+    h3 {
+        margin-top: 12px;
+        font-size: 38px;
+        letter-spacing: -0.035em;
+
+        span {
+            color: #4fe3c1;
+        }
+    }
+
+    p {
+        margin: 6px 0 14px;
+        font-size: 15.5px;
+        color: #a9b0c6;
+    }
+
+    a {
+        color: #eef0f4;
+    }
+}
+
+@media (max-width: 760px) {
+    .board-card--delta h3 {
+        font-size: 34px;
     }
 }
