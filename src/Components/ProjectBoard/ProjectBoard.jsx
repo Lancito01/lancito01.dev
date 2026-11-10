@@ -2,11 +2,12 @@ import { useEffect, useRef, useState } from "react";
 import { Link, useOutletContext } from "react-router-dom";
 import { animate, motion, useMotionValue } from "motion/react";
 import PropTypes from "prop-types";
+import DeltaOverlay from "../DeltaOverlay/DeltaOverlay";
 import ObsPill from "../ObsPill/ObsPill";
 import { TauLogo } from "../TauDemo/TauIcons";
 import ThumpLights from "../ThumpLights/ThumpLights";
 import useMediaQuery from "../../lib/useMediaQuery";
-import { andyScriptLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
+import { andyScriptLinks, deltaLinks, obsHudLinks, tauLinks, thumpLinks } from "../../data/links";
 import { randomHex } from "../../lib/hue";
 import botImage from "../../assets/showcase/showcase-1.webp";
 import tauWheel from "../../assets/tau/convert-wheel.webp";
@@ -129,17 +130,44 @@ const ThumpCard = () => {
 
 const cards = [
     {
+        id: "delta",
+        className: "board-card--delta",
+        rotate: 1,
+        place: { at: 0.52, top: 70 },
+        content: (
+            <>
+                <div className="board-card__top mono">
+                    <span>Lancito01/delta</span>
+                    <span className="board-card__tag">windows · rust</span>
+                </div>
+                <h3>
+                    <span aria-hidden="true">Δ</span> Delta
+                </h3>
+                <p>a light, good-looking performance overlay for games. fps, frame times, gpu, cpu and more, your way.</p>
+                <DeltaOverlay />
+                <div className="board-card__links">
+                    <a href={deltaLinks.download} target="_blank" rel="noreferrer">
+                        download
+                    </a>
+                    <a href={deltaLinks.github} target="_blank" rel="noreferrer">
+                        source
+                    </a>
+                </div>
+            </>
+        ),
+    },
+    {
         id: "thump",
         className: "board-card--thump",
         rotate: 1.5,
-        place: { at: 0.04, top: 470 },
+        place: { at: 0.02, top: 540 },
         content: <ThumpCard />,
     },
     {
         id: "obs-hud",
         className: "board-card--obs",
         rotate: -2,
-        place: { at: 0.06, top: 48 },
+        place: { at: 0.02, top: 60 },
         content: (
             <>
                 <div className="board-card__top mono">
@@ -168,7 +196,7 @@ const cards = [
         id: "tau",
         className: "board-card--tau",
         rotate: -1.5,
-        place: { at: 0.76, top: 540 },
+        place: { at: 0.995, top: 560 },
         content: (
             <>
                 <div className="board-card__top mono">
@@ -197,7 +225,7 @@ const cards = [
         id: "andyscript",
         className: "board-card--paper board-card--script",
         rotate: 2.5,
-        place: { at: 0.57, top: 88 },
+        place: { at: 0.52, top: 790 },
         content: (
             <>
                 <h3>AndyScript</h3>
@@ -215,7 +243,7 @@ const cards = [
         id: "hueguessr",
         className: "board-card--paper board-card--hue",
         rotate: -3.5,
-        place: { at: 0.93, top: 54 },
+        place: { at: 0.98, top: 40 },
         content: (
             <>
                 <HueSwatch />
@@ -230,7 +258,7 @@ const cards = [
         id: "andybot",
         className: "board-card--paper board-card--bot",
         rotate: 6,
-        place: { at: 0.88, top: 330 },
+        place: { at: 0.86, top: 300 },
         content: (
             <figure>
                 <img src={botImage} alt="A car on a freeway at sunset, drawn by AndyBot" />
@@ -244,7 +272,7 @@ const cards = [
         id: "more",
         className: "board-card--note",
         rotate: -4,
-        place: { at: 0.6, top: 352 },
+        place: { at: 0.5, top: 555 },
         content: (
             <>
                 <h3>more on github</h3>

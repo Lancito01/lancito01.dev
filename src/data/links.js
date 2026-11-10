@@ -30,3 +30,8 @@ export const kickstepLinks = {
     github: "https://github.com/Lancito01/kickstep",
     weights: "https://github.com/Lancito01/kickstep/raw/main/kickstep.thdm",
 };
+
+export const deltaLinks = {
+    github: "https://github.com/Lancito01/delta",
+    download: "https://github.com/Lancito01/delta/releases/latest",
+};
